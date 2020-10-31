@@ -44,7 +44,7 @@ const getAllRecommendation = async (): Promise<Song[]> => {
   ];
 };
 
-const getYouTubePlaylist = async (playlistURL: string): Promise<Playlist> => {
+const getYouTubePlaylist = async (_playlistURL: string): Promise<Playlist> => {
   return {
     id: 'mock-playlist-1',
     name: 'Mock Playlist 1',
@@ -74,7 +74,7 @@ const getYouTubePlaylist = async (playlistURL: string): Promise<Playlist> => {
   };
 };
 
-const getYouTubeSong = async (playlistURL: string): Promise<Song> => {
+const getYouTubeSong = async (_playlistURL: string): Promise<Song> => {
   return {
     title: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
     channel: 'NFRecords sakanaction',
