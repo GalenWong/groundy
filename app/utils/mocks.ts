@@ -192,6 +192,22 @@ const removeSongFromPlaylist = async (
   return `Song ${songID} was successfully removed from playlist ${playlistID}`;
 };
 
+const newPlaylist = async (name: string): Promise<string> => {
+  return `Playlist ${name} created`;
+};
+
+const startDownload = async (ytID: string): Promise<string> => {
+  return `Download ${ytID} started`;
+};
+
+const deleteSong = async (ytID: string): Promise<string> => {
+  return `${ytID} deleted`;
+};
+
+const getSongPath = async (ytID: string): Promise<string> => {
+  return `C:/Users/User/Music/example_${ytID}.mp3`;
+};
+
 export {
   isUserLoggedIn,
   getAllDownloads,
@@ -203,4 +219,8 @@ export {
   deletePlaylist,
   addSongToPlaylist,
   removeSongFromPlaylist,
+  newPlaylist,
+  startDownload,
+  deleteSong,
+  getSongPath,
 };
