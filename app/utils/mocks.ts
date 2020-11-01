@@ -196,7 +196,9 @@ const newPlaylist = async (name: string): Promise<string> => {
   return `Playlist ${name} created`;
 };
 
-const startDownload = async (ytID: string): Promise<void> => {};
+const startDownload = async (ytID: string): Promise<string> => {
+  return `Download ${ytID} started`;
+};
 
 const deleteSong = async (ytID: string): Promise<string> => {
   return `${ytID} deleted`;
