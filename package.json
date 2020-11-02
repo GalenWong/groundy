@@ -320,6 +320,14 @@
     "singleQuote": true
   },
   "stylelint": {
+    "rules": {
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": ["global"]
+        }
+      ]
+    },
     "extends": [
       "stylelint-config-standard",
       "stylelint-config-prettier"
