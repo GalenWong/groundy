@@ -75,9 +75,11 @@ const createWindow = async () => {
       process.env.ERB_SECURE !== 'true'
         ? {
             nodeIntegration: true,
+            webSecurity: false, // for accessing local music file
           }
         : {
             preload: path.join(__dirname, 'dist/renderer.prod.js'),
+            webSecurity: false, // for accessing local music file
           },
   });
 
