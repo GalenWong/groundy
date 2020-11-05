@@ -17,11 +17,11 @@ const assertNoConsoleErrors = async (t) => {
   await t.expect(error).eql([]);
 };
 
-// fixture`Home Page`.page('../../app/app.html').afterEach(assertNoConsoleErrors);
+fixture`Home Page`.page('../../app/app.html').afterEach(assertNoConsoleErrors);
 
-// test('e2e', async (t) => {
-//   await t.expect(getPageTitle()).eql('Hello Electron React!');
-// });
+test('e2e', async (t) => {
+  await t.expect(getPageTitle()).eql('Welcome to Groundy!');
+});
 
 // test('should open window and contain expected page title', async (t) => {
 //   await t.expect(getPageTitle()).eql('Hello Electron React!');
