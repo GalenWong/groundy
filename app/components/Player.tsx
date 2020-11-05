@@ -11,6 +11,7 @@ export default function Player(): JSX.Element {
         <br />
         <br />
         <br />
+        <br />
       </div>
       I am a Music Player Component!
     </div>
