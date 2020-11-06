@@ -1,6 +1,23 @@
 import React from 'react';
-import Player from '../components/Player';
+import MusicPlayer from '../components/MusicPlayer';
 
-export default function PlayerWrapper() {
-  return <Player />;
+export type PlayerWrapperProps = React.ComponentProps<'div'>;
+
+export default function PlayerWrapper({ children }: PlayerWrapperProps) {
+  return (
+    <>
+      {children}
+      <MusicPlayer
+        songQueue={[
+          {
+            title: 'Deca Joins-Go Slow',
+            channel: 'deca joins',
+            ytID: 'hC8CH0Z3L54',
+            downloaded: true,
+            filePath: '/Users/galenw/Desktop/Songs/Deca Joins-Go Slow.mp3',
+          },
+        ]}
+      />
+    </>
+  );
 }

@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import routes from './constants/routes.json';
 import App from './containers/App';
 // import HomePage from './containers/HomePage';
-import PlayerWrapper from './containers/PlayerWrapper';
 import DownloadedPage from './containers/DownloadedPage';
 import RecommendedPage from './containers/RecommendedPage';
 import FindRelatedPage from './containers/FindRelatedPage';
@@ -33,7 +32,6 @@ export default function Routes() {
         <Route path={routes.RECOMMENDED} component={RecommendedPage} />
         <Route path={routes.DOWNLOADED} component={DownloadedPage} />
       </Switch>
-      <PlayerWrapper />
     </App>
   );
 }

@@ -11,3 +11,8 @@ export interface Playlist {
   name: string;
   songs: Song[];
 }
+
+export interface DownloadedSong extends Song {
+  downloaded: true;
+  filePath: string;
+}
