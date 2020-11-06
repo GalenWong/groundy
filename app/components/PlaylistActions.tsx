@@ -7,10 +7,10 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import QueueIcon from '@material-ui/icons/Queue';
 
-const PlaylistActions = (props) => {
+const PlaylistActions = () => {
   return (
     <CardActions>
-      <IconButton key={1} onClick={() => console.log('testing')}>
+      <IconButton key={1}>
         <PlayArrowIcon />
       </IconButton>
       <IconButton key={2}>

@@ -7,10 +7,9 @@ import {
   Box,
   Typography,
 } from '@material-ui/core';
-import PropTypes from 'prop-types';
 import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
-import { Song } from '../types';
+import { Song, Progress } from '../types';
 
 const useStyles = makeStyles({
   card: {
@@ -27,30 +26,40 @@ const useStyles = makeStyles({
   },
 });
 
-const SongCard = (props: { song: Song; variant: string }) => {
+interface SongCardProps {
+  song: Song;
+  variant: string;
+  progress?: Progress;
+}
+
+const SongCard = (props: SongCardProps) => {
   const classes = useStyles();
 
-  const { song, variant } = props;
+  const { song, variant, progress } = props;
   const { title, channel, downloaded } = song;
-  const { actions } = variant;
 
   return (
     <Card variant="outlined" className={classes.card}>
-      <CardActionArea
-        className={classes.flexItem}
-        onClick={() => console.log('display info')}
-      >
+      <CardActionArea className={classes.flexItem}>
         <CardContent className={classes.content}>
           <Box maxWidth={1}>
             <Typography noWrap>{title}</Typography>
-            <Typography variant="caption">{channel}</Typography>
+            <Typography variant="caption" noWrap>
+              {channel}
+            </Typography>
           </Box>
         </CardContent>
       </CardActionArea>
-      {actions === 'playlist' && <PlaylistActions />}
-      {actions === 'import' && <ImportActions downloaded={downloaded} />}
+      {variant === 'playlist' && <PlaylistActions />}
+      {variant === 'import' && (
+        <ImportActions downloaded={downloaded} progress={progress} />
+      )}
     </Card>
   );
 };
 
 export default SongCard;
+
+SongCard.defaultProps = {
+  progress: undefined,
+};

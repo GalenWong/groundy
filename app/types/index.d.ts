@@ -11,3 +11,10 @@ export interface Playlist {
   name: string;
   songs: Song[];
 }
+
+export interface Progress {
+  ytID: string;
+  total: bigint;
+  current: bigint;
+  rate?: bigint; // bytes/sec ?
+}
