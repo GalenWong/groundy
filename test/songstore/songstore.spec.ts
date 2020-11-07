@@ -7,8 +7,8 @@ const fs = require('fs');
 jest.mock('fs');
 
 describe('songstore', () => {
-  const tempDir = os.tmpdir();
   it('getInstance', () => {
+    const tempDir = os.tmpdir();
     expect(SongStore.getInstance(tempDir)).toBeInstanceOf(SongStore);
   });
 
