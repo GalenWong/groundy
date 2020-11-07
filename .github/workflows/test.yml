@@ -31,7 +31,6 @@ jobs:
           yarn lint
           yarn tsc
           yarn test
-          yarn build-e2e
 
       - if: matrix.os == 'ubuntu-latest'
         run: |
