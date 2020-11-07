@@ -1,39 +1,34 @@
 import { assert } from 'console';
-import { SongStore } from '../../app/components/SongStore';
-const fs = require('fs');  
-jest.mock('fs'); 
-const path = require('path'); 
+import { SongStore } from '../../app/backend/SongStore';
+
+const fs = require('fs');
+
+jest.mock('fs');
 
 describe('songstore', () => {
-  it('getInstance', () => { 
-    expect(function() { SongStore.getInstance(''); })
-      .toThrow(new Error('Invalid argument: storageDirectory'));
-  });
-
   it('getInstance', () => {
-    expect(SongStore.getInstance('home')).toBeInstanceOf(SongStore); 
+    expect(SongStore.getInstance(process.cwd())).toBeInstanceOf(SongStore);
   });
 
   it('getStorageDirectory', () => {
-    assert(SongStore.getInstance('home').getStorageDirectory(), 'home'); 
+    assert(
+      SongStore.getInstance(process.cwd()).getStorageDirectory(),
+      process.cwd()
+    );
   });
 
   it('getWriteStream', () => {
-    expect(SongStore.getInstance('home').getWriteStream('dummy')).toBeUndefined;
-  }); 
-
-  it('doesFileExistErr', () => {
-    fs.existsSync.mockReturnValue(false); 
-    expect(SongStore.getInstance('home').doesFileExists('dummy')).toBeFalsy;
+    SongStore.getInstance(process.cwd()).getWriteStream('dummy.txt');
+    expect(fs.createWriteStream).toHaveBeenCalled();
   });
 
-  it('doesFileExist', () => {
-    fs.existsSync.mockReturnValue(true); 
-    expect(SongStore.getInstance('home').doesFileExists('dummy')).toBeTruthy;
-  }); 
+  it('delete', () => {
+    SongStore.getInstance(process.cwd()).delete('dummy.txt');
+    expect(fs.unlink).toHaveBeenCalled();
+  });
 
   it('getAllSongs', () => {
-    fs.existsSync.mockReturnValue(true); 
-    expect(SongStore.getInstance('home').getAllSongs()).toBeTruthy;
-  }); 
-}); 
+    SongStore.getInstance(process.cwd()).getAllSongs();
+    expect(fs.readdir).toHaveBeenCalled();
+  });
+});
