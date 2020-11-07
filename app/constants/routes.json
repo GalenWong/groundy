@@ -1,8 +1,7 @@
 {
-  "HOME": "/",
-  "COUNTER": "/counter",
-  "ALLPLAYLISTS": "/allplaylists",
-  "DOWNLOADED": "/downloaded",
-  "FINDRELATED": "/findrelated",
-  "RECOMMENDED": "/recommended"
+  "All Playlists": "/allplaylists",
+  "Downloaded": "/downloaded",
+  "Find Related": "/findrelated",
+  "Recommended": "/recommended",
+  "Setting": "/setting"
 }
