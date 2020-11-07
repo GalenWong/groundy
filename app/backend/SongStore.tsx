@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-export class SongStore {
+export default class SongStore {
   private static instance: SongStore;
 
   private storageDirectory: string;
@@ -25,7 +25,9 @@ export class SongStore {
 
   async delete(nameOfFile: string): any {
     const filePath = path.join(this.storageDirectory, nameOfFile);
-    await fs.unlink(filePath);
+    try {
+      await fs.unlink(filePath);
+    } catch (err) {}
   }
 
   getStorageDirectory(): string {
@@ -33,6 +35,8 @@ export class SongStore {
   }
 
   async getAllSongs(): any {
-    return await fs.readdir(this.storageDirectory);
+    try {
+      await fs.readdir(this.storageDirectory);
+    } catch (err) {}
   }
 }

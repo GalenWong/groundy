@@ -1,5 +1,5 @@
 import { assert } from 'console';
-import { SongStore } from '../../app/backend/SongStore';
+import SongStore from '../../app/backend/SongStore';
 
 const fs = require('fs');
 
