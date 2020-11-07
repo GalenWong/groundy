@@ -25,9 +25,7 @@ export default class SongStore {
 
   async delete(nameOfFile: string): any {
     const filePath = path.join(this.storageDirectory, nameOfFile);
-    try {
-      await fs.unlink(filePath);
-    } catch (err) {}
+    await fs.unlink(filePath);
   }
 
   getStorageDirectory(): string {
@@ -35,8 +33,7 @@ export default class SongStore {
   }
 
   async getAllSongs(): any {
-    try {
-      await fs.readdir(this.storageDirectory);
-    } catch (err) {}
+    const songs = await fs.readdir(this.storageDirectory);
+    return songs;
   }
 }
