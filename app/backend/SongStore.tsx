@@ -23,7 +23,7 @@ export default class SongStore {
     return fs.createWriteStream(filePath);
   }
 
-  async delete(nameOfFile: string): any {
+  async delete(nameOfFile: string): Promise<any> {
     const filePath = path.join(this.storageDirectory, nameOfFile);
     await fs.unlink(filePath);
   }
@@ -32,7 +32,7 @@ export default class SongStore {
     return this.storageDirectory;
   }
 
-  async getAllSongs(): any {
+  async getAllSongs(): Promise<any> {
     const songs = await fs.readdir(this.storageDirectory);
     return songs;
   }
