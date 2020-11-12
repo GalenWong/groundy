@@ -11,35 +11,35 @@ export default class SongStore {
   private static storageDirectory: string;
 
   private constructor(storageDirectory: string) {
-    this.storageDirectory = storageDirectory;
+    SongStore.storageDirectory = storageDirectory;
   }
 
-  static getInstance(): SongStore {
-    if (!this.storageDirectory) return null;
+  static getInstance(): SongStore | null {
+    if (!SongStore.storageDirectory) return null;
     return SongStore.instance;
   }
 
   static setInstance(storageDirectory: string): void {
-    this.storageDirectory = storageDirectory;
+    SongStore.storageDirectory = storageDirectory;
     SongStore.instance = new SongStore(storageDirectory);
   }
 
-  getWriteStream(nameOfFile: string): WriteStream {
-    const filePath = path.join(this.storageDirectory, nameOfFile);
+  getWriteStream(nameOfFile: string): fs.WriteStream {
+    const filePath = path.join(SongStore.storageDirectory, nameOfFile);
     return fs.createWriteStream(filePath);
   }
 
   async delete(nameOfFile: string): Promise<void> {
-    const filePath = path.join(this.storageDirectory, nameOfFile);
+    const filePath = path.join(SongStore.storageDirectory, nameOfFile);
     await unlink(filePath);
   }
 
   getStorageDirectory(): string {
-    return this.storageDirectory;
+    return SongStore.storageDirectory;
   }
 
-  async getAllSongs(): string[] {
-    const songs = await readdir(this.storageDirectory);
+  async getAllSongs(): Promise<string[]> {
+    const songs = await readdir(SongStore.storageDirectory);
     return songs;
   }
 }
