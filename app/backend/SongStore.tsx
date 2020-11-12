@@ -8,38 +8,36 @@ const readdir = util.promisify(fs.readdir);
 export default class SongStore {
   private static instance: SongStore;
 
-  private static storageDirectory: string;
+  private storageDirectory: string;
 
   private constructor(storageDirectory: string) {
-    SongStore.storageDirectory = storageDirectory;
+    this.storageDirectory = storageDirectory;
   }
 
-  static getInstance(): SongStore | null {
-    if (!SongStore.storageDirectory) return null;
+  static getInstance(storageDirectory: string): SongStore | null {
+    if (storageDirectory === '') return null;
+    if (!SongStore.instance) {
+      SongStore.instance = new SongStore(storageDirectory);
+    }
     return SongStore.instance;
   }
 
-  static setInstance(storageDirectory: string): void {
-    SongStore.storageDirectory = storageDirectory;
-    SongStore.instance = new SongStore(storageDirectory);
-  }
-
   getWriteStream(nameOfFile: string): fs.WriteStream {
-    const filePath = path.join(SongStore.storageDirectory, nameOfFile);
+    const filePath = path.join(this.storageDirectory, nameOfFile);
     return fs.createWriteStream(filePath);
   }
 
   async delete(nameOfFile: string): Promise<void> {
-    const filePath = path.join(SongStore.storageDirectory, nameOfFile);
+    const filePath = path.join(this.storageDirectory, nameOfFile);
     await unlink(filePath);
   }
 
   getStorageDirectory(): string {
-    return SongStore.storageDirectory;
+    return this.storageDirectory;
   }
 
   async getAllSongs(): Promise<string[]> {
-    const songs = await readdir(SongStore.storageDirectory);
+    const songs = await readdir(this.storageDirectory);
     return songs;
   }
 }

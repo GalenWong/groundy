@@ -6,31 +6,29 @@ import SongStore from '../../app/backend/SongStore';
 
 const writeFile = require('util').promisify(fs.writeFile);
 
-function beforeTest(): string {
-  const tempDir = os.tmpdir();
-  SongStore.setInstance(tempDir);
-  const filePath = path.join(tempDir, 'dummy.txt');
-  writeFile(filePath, 'hello world');
-  return filePath;
-}
-
 describe('songstoreInteg', () => {
   it('getAllSongs', async () => {
-    beforeTest();
-    const songs = await SongStore.getInstance().getAllSongs();
+    const tempDir = os.tmpdir();
+    const filePath = path.join(tempDir, 'dummy.txt');
+    writeFile(filePath, 'hello world');
+    const songs = await SongStore.getInstance(tempDir).getAllSongs();
     assert(songs.length, 1);
   });
 
   it('delete', async () => {
-    const filePath = beforeTest();
+    const tempDir = os.tmpdir();
+    const filePath = path.join(tempDir, 'dummy.txt');
+    writeFile(filePath, 'hello world');
     expect(fs.existsSync(filePath)).toEqual(true);
-    await SongStore.getInstance().delete('dummy.txt');
+    await SongStore.getInstance(tempDir).delete('dummy.txt');
     expect(fs.existsSync(filePath)).toEqual(false);
   });
 
   it('getWriteStream', async () => {
-    beforeTest();
-    const w = await SongStore.getInstance().getWriteStream('dummy.txt');
+    const tempDir = os.tmpdir();
+    const filePath = path.join(tempDir, 'dummy.txt');
+    writeFile(filePath, 'hello world');
+    const w = await SongStore.getInstance(tempDir).getWriteStream('dummy.txt');
     expect(w).toBeInstanceOf(fs.WriteStream);
   });
 });

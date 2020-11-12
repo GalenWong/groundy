@@ -8,34 +8,29 @@ jest.mock('fs');
 describe('songstore', () => {
   it('getInstance', () => {
     const tempDir = os.tmpdir();
-    SongStore.setInstance(tempDir);
-    expect(SongStore.getInstance()).toBeInstanceOf(SongStore);
+    expect(SongStore.getInstance(tempDir)).toBeInstanceOf(SongStore);
   });
 
   it('getStorageDirectory', () => {
     const tempDir = os.tmpdir();
-    SongStore.setInstance(tempDir);
-    assert(SongStore.getInstance().getStorageDirectory(), tempDir);
+    assert(SongStore.getInstance(tempDir).getStorageDirectory(), tempDir);
   });
 
   it('getWriteStream', () => {
     const tempDir = os.tmpdir();
-    SongStore.setInstance(tempDir);
-    SongStore.getInstance().getWriteStream('dummy.txt');
+    SongStore.getInstance(tempDir).getWriteStream('dummy.txt');
     expect(fs.createWriteStream).toHaveBeenCalled();
   });
 
   it('delete', () => {
     const tempDir = os.tmpdir();
-    SongStore.setInstance(tempDir);
-    SongStore.getInstance().delete('dummy.txt');
+    SongStore.getInstance(tempDir).delete('dummy.txt');
     expect(fs.unlink).toHaveBeenCalled();
   });
 
   it('getAllSongs', () => {
     const tempDir = os.tmpdir();
-    SongStore.setInstance(tempDir);
-    SongStore.getInstance().getAllSongs();
+    SongStore.getInstance(tempDir).getAllSongs();
     expect(fs.readdir).toHaveBeenCalled();
   });
 });
