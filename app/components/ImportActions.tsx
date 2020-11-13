@@ -23,6 +23,10 @@ const useStyles = makeStyles({
   },
   tinyFont: {
     fontSize: '.5rem',
+    '-webkit-user-select': 'none' /* Safari */,
+    '-moz-user-select': 'none' /* Firefox */,
+    '-ms-user-select': 'none' /* IE10+/Edge */,
+    'user-select': 'none' /* Standard */,
   },
 });
 
@@ -44,16 +48,14 @@ const ImportActions = (props: ImportActionsProps) => {
       </Button>
     );
   } else {
-    const { current, total, rate } = progress;
+    const { current, total } = progress;
     component = (
       <Box className={classes.fillWidth}>
         <Box display="flex">
           <Typography
             className={`${classes.grow} ${classes.tinyFont}`}
             variant="caption"
-          >
-            {`${rate} MB/s`}
-          </Typography>
+          />
           <Typography className={classes.tinyFont} variant="caption">
             {`${Number((current * BigInt(100)) / total)}%`}
           </Typography>
