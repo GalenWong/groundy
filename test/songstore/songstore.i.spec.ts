@@ -10,15 +10,16 @@ describe('songstoreInteg', () => {
   it('getAllSongs', async () => {
     const tempDir = os.tmpdir();
     const filePath = path.join(tempDir, 'dummy.txt');
-    writeFile(filePath, 'hello world');
+    await writeFile(filePath, 'hello world');
     const songs = await SongStore.getInstance(tempDir).getAllSongs();
     assert(songs.length, 1);
+    assert(songs[0], 'dummy.txt');
   });
 
   it('delete', async () => {
     const tempDir = os.tmpdir();
     const filePath = path.join(tempDir, 'dummy.txt');
-    writeFile(filePath, 'hello world');
+    await writeFile(filePath, 'hello world');
     expect(fs.existsSync(filePath)).toEqual(true);
     await SongStore.getInstance(tempDir).delete('dummy.txt');
     expect(fs.existsSync(filePath)).toEqual(false);
@@ -27,7 +28,6 @@ describe('songstoreInteg', () => {
   it('getWriteStream', async () => {
     const tempDir = os.tmpdir();
     const filePath = path.join(tempDir, 'dummy.txt');
-    writeFile(filePath, 'hello world');
     const w = await SongStore.getInstance(tempDir).getWriteStream('dummy.txt');
     expect(w).toBeInstanceOf(fs.WriteStream);
   });
