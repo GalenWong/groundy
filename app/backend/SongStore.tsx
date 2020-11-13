@@ -14,12 +14,18 @@ export default class SongStore {
     this.storageDirectory = storageDirectory;
   }
 
-  static getInstance(storageDirectory: string): SongStore | null {
-    if (storageDirectory === '') return null;
+  static getInstance(storageDirectory: string): SongStore {
     if (!SongStore.instance) {
       SongStore.instance = new SongStore(storageDirectory);
     }
     return SongStore.instance;
+  }
+
+  setDirectory(storageDirectory: string): void {
+    if (storageDirectory === '') {
+      throw new Error('storageDirectory cannot be empty.');
+    }
+    this.storageDirectory = storageDirectory;
   }
 
   getWriteStream(nameOfFile: string): fs.WriteStream {
