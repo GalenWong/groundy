@@ -32,5 +32,12 @@
     "app/renderer.prod.js",
     "app/dist",
     "dll"
-  ]
+  ],
+  "typedocOptions": {
+    "inputFiles": ["./app"],
+    "out": "typedoc",
+    "includeDeclarations": true,
+    "excludeExternals": true,
+    "name": "Groundy"
+  }
 }
