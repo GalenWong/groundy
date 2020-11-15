@@ -24,4 +24,3 @@ export interface DownloadedSong extends Song {
   downloaded: true;
   filePath: string;
 }
-
