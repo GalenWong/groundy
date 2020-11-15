@@ -12,6 +12,14 @@ export interface Playlist {
   songs: Song[];
 }
 
+export interface Progress {
+  ytID: string;
+  total: bigint;
+  current: bigint;
+}
+
+export type ActionVariant = 'import' | 'playlist';
+
 export interface DownloadedSong extends Song {
   downloaded: true;
   filePath: string;
