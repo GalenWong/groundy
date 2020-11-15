@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as mui from '@material-ui/core';
 import Playlist from './Playlist';
-import { Progress } from '../types';
+import { Progress, ActionVariant } from '../types';
 
 const useStyles = mui.makeStyles({
   topbar: {
@@ -15,7 +15,7 @@ const useStyles = mui.makeStyles({
   },
 });
 
-const MainContentWindow = (props: { title: string; window: string }) => {
+const MainContentWindow = (props: { title: string; window: ActionVariant }) => {
   const classes = useStyles();
   const { title, window } = props;
 
@@ -48,7 +48,6 @@ const MainContentWindow = (props: { title: string; window: string }) => {
       ytID: 'LIlZCmETvsY',
       total: BigInt(10000),
       current: BigInt(10000),
-      rate: BigInt(-1),
     },
   };
 

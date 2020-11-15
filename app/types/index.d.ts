@@ -16,5 +16,6 @@ export interface Progress {
   ytID: string;
   total: bigint;
   current: bigint;
-  rate?: bigint; // bytes/sec ?
 }
+
+export type ActionVariant = 'import' | 'playlist';

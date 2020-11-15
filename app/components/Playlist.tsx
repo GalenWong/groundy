@@ -2,12 +2,12 @@ import * as React from 'react';
 import { List } from '@material-ui/core';
 import SongCard from './SongCard';
 
-import { Song, Progress } from '../types';
+import { Song, Progress, ActionVariant } from '../types';
 
 interface PlaylistProps {
   songs: Song[];
   downloads: Record<string, Progress>;
-  window: string;
+  window: ActionVariant;
 }
 
 const Playlist = (props: PlaylistProps) => {

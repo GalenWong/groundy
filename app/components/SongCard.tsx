@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
-import { Song, Progress } from '../types';
+import { Song, Progress, ActionVariant } from '../types';
 
 const useStyles = makeStyles({
   card: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 interface SongCardProps {
   song: Song;
-  variant: string;
+  variant: ActionVariant;
   progress?: Progress;
 }
 
