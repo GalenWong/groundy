@@ -19,3 +19,9 @@ export interface Progress {
 }
 
 export type ActionVariant = 'import' | 'playlist';
+
+export interface DownloadedSong extends Song {
+  downloaded: true;
+  filePath: string;
+}
+
