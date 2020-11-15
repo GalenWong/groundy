@@ -20,7 +20,8 @@ function getOAuthCode(AuthURL) {
     authWin.loadURL(AuthURL, {userAgent: 'Chrome'})
     return new Promise((resolve, reject) => {
         const onclosed = () => {
-            reject('Interaction ended intentionally ;(');
+            //TODO: seng signal
+            reject('auth ended. check ipcMain');
         };
         authWin.on('closed', onclosed);
         authWin.on('page-title-updated', (event) => {
