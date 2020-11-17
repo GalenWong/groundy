@@ -25,7 +25,7 @@ class Downloader {
       filter: 'audioonly',
     });
 
-    const filename = `${name}-${videoInfo.videoDetails.videoId}.${audioFormat.container}`;
+    const filename = `${name}.${audioFormat.container}`;
 
     const manager = new DownloadManager(ytid, filename, {
       format: audioFormat,
