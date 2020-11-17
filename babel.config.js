@@ -56,12 +56,8 @@ module.exports = (api) => {
       [require('@babel/plugin-proposal-class-properties'), { loose: true }],
       require('@babel/plugin-proposal-json-strings'),
 
-      [
-        require('@babel/plugin-transform-runtime'),
-        {
-          regenerator: true,
-        },
-      ],
+      [require('@babel/plugin-transform-runtime'), { regenerator: true }],
+
       ...(development ? developmentPlugins : productionPlugins),
     ],
   };
