@@ -49,4 +49,6 @@ class Downloader {
   }
 }
 
-export default Downloader;
+const downloader = new Downloader();
+
+export default downloader;
