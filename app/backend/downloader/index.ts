@@ -1,5 +1,4 @@
 import ytdl from 'ytdl-core';
-import path from 'path';
 import DownloadManager from './DownloadManager';
 import { FinishCallback, ProgressCallback } from './types';
 
@@ -14,11 +13,7 @@ class Downloader {
     return inst;
   }
 
-  public async startDownload(
-    ytid: string,
-    dir: string,
-    name: string
-  ): Promise<string> {
+  public async startDownload(ytid: string, name: string): Promise<string> {
     if (this.managers.has(ytid)) {
       throw new Error(`already downloading ${ytid}`);
     }
@@ -30,9 +25,9 @@ class Downloader {
       filter: 'audioonly',
     });
 
-    const filepath = path.join(dir, `${name}.${audioFormat.container}`);
+    const filename = `${name}-${videoInfo.videoDetails.videoId}.${audioFormat.container}`;
 
-    const manager = new DownloadManager(ytid, filepath, {
+    const manager = new DownloadManager(ytid, filename, {
       format: audioFormat,
     });
     this.managers.set(ytid, manager);
@@ -40,7 +35,7 @@ class Downloader {
     manager.addOnFinishListener(({ ytid: finishedYtid }) => {
       this.managers.delete(finishedYtid);
     });
-    return filepath;
+    return filename;
   }
 
   public addFinishDownloadListener(ytid: string, onFinish: FinishCallback) {

@@ -1,7 +1,7 @@
 import ytdl from 'ytdl-core';
-import fs from 'fs';
 import { Readable } from 'stream';
 import { FinishCallback, ProgressCallback } from './types';
+import SongStore from '../SongStore';
 
 export default class DownloadManager {
   private onFinishListeners: FinishCallback[] = [];
@@ -10,7 +10,7 @@ export default class DownloadManager {
 
   private ytid: string;
 
-  private filepath: string;
+  private filename: string;
 
   private ytdlInst: Readable;
 
@@ -22,13 +22,13 @@ export default class DownloadManager {
     this.onProgressListeners.push(cb);
   }
 
-  constructor(ytid: string, filepath: string, options: ytdl.downloadOptions) {
+  constructor(ytid: string, filename: string, options: ytdl.downloadOptions) {
     this.ytid = ytid;
-    this.filepath = filepath;
+    this.filename = filename;
 
     this.ytdlInst = ytdl(ytid, options);
 
-    this.ytdlInst.pipe(fs.createWriteStream(this.filepath));
+    this.ytdlInst.pipe(SongStore.getInstance().getWriteStream(filename));
     this.ytdlInst.on(
       'progress',
       (_chunkLength: number, downloaded: number, total: number) => {
@@ -43,13 +43,13 @@ export default class DownloadManager {
 
   private notifyFinish() {
     this.onFinishListeners.forEach((f) =>
-      f({ ytid: this.ytid, filepath: this.filepath })
+      f({ ytid: this.ytid, filename: this.filename })
     );
   }
 
   private notifyProgress(total: number, downloaded: number) {
     this.onProgressListeners.forEach((f) =>
-      f({ ytid: this.ytid, filepath: this.filepath, total, downloaded })
+      f({ ytid: this.ytid, filename: this.filename, total, downloaded })
     );
   }
 }
