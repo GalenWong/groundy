@@ -166,6 +166,9 @@
     ],
     "setupFiles": [
       "./internals/scripts/CheckBuildsExist.js"
+    ],
+    "watchPathIgnorePatterns": [
+      "test/integration"
     ]
   },
   "devDependencies": {
@@ -298,7 +301,7 @@
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
     "source-map-support": "^0.5.19",
-    "typedoc": "^0.19.2"
+    "ytdl-core": "^4.0.3"
   },
   "devEngines": {
     "node": ">=7.x",
