@@ -15,6 +15,7 @@ import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+import registerEndpoints from './backend/ipc';
 
 export default class AppUpdater {
   constructor() {
@@ -135,3 +136,5 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
+
+registerEndpoints();
