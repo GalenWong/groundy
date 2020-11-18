@@ -38,6 +38,18 @@
     "out": "typedoc",
     "includeDeclarations": true,
     "excludeExternals": true,
-    "name": "Groundy"
+    "name": "Groundy",
+    "exclude": [
+      "**/components/**",
+      "**/containers/**",
+      "**/Routes.tsx",
+      "**/dist/**",
+      "**/global.d.ts",
+      "./app/index.tsx",
+      "./app/main.**",
+      "./app/menu.ts",
+      "./app/rootReducer.ts",
+      "./app/store.ts"
+    ]
   }
 }
