@@ -37,7 +37,7 @@ jobs:
         run: |
           Xvfb :99 &
           disown -ar
-          echo "::set-env name=DISPLAY:::99"
+          # echo "::set-env name=DISPLAY:::99"
 
       # TODO: Testcafe e2e are broken because of:
       # https://github.com/DevExpress/testcafe/issues/4512
