@@ -20,6 +20,22 @@ export interface Playlist {
 }
 
 /**
+ * @typeParam Progress - Used for tracking download progress
+ *
+ */
+export interface Progress {
+  ytID: string;
+  total: bigint;
+  current: bigint;
+}
+
+/**
+ * @typeParam ActionVariant
+ *
+ */
+export type ActionVariant = 'import' | 'playlist';
+
+/**
  * @typeParam DownloadedSong - Used for downloaded songs
  *
  */
