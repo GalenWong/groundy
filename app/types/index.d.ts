@@ -43,3 +43,9 @@ export interface DownloadedSong extends Song {
   downloaded: true;
   filePath: string;
 }
+
+// just to finish the doc
+// will clarify what Account is later
+export interface Account {
+  token: string;
+}

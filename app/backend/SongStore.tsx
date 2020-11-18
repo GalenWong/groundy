@@ -33,6 +33,9 @@ export default class SongStore {
     return fs.createWriteStream(filePath);
   }
 
+  /**
+   * @async
+   */
   async delete(nameOfFile: string): Promise<void> {
     const filePath = path.join(this.storageDirectory, nameOfFile);
     await unlink(filePath);
