@@ -282,12 +282,14 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@reduxjs/toolkit": "^1.4.0",
+    "ajv": "^6.12.6",
     "connected-react-router": "^6.6.1",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",
     "fontsource-roboto": "^3.0.3",
     "history": "^4.7.2",
+    "nedb-promises": "^4.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.12.0",
     "react-hot-loader": "^4.12.21",
@@ -329,7 +331,9 @@
       "selector-pseudo-class-no-unknown": [
         true,
         {
-          "ignorePseudoClasses": ["global"]
+          "ignorePseudoClasses": [
+            "global"
+          ]
         }
       ]
     },
