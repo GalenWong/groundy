@@ -12,6 +12,7 @@ import getYouTubeSong from './getYouTubeSong';
 import isLoggedIn from './isLoggedIn';
 import newPlaylist from './newPlaylist';
 import removeSongFromPlaylist from './removeSongFromPlaylist';
+import startAuth from './startAuth';
 import startDownload from './startDownload';
 
 export enum BackendEndpoints {
@@ -29,6 +30,7 @@ export enum BackendEndpoints {
   START_DOWNLOAD = 'start-download',
   DELETE_SONG = 'delete-song',
   GET_SONG_PATH = 'get-song-path',
+  START_AUTH = 'start-auth',
 }
 
 const endPoints2Handler = {
@@ -46,6 +48,7 @@ const endPoints2Handler = {
   [BackendEndpoints.START_DOWNLOAD]: startDownload,
   [BackendEndpoints.DELETE_SONG]: deleteSong,
   [BackendEndpoints.GET_SONG_PATH]: getSongPath,
+  [BackendEndpoints.START_AUTH]: startAuth,
 };
 
 const ipcEndpointWrapper = <T extends CallableFunction>(func: T) => (
