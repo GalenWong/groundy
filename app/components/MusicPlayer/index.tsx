@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactJkMusicPlayer, {
   ReactJkMusicPlayerAudioListProps,
+  ReactJkMusicPlayerProps,
 } from 'react-jinke-music-player';
 import { DownloadedSong } from '../../types';
 import defaultCover from './default-cover.jpg';
 import './player.css';
 
-export interface MusicPlayerProps {
+export interface MusicPlayerProps
+  extends Omit<ReactJkMusicPlayerProps, 'audioLists'> {
   songQueue: DownloadedSong[];
 }
 
@@ -20,7 +22,7 @@ const transformSongToPlayerSrc = (
   }));
 };
 
-export default function MusicPlayer({ songQueue }: MusicPlayerProps) {
+export default function MusicPlayer({ songQueue, ...props }: MusicPlayerProps) {
   const audioLists = transformSongToPlayerSrc(songQueue);
   return (
     <ReactJkMusicPlayer
@@ -31,9 +33,12 @@ export default function MusicPlayer({ songQueue }: MusicPlayerProps) {
       showDownload={false}
       showLyric={false}
       showThemeSwitch={false}
-      autoPlay={false}
       remove={false}
       audioLists={audioLists}
+      clearPriorAudioLists
+      quietUpdate
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
     />
   );
 }
