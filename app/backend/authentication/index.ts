@@ -48,15 +48,10 @@ const getOAuthCode = async (AuthURL: string): Promise<string> => {
   });
 };
 
-async function extractOAuthToken(client: OAuth2Client, code: string) {
-  const response = await client.getToken(code);
-  return response.tokens;
-}
-
 const startAuth = async () => {
   const [client, authURL] = getOAuthClient();
   const code = await getOAuthCode(authURL);
-  const tokens = await extractOAuthToken(client, code);
+  const tokens = await client.getToken(code);
   // TODO: write to token to DB
   console.log(tokens);
 };
@@ -71,4 +66,4 @@ const getToken = async () => {
   console.log('get token');
 };
 
-export { startAuth, getToken, deleteToken };
+export { startAuth, getToken, deleteToken, getOAuthClient, getOAuthCode };
