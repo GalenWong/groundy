@@ -50,7 +50,7 @@ const SongCard = (props: SongCardProps) => {
           </Box>
         </CardContent>
       </CardActionArea>
-      {variant === 'playlist' && <PlaylistActions />}
+      {variant === 'playlist' && <PlaylistActions song={song} />}
       {variant === 'import' && (
         <ImportActions downloaded={downloaded} progress={progress} />
       )}

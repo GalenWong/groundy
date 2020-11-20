@@ -40,7 +40,7 @@ const ImportActions = (props: ImportActionsProps) => {
   const { downloaded, progress } = props;
 
   let component;
-  if (typeof progress === 'undefined') {
+  if (progress === undefined) {
     component = (
       <Button key={2} disabled={downloaded}>
         <GetAppIcon />

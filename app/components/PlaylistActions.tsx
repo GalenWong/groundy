@@ -7,7 +7,15 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import QueueIcon from '@material-ui/icons/Queue';
 
-const PlaylistActions = () => {
+import { Song } from '../types';
+
+interface PlaylistActionProps {
+  song: Song;
+}
+
+const PlaylistActions = (props: PlaylistActionProps) => {
+  const { song } = props;
+
   return (
     <CardActions>
       <IconButton key={1}>

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as mui from '@material-ui/core';
+import { Box, Typography, Paper, makeStyles } from '@material-ui/core';
 import Playlist from './Playlist';
-import { Progress, ActionVariant } from '../types';
+import { Song, Progress } from '../types';
 
-const useStyles = mui.makeStyles({
+const useStyles = makeStyles({
   topbar: {
     display: 'flex',
   },
@@ -15,52 +15,41 @@ const useStyles = mui.makeStyles({
   },
 });
 
-const MainContentWindow = (props: { title: string; window: ActionVariant }) => {
+interface State {
+  songs: Song[];
+  downloads: Record<string, Progress>;
+}
+
+interface MainContentProps {
+  title: string;
+  children: React.ReactNode;
+  content: () => Promise<Song[]>;
+}
+
+const MainContentWindow = (props: MainContentProps) => {
+  const [state, setState] = React.useState<State>({ songs: [], downloads: {} });
+  const { title, children, content } = props;
+  const { songs, downloads } = state;
+  React.useEffect(() => {
+    const getData = async () => {
+      content()
+        .then((s: Song[]) => setState({ songs: s, downloads: state.downloads }))
+        .catch(() => {});
+    };
+    getData();
+  }, []);
   const classes = useStyles();
-  const { title, window } = props;
-
-  const songs = [
-    {
-      title: 'Fkj & Masego - Tadow',
-      channel: 'Fkj',
-      ytID: 'hC8CH0Z3L54',
-      downloaded: true,
-      fileName: 'Fkj & Masego - Tadow-hC8CH0Z3L54.mp3',
-    },
-    {
-      title: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
-      channel: 'NFRecords sakanaction',
-      ytID: 'LIlZCmETvsY',
-      downloaded: false,
-    },
-    {
-      title: 'Official髭男dism - Pretender［Official Video］',
-      channel: 'Official髭男dism',
-      ytID: 'TQ8WlA2GXbk',
-      downloaded: true,
-      fileName:
-        'Official髭男dism - Pretender［Official Video］-TQ8WlA2GXbk.mp3',
-    },
-  ];
-
-  const downloads: Record<string, Progress> = {
-    LIlZCmETvsY: {
-      ytID: 'LIlZCmETvsY',
-      total: BigInt(10000),
-      current: BigInt(10000),
-    },
-  };
 
   return (
-    <mui.Paper className={classes.padded}>
-      <mui.Box className={classes.topbar}>
-        <mui.Typography className={classes.fillSpace} variant="h4" noWrap>
+    <Paper className={classes.padded}>
+      <Box className={classes.topbar}>
+        <Typography className={classes.fillSpace} variant="h4" noWrap>
           {title}
-        </mui.Typography>
-        <mui.Typography>Things go here</mui.Typography>
-      </mui.Box>
-      <Playlist songs={songs} downloads={downloads} window={window} />
-    </mui.Paper>
+        </Typography>
+        <Box>{children}</Box>
+      </Box>
+      <Playlist songs={songs} downloads={downloads} />
+    </Paper>
   );
 };
 

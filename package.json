@@ -248,7 +248,7 @@
     "file-loader": "^6.0.0",
     "husky": "^4.2.5",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.1.0",
+    "jest": "^26.6.3",
     "lint-staged": "^10.2.11",
     "mini-css-extract-plugin": "^0.9.0",
     "mock-fs": "^4.13.0",
@@ -329,7 +329,9 @@
       "selector-pseudo-class-no-unknown": [
         true,
         {
-          "ignorePseudoClasses": ["global"]
+          "ignorePseudoClasses": [
+            "global"
+          ]
         }
       ]
     },

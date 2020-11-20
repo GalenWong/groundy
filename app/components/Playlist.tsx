@@ -7,22 +7,24 @@ import { Song, Progress, ActionVariant } from '../types';
 interface PlaylistProps {
   songs: Song[];
   downloads: Record<string, Progress>;
-  window: ActionVariant;
 }
 
 const Playlist = (props: PlaylistProps) => {
-  const { songs, downloads, window } = props;
+  const { songs, downloads } = props;
 
   return (
     <List>
-      {songs.map((song: Song) => (
-        <SongCard
-          key={song.ytID}
-          song={song}
-          variant={window}
-          progress={downloads[song.ytID]}
-        />
-      ))}
+      {songs.map((song: Song) => {
+        const actions: ActionVariant = song.downloaded ? 'playlist' : 'import';
+        return (
+          <SongCard
+            key={song.ytID}
+            song={song}
+            variant={actions}
+            progress={downloads[song.ytID]}
+          />
+        );
+      })}
     </List>
   );
 };
