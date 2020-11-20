@@ -1,6 +1,6 @@
 import * as os from 'os';
 import * as fs from 'fs';
-import SongStore from '../../app/backend/SongStore';
+import SongStore from '../../../app/backend/SongStore';
 
 jest.mock('fs');
 
