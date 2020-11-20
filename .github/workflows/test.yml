@@ -32,16 +32,17 @@ jobs:
           yarn tsc
           yarn test
           # yarn build-e2e
-
-      - if: matrix.os == 'ubuntu-latest'
-        run: |
-          Xvfb :99 &
-          disown -ar
-          echo "::set-env name=DISPLAY:::99"
+        # disabling since github no longer use set-env
+        # https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
+        # - if: matrix.os == 'ubuntu-latest'
+        #   run: |
+        #     Xvfb :99 &
+        #     disown -ar
+        #     echo "::set-env name=DISPLAY:::99"
 
       # TODO: Testcafe e2e are broken because of:
       # https://github.com/DevExpress/testcafe/issues/4512
       # Tests are currently broken on linux and macos
-      - if: matrix.os == 'windows-latest'
-        run: |
-          # yarn test-e2e
+      # - if: matrix.os == 'windows-latest'
+      #   run: |
+      #     yarn test-e2e
