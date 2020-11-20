@@ -1,11 +1,21 @@
-/* write mocks here */
-
 import { Playlist, Song } from '../types';
 
+/**
+ * Check Google Account Login Status
+ *
+ * @async
+ * @returns {Promise<boolean>}
+ */
 const isUserLoggedIn = async (): Promise<boolean> => {
   return false;
 };
 
+/**
+ * Get all downloaded songs in an array
+ *
+ * @async
+ * @returns {Promise<Song[]>}
+ */
 const getAllDownloads = async (): Promise<Song[]> => {
   return [
     {
@@ -26,6 +36,12 @@ const getAllDownloads = async (): Promise<Song[]> => {
   ];
 };
 
+/**
+ * Get an array of songs based on user account
+ *
+ * @async
+ * @returns {Promise<Song[]>}
+ */
 const getAllRecommendation = async (): Promise<Song[]> => {
   return [
     {
@@ -44,6 +60,13 @@ const getAllRecommendation = async (): Promise<Song[]> => {
   ];
 };
 
+/**
+ * Get a public playlist with a url
+ *
+ * @async
+ * @param {string} _playlistURL - url of a public playlist
+ * @returns {Promise<Playlist>} - Promise that resolves to a Playlist
+ */
 const getYouTubePlaylist = async (_playlistURL: string): Promise<Playlist> => {
   return {
     id: 'mock-playlist-1',
@@ -74,7 +97,14 @@ const getYouTubePlaylist = async (_playlistURL: string): Promise<Playlist> => {
   };
 };
 
-const getYouTubeSong = async (_playlistURL: string): Promise<Song> => {
+/**
+ * Get a public song with a url
+ *
+ * @async
+ * @param {string} _songURL - url of a public song
+ * @returns {Promise<Song>} - Promise that resolves to a Song
+ */
+const getYouTubeSong = async (_songURL: string): Promise<Song> => {
   return {
     title: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
     channel: 'NFRecords sakanaction',
@@ -83,6 +113,12 @@ const getYouTubeSong = async (_playlistURL: string): Promise<Song> => {
   };
 };
 
+/**
+ * Get all local playlists
+ *
+ * @async
+ * @returns {Promise<Playlist[]>}
+ */
 const getAllPlaylists = async (): Promise<Playlist[]> => {
   return [
     {
@@ -144,6 +180,13 @@ const getAllPlaylists = async (): Promise<Playlist[]> => {
   ];
 };
 
+/**
+ * Get info of a playlist
+ *
+ * @async
+ * @param {string} playlistID - the unique ID of a local playlist
+ * @returns {Promise<Playlist>} - Promise that resolves to a Playlist
+ */
 const getPlaylistInfo = async (playlistID: string): Promise<Playlist> => {
   return {
     id: playlistID,
@@ -174,17 +217,40 @@ const getPlaylistInfo = async (playlistID: string): Promise<Playlist> => {
   };
 };
 
-const deletePlaylist = async (playlistID: string): Promise<string> => {
-  return `Playlist ${playlistID} was successfully delted`;
+/**
+ * Delete a local playlist
+ *
+ * @async
+ * @param {string} playlistID - id of a local playlist
+ * @returns {Promise<boolean>} - Promise that resolves to a boolean
+ */
+const deletePlaylist = async (playlistID: string): Promise<boolean> => {
+  return playlistID !== 'false';
 };
 
+/**
+ * Add a song to a local playlist
+ *
+ * @async
+ * @param {string} songID - id of a song
+ * @param {string} playlistID - id of a local playlist
+ * @returns {Promise<boolean>}
+ */
 const addSongToPlaylist = async (
   songID: string,
   playlistID: string
-): Promise<string> => {
-  return `Song ${songID} was successfully added to playlist ${playlistID}`;
+): Promise<boolean> => {
+  return songID !== 'false' || playlistID !== 'false';
 };
 
+/**
+ * Remove a song to a local playlist
+ *
+ * @async
+ * @param {string} songID - id of a song
+ * @param {string} playlistID - id of a local playlist
+ * @returns {Promise<string>} - success/failure message
+ */
 const removeSongFromPlaylist = async (
   songID: string,
   playlistID: string
@@ -192,18 +258,46 @@ const removeSongFromPlaylist = async (
   return `Song ${songID} was successfully removed from playlist ${playlistID}`;
 };
 
+/**
+ * Create a new local playlist
+ *
+ * @async
+ * @param {string} name - id of a song
+ * @returns {Promise<string>} - success/failure message
+ */
 const newPlaylist = async (name: string): Promise<string> => {
   return `Playlist ${name} created`;
 };
 
+/**
+ * Start downloading a song
+ *
+ * @async
+ * @param {string} ytID - id of a song
+ * @returns {Promise<string>} - success/failure message
+ */
 const startDownload = async (ytID: string): Promise<string> => {
   return `Download ${ytID} started`;
 };
 
+/**
+ * Delete a local song
+ *
+ * @async
+ * @param {string} ytID - id of a song
+ * @returns {Promise<string>} - success/failure message
+ */
 const deleteSong = async (ytID: string): Promise<string> => {
   return `${ytID} deleted`;
 };
 
+/**
+ * Get the path to a local song file
+ *
+ * @async
+ * @param {string} ytID - id of a song
+ * @returns {Promise<string>} - path string
+ */
 const getSongPath = async (ytID: string): Promise<string> => {
   return `C:/Users/User/Music/example_${ytID}.mp3`;
 };

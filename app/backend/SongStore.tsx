@@ -8,15 +8,11 @@ const readdir = util.promisify(fs.readdir);
 export default class SongStore {
   private static instance: SongStore;
 
-  private storageDirectory: string;
+  private storageDirectory?: string;
 
-  private constructor(storageDirectory: string) {
-    this.storageDirectory = storageDirectory;
-  }
-
-  static getInstance(storageDirectory: string): SongStore {
+  static getInstance(): SongStore {
     if (!SongStore.instance) {
-      SongStore.instance = new SongStore(storageDirectory);
+      SongStore.instance = new SongStore();
     }
     return SongStore.instance;
   }
@@ -29,21 +25,27 @@ export default class SongStore {
   }
 
   getWriteStream(nameOfFile: string): fs.WriteStream {
-    const filePath = path.join(this.storageDirectory, nameOfFile);
+    const filePath = path.join(this.getStorageDirectory(), nameOfFile);
     return fs.createWriteStream(filePath);
   }
 
+  /**
+   * @async
+   */
   async delete(nameOfFile: string): Promise<void> {
-    const filePath = path.join(this.storageDirectory, nameOfFile);
+    const filePath = path.join(this.getStorageDirectory(), nameOfFile);
     await unlink(filePath);
   }
 
   getStorageDirectory(): string {
+    if (this.storageDirectory === undefined) {
+      throw new Error('StorageDirectory is uninitialized');
+    }
     return this.storageDirectory;
   }
 
   async getAllSongs(): Promise<string[]> {
-    const songs = await readdir(this.storageDirectory);
+    const songs = await readdir(this.getStorageDirectory());
     return songs;
   }
 }
