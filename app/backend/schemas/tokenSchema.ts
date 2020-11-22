@@ -12,4 +12,4 @@ const tokenSchema = {
   additionalProperties: false,
 };
 
-module.exports = tokenSchema;
+export default tokenSchema;

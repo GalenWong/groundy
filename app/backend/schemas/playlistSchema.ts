@@ -9,4 +9,4 @@ const playlistSchema = {
   required: ['name', 'songs'],
 };
 
-module.exports = playlistSchema;
+export default playlistSchema;

@@ -2,6 +2,7 @@
 import * as os from 'os';
 import * as path from 'path';
 import Database from '../../app/backend/database';
+// import { Song, Playlist, Token } from '../types/index.d';
 
 function getRand() {
   return Math.floor(Math.random() * 10000);

@@ -2,7 +2,7 @@
 import * as os from 'os';
 import * as path from 'path';
 import Database from '../../app/backend/database';
-import { Song } from '../../app/types/index';
+// import { Song } from '../../app/types/index';
 
 jest.mock('fs');
 
@@ -24,7 +24,7 @@ describe('database', () => {
       channel: 'my_channel',
       fileName: 'my_filename',
       thumbnailUrl: 'my_thumbnailUrl',
-    } as Song;
+    };
     expect(database.validateSong(data)).toEqual(true);
   });
 

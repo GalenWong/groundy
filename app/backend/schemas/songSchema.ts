@@ -12,4 +12,4 @@ const songSchema = {
   required: ['ytid', 'title', 'channel', 'fileName'],
 };
 
-module.exports = songSchema;
+export default songSchema;

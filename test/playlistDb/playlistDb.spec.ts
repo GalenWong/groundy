@@ -1,7 +1,7 @@
 import * as os from 'os';
 import * as path from 'path';
 import Database from '../../app/backend/database';
-import { Playlist } from '../types/index.d';
+// import { Playlist } from '../types/index.d';
 
 jest.mock('fs');
 
@@ -21,7 +21,7 @@ describe('database', () => {
       id: 'my_id',
       name: 'my_name',
       songs: [],
-    } as Playlist;
+    };
     expect(database.validatePlaylist(data)).toEqual(true);
   });
 

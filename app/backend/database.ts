@@ -3,15 +3,21 @@
 import * as path from 'path';
 import songSchema from './schemas/songSchema';
 import playlistSchema from './schemas/playlistSchema';
-import { Song, Playlist } from '../types/index';
+// import { Song, Playlist, Token } from '../types/index';
 
 const Datastore = require('nedb-promises');
 const Ajv = require('ajv');
 
 export default class Database {
+  private static instance: Database;
+
   private directory: string;
 
-  private static instance: Database;
+  private songSchemaValidator: any;
+
+  private playlistSchemaValidator: any;
+
+  private db: Datastore;
 
   private constructor(directory: string) {
     const ajv = new Ajv({ allErrors: true, useDefaults: true });
@@ -49,11 +55,11 @@ export default class Database {
   /// ////////////////////////////////////////
   // SONG DATABASE API
   /// ////////////////////////////////////////
-  validateSong(data: Song): boolean {
+  validateSong(data: any): boolean {
     return this.songSchemaValidator(data);
   }
 
-  async createSong(data: Song): Promise<any> | null {
+  async createSong(data: any): Promise<any> | null {
     const isValid = this.validateSong(data);
     if (isValid) {
       data.key = 'song';
@@ -63,7 +69,7 @@ export default class Database {
     return null;
   }
 
-  async getOneSong(ytid: string): Promises<any> | null {
+  async getOneSong(ytid: string): Promise<any> | null {
     const s = await this.db.findOne({ key: 'song', ytid }).exec();
     return s === null ? null : s;
   }
@@ -72,7 +78,7 @@ export default class Database {
     await this.db.remove({ ytid });
   }
 
-  async updateSong(ytid: string, data): Promise<void> {
+  async updateSong(ytid: string, data: any): Promise<void> {
     const found = this.db.findOne({ key: 'song', ytid });
     if (found === null) return;
     await this.db.update({ ytid }, { $set: data });
@@ -87,11 +93,11 @@ export default class Database {
   // PLAYLIST DATABASE API
   /// ////////////////////////////////////////
 
-  validatePlaylist(data: Playlist): boolean {
+  validatePlaylist(data: any): boolean {
     return this.playlistSchemaValidator(data);
   }
 
-  async createPlaylist(data: Playlist): Promise<any> {
+  async createPlaylist(data: any): Promise<any> {
     const isValid = this.validatePlaylist(data);
     if (isValid) {
       // assume ytid for each song is valid
@@ -115,7 +121,7 @@ export default class Database {
     await this.db.remove({ key: 'playlist', id });
   }
 
-  async updatePlaylist(id: string, data): Promise<void> {
+  async updatePlaylist(id: string, data: any): Promise<void> {
     await this.db.update({ key: 'playlist', id }, { $set: data });
   }
 
@@ -127,7 +133,7 @@ export default class Database {
   /// ////////////////////////////////////////
   // TOKEN DATABASE API
   /// ////////////////////////////////////////
-  async createToken(data): Promise<any> {
+  async createToken(data: any): Promise<any> {
     data.key = 'token';
     const t = await this.db.insert(data);
     return t;
@@ -138,7 +144,7 @@ export default class Database {
     return t;
   }
 
-  async updateToken(id_token: string, data): Promise<void> {
+  async updateToken(id_token: string, data: any): Promise<void> {
     await this.db.update({ key: 'token', id_token }, { $set: data });
   }
 }
