@@ -4,6 +4,7 @@ export interface Song {
   ytID: string;
   downloaded: boolean;
   fileName?: string;
+  thumbnailUrl?: string;
 }
 
 export interface Playlist {
@@ -15,4 +16,13 @@ export interface Playlist {
 export interface DownloadedSong extends Song {
   downloaded: true;
   filePath: string;
+}
+
+export interface Token {
+  refresh_token?: string;
+  expiry_date?: string;
+  access_token?: string;
+  token_type?: string;
+  id_token: string;
+  scope?: string;
 }

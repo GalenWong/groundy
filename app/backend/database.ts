@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle */
+
 import * as path from 'path';
 import songSchema from './schemas/songSchema';
 import playlistSchema from './schemas/playlistSchema';
+import { Song, Playlist } from '../types/index';
 
 const Datastore = require('nedb-promises');
 const Ajv = require('ajv');
@@ -47,33 +49,36 @@ export default class Database {
   /// ////////////////////////////////////////
   // SONG DATABASE API
   /// ////////////////////////////////////////
-  validateSong(data): boolean {
+  validateSong(data: Song): boolean {
     return this.songSchemaValidator(data);
   }
 
-  async createSong(data): Promise<> {
+  async createSong(data: Song): Promise<any> | null {
     const isValid = this.validateSong(data);
     if (isValid) {
+      data.key = 'song';
       const s = await this.db.insert(data);
       return s;
     }
     return null;
   }
 
-  async getOneSong(ytid: string): Promises<> {
+  async getOneSong(ytid: string): Promises<any> | null {
     const s = await this.db.findOne({ key: 'song', ytid }).exec();
-    return s;
+    return s === null ? null : s;
   }
 
-  async deleteSong(_id: string): void {
-    await this.db.remove({ _id });
+  async deleteSong(ytid: string): Promise<void> {
+    await this.db.remove({ ytid });
   }
 
-  async updateSong(_id: string, data): void {
-    await this.db.update({ _id }, { $set: data });
+  async updateSong(ytid: string, data): Promise<void> {
+    const found = this.db.findOne({ key: 'song', ytid });
+    if (found === null) return;
+    await this.db.update({ ytid }, { $set: data });
   }
 
-  async getAllSongs(): Promise<> {
+  async getAllSongs(): Promise<any> {
     const songs = await this.db.find({ key: 'song' });
     return songs;
   }
@@ -82,33 +87,39 @@ export default class Database {
   // PLAYLIST DATABASE API
   /// ////////////////////////////////////////
 
-  validatePlaylist(data): boolean {
+  validatePlaylist(data: Playlist): boolean {
     return this.playlistSchemaValidator(data);
   }
 
-  async createPlaylist(data): Promise<> {
+  async createPlaylist(data: Playlist): Promise<any> {
     const isValid = this.validatePlaylist(data);
     if (isValid) {
-      const p = await this.db.insert(data);
+      // assume ytid for each song is valid
+      // call findOneSong() before adding to songs[]
+
+      data.key = 'playlist';
+      let p = await this.db.insert(data);
+      await this.db.update({ _id: p._id }, { $set: { id: p._id } });
+      p = await this.db.findOne({ _id: p._id });
       return p;
     }
     return null;
   }
 
-  async getOnePlaylist(id: string): Promise<> {
+  async getOnePlaylist(id: string): Promise<any> {
     const p = await this.db.findOne({ key: 'playlist', id }).exec();
     return p;
   }
 
-  async deletePlaylist(_id: string): void {
-    await this.db.remove({ _id });
+  async deletePlaylist(id: string): Promise<void> {
+    await this.db.remove({ key: 'playlist', id });
   }
 
-  async updatePlaylist(_id: string, data): void {
-    await this.db.update({ _id }, { $set: data });
+  async updatePlaylist(id: string, data): Promise<void> {
+    await this.db.update({ key: 'playlist', id }, { $set: data });
   }
 
-  async getAllPlaylists(): Promise<> {
+  async getAllPlaylists(): Promise<any> {
     const playlists = await this.db.find({ key: 'playlist' });
     return playlists;
   }
@@ -116,26 +127,18 @@ export default class Database {
   /// ////////////////////////////////////////
   // TOKEN DATABASE API
   /// ////////////////////////////////////////
-  async createToken(data): Promise<> {
+  async createToken(data): Promise<any> {
+    data.key = 'token';
     const t = await this.db.insert(data);
     return t;
   }
 
-  async getOneToken(id_token: string): Promise<> {
+  async getToken(id_token: string): Promise<any> {
     const t = await this.db.findOne({ key: 'token', id_token }).exec();
     return t;
   }
 
-  async deleteToken(_id: string): void {
-    await this.db.remove({ _id });
-  }
-
-  async updateToken(_id: string, data): void {
-    await this.db.update({ _id }, { $set: data });
-  }
-
-  async getAllTokens(): Promise<> {
-    const tokens = await this.db.find({ key: 'token' });
-    return tokens;
+  async updateToken(id_token: string, data): Promise<void> {
+    await this.db.update({ key: 'token', id_token }, { $set: data });
   }
 }

@@ -1,7 +1,6 @@
 const tokenSchema = {
   type: 'object',
   properties: {
-    key: { type: 'string', default: 'token' },
     refresh_token: { type: 'string' },
     expiry_date: { type: 'string' },
     access_token: { type: 'string' },
@@ -9,6 +8,7 @@ const tokenSchema = {
     id_token: { type: 'string' },
     scope: { type: 'string' },
   },
+  required: ['id_token'],
   additionalProperties: false,
 };
 

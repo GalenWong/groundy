@@ -13,7 +13,6 @@ describe('database', () => {
     const database = Database.getInstance(tempDir);
 
     const data = {
-      key: 'token',
       id_token: `my_id_token_${getRand()}`,
       scope: 'my_scope',
       refresh_token: 'my_refresh_token',
@@ -36,7 +35,6 @@ describe('database', () => {
     const database = Database.getInstance(tempDir);
 
     const data = {
-      key: 'token',
       id_token: `my_id_token_${getRand()}`,
       scope: 'my_scope',
       refresh_token: 'my_refresh_token',
@@ -46,7 +44,7 @@ describe('database', () => {
     };
 
     const t = await database.createToken(data);
-    let result = await database.getOneToken(data.ytid);
+    let result = await database.getToken(data.id_token);
     expect(t.key).toEqual('token');
     expect(t.id_token).toEqual(data.id_token);
     expect(t.scope).toEqual('my_scope');
@@ -55,30 +53,8 @@ describe('database', () => {
     expect(t.access_token).toEqual('my_access_token');
     expect(t.token_type).toEqual('my_token_type');
 
-    database.updateToken(t._id, { scope: 'hello world' });
-    result = await database.getOneToken(data.id_token);
+    database.updateToken(t.id_token, { scope: 'hello world' });
+    result = await database.getToken(data.id_token);
     expect(result.scope).toEqual('hello world');
-  });
-
-  it('getAllTokens', async () => {
-    const database = Database.getInstance(tempDir);
-
-    const data = {
-      key: 'token',
-      id_token: `my_id_token_${getRand()}`,
-      scope: 'my_scope',
-      refresh_token: 'my_refresh_token',
-      expiry_date: 'my_expiry_date',
-      access_token: 'my_access_token',
-      token_type: 'my_token_type',
-    };
-
-    const t = await database.createToken(data);
-    let result = await database.getAllTokens();
-    expect(result).toContainEqual(expect.objectContaining(t));
-
-    database.deleteToken(t._id);
-    result = await database.getAllTokens();
-    expect(result).not.toContainEqual(expect.objectContaining(t));
   });
 });

@@ -1,6 +1,7 @@
 import * as os from 'os';
 import * as path from 'path';
 import Database from '../../app/backend/database';
+import { Playlist } from '../types/index.d';
 
 jest.mock('fs');
 
@@ -12,20 +13,19 @@ describe('database', () => {
     expect(database.getDirectory()).toEqual(filePath);
   });
 
-  it('validatePlaylist', () => {
+  it('validatePlaylistTrue', () => {
     const tempDir = os.tmpdir();
     const database = Database.getInstance(tempDir);
 
     const data = {
-      key: 'playlist',
       id: 'my_id',
       name: 'my_name',
       songs: [],
-    };
+    } as Playlist;
     expect(database.validatePlaylist(data)).toEqual(true);
   });
 
-  it('validateSong', () => {
+  it('validatePlaylistFalse', () => {
     const tempDir = os.tmpdir();
     const database = Database.getInstance(tempDir);
     expect(database.validatePlaylist({ id: 1 })).toEqual(false);

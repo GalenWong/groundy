@@ -1,8 +1,7 @@
 const songSchema = {
   type: 'object',
   properties: {
-    key: { type: 'string', default: 'song' },
-    ytid: { type: 'string' },
+    ytid: { type: 'string', unique: true },
     title: { type: 'string' },
     channel: { type: 'string' },
     fileName: { type: 'string' },
@@ -10,7 +9,7 @@ const songSchema = {
     downloaded: { type: 'boolean', default: false },
   },
   additionalProperties: false,
-  required: ['ytid', 'title', 'channel', 'fileName', 'thumbnailUrl'],
+  required: ['ytid', 'title', 'channel', 'fileName'],
 };
 
 module.exports = songSchema;
