@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import Playlist from './Playlist';
-import { DownloadedSong, Song, Progress } from '../types';
-import { getAllDownloads } from '../utils';
-import { isDownloaded } from './SongCard';
-import { playerQueueContext } from '../containers/PlayerWrapper/index';
+import Playlist from '../Playlist';
+import { DownloadedSong, Song, Progress } from '../../types';
+import { getAllDownloads } from '../../utils';
+import { isDownloaded } from '../SongCard';
+import { playerQueueContext } from '../../containers/PlayerWrapper/index';
 
 const useStyles = makeStyles({
   topbar: {
