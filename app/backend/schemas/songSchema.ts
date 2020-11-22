@@ -1,6 +1,7 @@
 const songSchema = {
   type: 'object',
   properties: {
+    key: { type: 'string', default: 'song' },
     ytid: { type: 'string' },
     title: { type: 'string' },
     channel: { type: 'string' },

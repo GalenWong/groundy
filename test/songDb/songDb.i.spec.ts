@@ -1,65 +1,79 @@
+/* eslint-disable no-underscore-dangle */
 import * as os from 'os';
 import * as path from 'path';
-import SongDB from '../../app/backend/SongDB';
+import Database from '../../app/backend/database';
 
-describe('songDb', () => {
+function getRand() {
+  return Math.floor(Math.random() * 10000);
+}
+
+describe('database', () => {
+  const tempDir = path.join(os.tmpdir(), getRand().toString());
   it('createSong', async () => {
-    const tempDir = os.tmpdir();
-    const songDb = SongDB.getInstance(tempDir);
+    const database = Database.getInstance(tempDir);
 
     const data = {
-      ytid: 'my_ytid_1',
-      title: 'my_title_1',
-      channel: 'my_channel_1',
-      fileName: 'my_filename_1',
-      thumbnailUrl: 'my_thumbnailUrl_1',
+      key: 'song',
+      ytid: `my_ytid_${getRand()}`,
+      title: 'my_title',
+      channel: 'my_channel',
+      fileName: 'my_filename',
+      thumbnailUrl: 'my_thumbnailUrl',
     };
 
-    const s = await songDb.createSong(data);
-    expect(s.ytid).toEqual('my_ytid_1');
-    expect(s.title).toEqual('my_title_1');
-    expect(s.channel).toEqual('my_channel_1');
-    expect(s.fileName).toEqual('my_filename_1');
-    expect(s.thumbnailUrl).toEqual('my_thumbnailUrl_1');
+    const s = await database.createSong(data);
+    expect(s.key).toEqual('song');
+    expect(s.ytid).toEqual(data.ytid);
+    expect(s.title).toEqual('my_title');
+    expect(s.channel).toEqual('my_channel');
+    expect(s.fileName).toEqual('my_filename');
+    expect(s.thumbnailUrl).toEqual('my_thumbnailUrl');
   });
 
   it('getOneSong', async () => {
-    const tempDir = os.tmpdir();
-    const songDb = SongDB.getInstance(tempDir);
+    const database = Database.getInstance(tempDir);
 
     const data = {
-      ytid: 'my_ytid_2',
-      title: 'my_title_2',
-      channel: 'my_channel_2',
-      fileName: 'my_filename_2',
-      thumbnailUrl: 'my_thumbnailUrl_2',
+      key: 'song',
+      ytid: `my_ytid_${getRand()}`,
+      title: 'my_title',
+      channel: 'my_channel',
+      fileName: 'my_filename',
+      thumbnailUrl: 'my_thumbnailUrl',
     };
 
-    const s = await songDb.createSong(data);
-    const result = await songDb.getOneSong('my_ytid_2');
-    expect(result.ytid).toEqual('my_ytid_2');
-    expect(result.title).toEqual('my_title_2');
-    expect(result.channel).toEqual('my_channel_2');
-    expect(result.fileName).toEqual('my_filename_2');
-    expect(result.thumbnailUrl).toEqual('my_thumbnailUrl_2');
+    const s = await database.createSong(data);
+    let result = await database.getOneSong(data.ytid);
+    expect(s.key).toEqual('song');
+    expect(result.ytid).toEqual(data.ytid);
+    expect(result.title).toEqual('my_title');
+    expect(result.channel).toEqual('my_channel');
+    expect(result.fileName).toEqual('my_filename');
+    expect(result.thumbnailUrl).toEqual('my_thumbnailUrl');
+
+    database.updateSong(s._id, { title: 'hello world' });
+    result = await database.getOneSong(data.ytid);
+    expect(result.title).toEqual('hello world');
   });
 
-  // it('getAllSongs', async () => {
-  //   const tempDir = os.tmpdir();
-  //   const songDb = SongDB.getInstance(tempDir);
+  it('getAllSongs', async () => {
+    const database = Database.getInstance(tempDir);
 
-  //   const data = {
-  //     ytid: 'my_ytid_3',
-  //     title: 'my_title_3',
-  //     channel: 'my_channel_3',
-  //     fileName: 'my_filename_3',
-  //     thumbnailUrl: 'my_thumbnailUrl_3'
-  //   };
+    const data = {
+      key: 'song',
+      ytid: `my_ytid_${getRand()}`,
+      title: 'my_title',
+      channel: 'my_channel',
+      fileName: 'my_filename',
+      thumbnailUrl: 'my_thumbnailUrl',
+    };
 
-  //   const s = await songDb.createSong(data);
-  //   let result = await songDb.getAllSongs();
-  //   console.log(typeof(result))
-  //   //result = result.toArray();
-  //   //expect(result).toEqual(expect.arrayContaining(s));
-  // });
+    const s = await database.createSong(data);
+    let result = await database.getAllSongs();
+    expect(result).toContainEqual(expect.objectContaining(s));
+
+    database.deleteSong(s._id);
+    result = await database.getAllSongs();
+    expect(result).not.toContainEqual(expect.objectContaining(s));
+  });
 });
