@@ -2,27 +2,27 @@ import * as React from 'react';
 import { List } from '@material-ui/core';
 import SongCard from './SongCard';
 
-import { Song, Progress, ActionVariant } from '../types';
+import { DownloadedSong, Song, Progress } from '../types';
 
 interface PlaylistProps {
-  songs: Song[];
+  songs: (DownloadedSong | Song)[];
   downloads: Record<string, Progress>;
-  window: ActionVariant;
 }
 
 const Playlist = (props: PlaylistProps) => {
-  const { songs, downloads, window } = props;
+  const { songs, downloads } = props;
 
   return (
     <List>
-      {songs.map((song: Song) => (
-        <SongCard
-          key={song.ytID}
-          song={song}
-          variant={window}
-          progress={downloads[song.ytID]}
-        />
-      ))}
+      {songs.map((song: Song | DownloadedSong) => {
+        return (
+          <SongCard
+            key={song.ytID}
+            song={song}
+            progress={downloads[song.ytID]}
+          />
+        );
+      })}
     </List>
   );
 };

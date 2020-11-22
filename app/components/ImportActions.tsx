@@ -9,6 +9,7 @@ import {
 import LinearProgress from '@material-ui/core/LinearProgress';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { Progress } from '../types';
+import { startDownload } from '../utils/index';
 
 const useStyles = makeStyles({
   fixWidth: {
@@ -33,16 +34,17 @@ const useStyles = makeStyles({
 interface ImportActionsProps {
   downloaded: boolean;
   progress?: Progress;
+  ytid: string;
 }
 
 const ImportActions = (props: ImportActionsProps) => {
   const classes = useStyles();
-  const { downloaded, progress } = props;
+  const { downloaded, progress, ytid } = props;
 
   let component;
-  if (typeof progress === 'undefined') {
+  if (progress === undefined) {
     component = (
-      <Button key={2} disabled={downloaded}>
+      <Button key={2} disabled={downloaded} onClick={() => startDownload(ytid)}>
         <GetAppIcon />
         <Typography>Cache</Typography>
       </Button>
