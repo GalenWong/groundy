@@ -51,3 +51,6 @@ npm-debug.log.*
 
 # Generated Docs
 typedoc/
+
+# Secret for authen
+app/backend/authentication/secrets.json
