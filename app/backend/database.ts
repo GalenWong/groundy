@@ -17,7 +17,7 @@ export default class Database {
 
   private playlistSchemaValidator: any;
 
-  private db: Datastore;
+  private db: any;
 
   private constructor(directory: string) {
     const ajv = new Ajv({ allErrors: true, useDefaults: true });
@@ -59,7 +59,7 @@ export default class Database {
     return this.songSchemaValidator(data);
   }
 
-  async createSong(data: any): Promise<any> | null {
+  async createSong(data: any): Promise<any> {
     const isValid = this.validateSong(data);
     if (isValid) {
       data.key = 'song';
@@ -69,7 +69,7 @@ export default class Database {
     return null;
   }
 
-  async getOneSong(ytid: string): Promise<any> | null {
+  async getOneSong(ytid: string): Promise<any> {
     const s = await this.db.findOne({ key: 'song', ytid }).exec();
     return s === null ? null : s;
   }
