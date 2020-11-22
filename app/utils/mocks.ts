@@ -225,6 +225,7 @@ const getPlaylistInfo = async (playlistID: string): Promise<Playlist> => {
  * @returns {Promise<boolean>} - Promise that resolves to a boolean
  */
 const deletePlaylist = async (playlistID: string): Promise<boolean> => {
+  console.log(`playlist ${playlistID} is deleted!`);
   return playlistID !== 'false';
 };
 
@@ -266,6 +267,7 @@ const removeSongFromPlaylist = async (
  * @returns {Promise<string>} - success/failure message
  */
 const newPlaylist = async (name: string): Promise<string> => {
+  console.log(`Playlist ${name} created`);
   return `Playlist ${name} created`;
 };
 

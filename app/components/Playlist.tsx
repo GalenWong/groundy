@@ -4,7 +4,7 @@ import SongCard from './SongCard';
 
 import { Song, Progress, ActionVariant } from '../types';
 
-interface PlaylistProps {
+export interface PlaylistProps {
   songs: Song[];
   downloads: Record<string, Progress>;
   window: ActionVariant;
