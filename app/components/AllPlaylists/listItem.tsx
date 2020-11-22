@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, IconButton, CardContent, Grid } from '@material-ui/core';
+import { Card, CardContent, Grid } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
 import routesJSON from '../../constants/routes.json';
 import { Playlist } from '../../types';
 import Delete from './delete';
