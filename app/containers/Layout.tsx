@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { spacing } from '@material-ui/system';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';

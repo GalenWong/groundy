@@ -1,26 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  CircularProgress,
-  Card,
-  IconButton,
-  Typography,
-  CardContent,
-  Grid,
-} from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
+// import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+// import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { getAllPlaylists } from '../../utils';
 import { Playlist } from '../../types';
-import routesJSON from '../../constants/routes.json';
 import ListItem from './listItem';
 import Add from './add';
-
-interface RoutesObject {
-  [index: string]: string;
-}
-const routes: RoutesObject = routesJSON;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
