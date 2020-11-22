@@ -3,10 +3,12 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
+import { SnackbarProvider } from 'notistack';
 import { Store } from '../store';
 import Routes from '../Routes';
 import PlayerWrapper from './PlayerWrapper';
 import Layout from './Layout';
+import ErrorSnackBarWrapper from './ErrorSnackbarWrapper';
 
 type Props = {
   store: Store;
@@ -16,11 +18,15 @@ type Props = {
 const Root = ({ store, history }: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Layout>
-        <PlayerWrapper>
-          <Routes />
-        </PlayerWrapper>
-      </Layout>
+      <SnackbarProvider maxSnack={1}>
+        <ErrorSnackBarWrapper>
+          <Layout>
+            <PlayerWrapper>
+              <Routes />
+            </PlayerWrapper>
+          </Layout>
+        </ErrorSnackBarWrapper>
+      </SnackbarProvider>
     </ConnectedRouter>
   </Provider>
 );
