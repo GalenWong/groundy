@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
-import { Song, Progress, ActionVariant } from '../types';
+import { Song, DownloadedSong, Progress } from '../types';
 
 const useStyles = makeStyles({
   card: {
@@ -27,16 +27,24 @@ const useStyles = makeStyles({
 });
 
 interface SongCardProps {
-  song: Song;
-  variant: ActionVariant;
+  song: Song | DownloadedSong;
   progress?: Progress;
+}
+
+export function isDownloaded(
+  thing: Song | DownloadedSong
+): thing is DownloadedSong {
+  if ((thing as DownloadedSong).filePath) {
+    return true;
+  }
+  return false;
 }
 
 const SongCard = (props: SongCardProps) => {
   const classes = useStyles();
 
-  const { song, variant, progress } = props;
-  const { title, channel, downloaded } = song;
+  const { song, progress } = props;
+  const { title, channel, downloaded, ytID } = song;
 
   return (
     <Card variant="outlined" className={classes.card}>
@@ -50,9 +58,13 @@ const SongCard = (props: SongCardProps) => {
           </Box>
         </CardContent>
       </CardActionArea>
-      {variant === 'playlist' && <PlaylistActions song={song} />}
-      {variant === 'import' && (
-        <ImportActions downloaded={downloaded} progress={progress} />
+      {isDownloaded(song) && <PlaylistActions song={song} />}
+      {!isDownloaded(song) && (
+        <ImportActions
+          downloaded={downloaded}
+          progress={progress}
+          ytid={ytID}
+        />
       )}
     </Card>
   );

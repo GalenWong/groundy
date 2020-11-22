@@ -1,4 +1,4 @@
-import { Playlist, Song } from '../types';
+import { Playlist, DownloadedSong, Song } from '../types';
 
 /**
  * Check Google Account Login Status
@@ -16,7 +16,7 @@ const isUserLoggedIn = async (): Promise<boolean> => {
  * @async
  * @returns {Promise<Song[]>}
  */
-const getAllDownloads = async (): Promise<Song[]> => {
+const getAllDownloads = async (): Promise<(Song | DownloadedSong)[]> => {
   return [
     {
       title: 'Fkj & Masego - Tadow',
@@ -33,6 +33,27 @@ const getAllDownloads = async (): Promise<Song[]> => {
       fileName:
         'Official髭男dism - Pretender［Official Video］-TQ8WlA2GXbk.mp3',
     },
+    {
+      title:
+        'The Reason I Wanted To Die 僕が死のうと思ったのは【Cover: Nakashima Mika】【Lyrics: amazarashi】',
+      channel: '李健宏',
+      ytID: '0HTAKT-JIaA',
+      downloaded: true,
+      fileName: '單曲推薦僕が死のうと思ったのは薇爾莉特.mp3',
+      filePath:
+        'D:/Users/Tony/Downloads/單曲推薦僕が死のうと思ったのは薇爾莉特.mp3',
+    },
+    {
+      title:
+        'Niccolò Paganini - Caprice for Solo Violin, Op. 1 No. 4 (Sheet Music)',
+      channel: 'TheExarion',
+      ytID: 'lZgWBwsO2EM',
+      downloaded: true,
+      fileName:
+        'Niccolò Paganini - Caprice for Solo Violin, Op. 1 No. 4 (Sheet Music).mp3',
+      filePath:
+        'D:/Users/Tony/Downloads/Niccolò Paganini - Caprice for Solo Violin, Op. 1 No. 4 (Sheet Music).mp3',
+    },
   ];
 };
 
@@ -42,7 +63,7 @@ const getAllDownloads = async (): Promise<Song[]> => {
  * @async
  * @returns {Promise<Song[]>}
  */
-const getAllRecommendation = async (): Promise<Song[]> => {
+const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
   return [
     {
       title: 'Fkj & Masego - Tadow',
@@ -104,7 +125,9 @@ const getYouTubePlaylist = async (_playlistURL: string): Promise<Playlist> => {
  * @param {string} _songURL - url of a public song
  * @returns {Promise<Song>} - Promise that resolves to a Song
  */
-const getYouTubeSong = async (_songURL: string): Promise<Song> => {
+const getYouTubeSong = async (
+  _songURL: string
+): Promise<Song | DownloadedSong> => {
   return {
     title: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
     channel: 'NFRecords sakanaction',

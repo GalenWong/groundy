@@ -16,7 +16,7 @@ export interface Song {
 export interface Playlist {
   id: string;
   name: string;
-  songs: Song[];
+  songs: (DownloadedSong | Song)[];
 }
 
 /**
