@@ -18,7 +18,10 @@ type Props = {
 const Root = ({ store, history }: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <SnackbarProvider maxSnack={1}>
+      <SnackbarProvider
+        maxSnack={1}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
         <ErrorSnackBarWrapper>
           <Layout>
             <PlayerWrapper>
