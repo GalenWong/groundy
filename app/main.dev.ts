@@ -16,6 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import registerEndpoints from './backend/ipc';
+import { setMainWindow } from './backend/ipc-renderer';
 
 export default class AppUpdater {
   constructor() {
@@ -103,6 +104,9 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  // load the store mainwindow to ipc-renderer
+  setMainWindow(mainWindow);
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
