@@ -1,69 +1,185 @@
+class Song{
+    constructor(title, channel, ytID, downloaded = false, fileName = null) {
+        this.title = title
+        this.channel = channel
+        this.ytID = ytID
+        this.downloaded = downloaded
+        this.fileName = fileName
+    }
+}
+
+class Playlist{
+    constructor(id, name, songs = []) {
+        this.id = id
+        this.name = name
+        this.songs = songs
+    }
+}
+
 class PalylistService {
-    constructor(tokens) {
-        this.accessToken = tokens.access_token;
-        this.refreshToken = tokens.refresh_token; 
-        this.scope = tokens.scope;
-        this.tokenType = tokens.token_type;
-        this.expiryDate = tokens.expiry_date;
+    constructor(apiKey) {
+        this.apiKey = apiKey
+        this.accessToken = null
+        this.refreshToken = null
+        this.scope = null
+        this.tokenType = null
+        this.expiry_date = null
+        this.tokenExist = false
     }
-    unwrapPlaylist(respJSON) {
-        // TODO: modification needed, have to know class Song
+    setTokens(tokens) {
+        this.accessToken = tokens.access_token
+        this.refreshToken = tokens.refresh_token
+        this.scope = tokens.scope
+        this.tokenType = tokens.token_type
+        this.expiryDate = tokens.expiry_date
+        this.tokenExist = true
+    }
+    async unwrapIntoPlaylist(respJSON, isRelated = false, relatedTo = '') {
         var item;
+        var songs = []
         for (item of respJSON.items) {
-            console.log(item.snippet.title)
-            console.log(item.snippet.resourceId.videoId)
+            console.log(item)
+            try {
+                var videoId = item.snippet.resourceId.videoId
+            }
+            catch (err) {
+                videoId = item.id.videoId
+            }
+            finally {
+                const song = new Song(
+                    item.snippet.title,
+                    item.snippet.channelId,
+                    videoId,
+                )
+                songs.push(song)
+            }
         }
-        return item
-    }
-    getRelated(song) {
-        const url = new URL('GET https://www.googleapis.com/youtube/v3/search')
+        if (isRelated == true) {
+            return new Playlist(
+                null,
+                `Related songs to ${relatedTo}`,
+                songs
+            )
+        }
+        // get playlist name
+        const url = new URL('https://www.googleapis.com/youtube/v3/playlists')
         url.searchParams.set('part', 'snippet')
-        url.searchParams.set('type', 'video')
-        // FIXME: This needs modification, song should be an object
-        url.searchParams.set('relatedToVideoId', song)
-        return fetch(url.toString(), {
-            headers: {
-                Authorization: `${this.tokenType} ${this.accessToken}`,
-            },
-        })
-        //console.log(rawResults)
-        //const results = await rawResults.json()
-        //console.log(results)
+        url.searchParams.set('id', item.snippet.playlistId)
+        url.searchParams.set('key', this.apiKey)
+        const response = await fetch(url.toString()).then(resp => resp.json())
+
+        try {
+            var playlistName = response.items[0].snippet.title
+        } catch (err) {
+            console.log(err)
+            //playlistName = 'Unknown Playlist'
+        }
+        finally {
+            playlistName = item.snippet.playlistId == 'RDMM' ? 'My Mix' : playlistName
+            var list = new Playlist(
+                item.snippet.playlistId,
+                playlistName,
+                songs
+            )
+        }
+        return list
     }
-    getSong(song) {
-        const results = this.search(song)
-        return results
-    }
-    getRecommend(maxResults) {
+
+    async getRecommend(maxResults = 10) {
+        if (!this.tokenExist) {
+            console.log('This function requires user login.')
+            return null
+        }
         const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
         url.searchParams.set('part', 'snippet')
         url.searchParams.set('playlistId', 'RDMM')
         url.searchParams.set('maxResults', maxResults.toString())
-        return fetch(url.toString(), {
+        const response = await fetch(url.toString(), {
             headers: {
                 Authorization: `${this.tokenType} ${this.accessToken}`,
             },
         }).then(resp => resp.json())
+        return this.unwrapIntoPlaylist(response)
     }
-    getPlaylist(id) {
+    
+    async getPlaylist(playlistId, maxResults = 10) {
         const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
         url.searchParams.set('part', 'snippet')
-        url.searchParams.set('playlistId', id)
-        return fetch(url.toString(), {
-            headers: {
-                Authorization: `${this.tokenType} ${this.accessToken}`,
-            },
-        })
+        url.searchParams.set('playlistId', playlistId)
+        url.searchParams.set('maxResults', maxResults.toString())
+        var respJson = null
+        if (this.tokenExist) {
+            respJson = await fetch(url.toString(), {
+                headers: {
+                    Authorization: `${this.tokenType} ${this.accessToken}`,
+                },
+            }).then(resp => resp.json())
+        }
+        else {
+            url.searchParams.set('key', this.apiKey)
+            respJson = await fetch(url.toString()).then(resp => resp.json())
+        }
+        return this.unwrapIntoPlaylist(respJson)
     }
+
+    async getRelated(songId) {
+        const url = new URL('https://www.googleapis.com/youtube/v3/search')
+        url.searchParams.set('part', 'snippet')
+        url.searchParams.set('relatedToVideoId', songId)
+        url.searchParams.set('type', 'video')
+        var respJson = null
+        if (this.tokenExist) {
+            respJson = await fetch(url.toString(), {
+                headers: {
+                    Authorization: `${this.tokenType} ${this.accessToken}`,
+                },
+            }).then(resp => resp.json())
+        }
+        else {
+            url.searchParams.set('key', this.apiKey)
+            respJson = await fetch(url.toString()).then(resp => resp.json())
+        }
+        //this.unwrapPlaylist(respJson)
+        return this.unwrapIntoPlaylist(respJson, true, songId)
+    }
+
     search(query) {
         const url = new URL('https://www.googleapis.com/youtube/v3/search');
         url.searchParams.set('part', 'snippet');
+        url.searchParams.set('maxResults', '1');
         url.searchParams.set('q', query);
-        return fetch(url.toString(), {
-            headers: {
-                Authorization: `${this.tokenType} ${this.accessToken}`,
-            },
-        })
+        if (this.tokenExist) {
+            return fetch(url.toString(), {
+                headers: {
+                    Authorization: `${this.tokenType} ${this.accessToken}`,
+                },
+            }).then(resp => resp.json())
+        }
+        else {
+            url.searchParams.set('key', this.apiKey)
+            return fetch(url.toString()).then(resp => resp.json())
+        }
+    }
+
+    async getSongByName(songName) {
+        const result = await this.search(songName)
+        console.log(result)
+        try {
+            var item = result.items[0]
+            var song = new Song(
+                item.snippet.title,
+                item.snippet.channelId,
+                item.id.videoId,
+            )
+        }
+        catch (err) {
+            song = null
+        }
+        return song
+    }
+
+    async getSongById(songId) {
+        return null
     }
 }
 
