@@ -48,3 +48,9 @@ npm-debug.log.*
 *.css.d.ts
 *.sass.d.ts
 *.scss.d.ts
+
+# Generated Docs
+typedoc/
+
+# Secret for authen
+app/backend/authentication/secrets.json

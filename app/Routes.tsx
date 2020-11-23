@@ -9,6 +9,8 @@ import RecommendedPage from './containers/RecommendedPage';
 import FindRelatedPage from './containers/FindRelatedPage';
 import AllPlaylistsPage from './containers/AllPlaylistsPage';
 import SettingPage from './containers/SettingPage';
+import ShowPlaylistPage from './components/ShowPlaylist';
+import Layout from './containers/Layout';
 
 interface RoutesObject {
   [index: string]: string;
@@ -18,18 +20,20 @@ const routes: RoutesObject = routesJSON;
 export default function Routes() {
   return (
     <App>
-      <br />
-      <br />
-      <br />
-      <br />
-      <Switch>
-        <Route path={routes['All Playlists']} component={AllPlaylistsPage} />
-        <Route path={routes['Find Related']} component={FindRelatedPage} />
-        <Route path={routes.Recommended} component={RecommendedPage} />
-        <Route path={routes.Downloaded} component={DownloadedPage} />
-        <Route path={routes.Setting} component={SettingPage} />
-        <Route path={routes.Home} component={HomePage} />
-      </Switch>
+      <Layout>
+        <Switch>
+          <Route
+            path={`${routes['Show Playlist']}/:id`}
+            component={ShowPlaylistPage}
+          />
+          <Route path={routes['All Playlists']} component={AllPlaylistsPage} />
+          <Route path={routes['Find Related']} component={FindRelatedPage} />
+          <Route path={routes.Recommended} component={RecommendedPage} />
+          <Route path={routes.Downloaded} component={DownloadedPage} />
+          <Route path={routes.Setting} component={SettingPage} />
+          <Route path={routes.Home} component={HomePage} />
+        </Switch>
+      </Layout>
     </App>
   );
 }
