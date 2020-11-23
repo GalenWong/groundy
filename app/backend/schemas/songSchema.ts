@@ -1,3 +1,13 @@
+export interface DbSong {
+  ytid: string;
+  title: string;
+  channel: string;
+  fileName?: string;
+  downloaded: boolean;
+  thumbnailUrl?: string;
+  key: string;
+}
+
 const songSchema = {
   type: 'object',
   properties: {
@@ -7,9 +17,10 @@ const songSchema = {
     fileName: { type: 'string' },
     thumbnailUrl: { type: 'string' },
     downloaded: { type: 'boolean', default: false },
+    key: { value: 'song' },
   },
   additionalProperties: false,
-  required: ['ytid', 'title', 'channel', 'fileName'],
+  required: ['ytid', 'title', 'channel'],
 };
 
 export default songSchema;

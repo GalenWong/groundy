@@ -1,23 +1,22 @@
 /* eslint-disable no-underscore-dangle */
 
+import Datastore from 'nedb-promises';
+import Ajv from 'ajv';
 import * as path from 'path';
-import songSchema from './schemas/songSchema';
+import songSchema, { DbSong } from './schemas/songSchema';
 import playlistSchema from './schemas/playlistSchema';
-// import { Song, Playlist, Token } from '../types/index';
-
-const Datastore = require('nedb-promises');
-const Ajv = require('ajv');
+import { Song, Playlist, Token } from '../types/index';
 
 export default class Database {
   private static instance: Database;
 
   private directory: string;
 
-  private songSchemaValidator: any;
+  private songSchemaValidator: Ajv.ValidateFunction;
 
-  private playlistSchemaValidator: any;
+  private playlistSchemaValidator: Ajv.ValidateFunction;
 
-  private db: any;
+  private db: Datastore;
 
   private constructor(directory: string) {
     const ajv = new Ajv({ allErrors: true, useDefaults: true });
@@ -56,37 +55,60 @@ export default class Database {
   // SONG DATABASE API
   /// ////////////////////////////////////////
   validateSong(data: any): boolean {
-    return this.songSchemaValidator(data);
+    return this.songSchemaValidator(data) as boolean;
   }
 
-  async createSong(data: any): Promise<any> {
-    const isValid = this.validateSong(data);
-    if (isValid) {
-      data.key = 'song';
-      const s = await this.db.insert(data);
-      return s;
+  async createSong(data: Song): Promise<DbSong> {
+    const dbSong: DbSong = {
+      ytid: data.ytID,
+      title: data.title,
+      channel: data.channel,
+      fileName: data.fileName,
+      downloaded: data.downloaded,
+      thumbnailUrl: data.thumbnailUrl,
+      key: 'song',
+    };
+    const isValid = this.validateSong(dbSong);
+    const exist = (await this.getOneSong(data.ytID)) !== null;
+    if (exist) {
+      throw new Error(`duplicate song ${data.ytID}`);
     }
+    if (isValid) {
+      return this.db.insert(dbSong);
+    }
+    throw new Error('invalid song');
+  }
+
+  async getOneSong(ytid: string): Promise<Song | null> {
+    const s = await this.db.findOne<DbSong>({ key: 'song', ytid });
+    if (s !== null)
+      return {
+        ...s,
+        ytID: s.ytid,
+      };
     return null;
   }
 
-  async getOneSong(ytid: string): Promise<any> {
-    const s = await this.db.findOne({ key: 'song', ytid }).exec();
-    return s === null ? null : s;
-  }
-
   async deleteSong(ytid: string): Promise<void> {
-    await this.db.remove({ ytid });
+    await this.db.remove({ ytid }, { multi: true });
   }
 
-  async updateSong(ytid: string, data: any): Promise<void> {
+  async updateSong(ytid: string, data: Partial<Song>): Promise<void> {
     const found = this.db.findOne({ key: 'song', ytid });
     if (found === null) return;
     await this.db.update({ ytid }, { $set: data });
   }
 
-  async getAllSongs(): Promise<any> {
-    const songs = await this.db.find({ key: 'song' });
-    return songs;
+  async getAllSongs(): Promise<Song[]> {
+    const songs = await this.db.find<DbSong>({ key: 'song' });
+    return songs.map((s) => ({
+      ytID: s.ytid,
+      title: s.title,
+      channel: s.channel,
+      downloaded: s.downloaded,
+      fileName: s.fileName,
+      thumbnailUrl: s.thumbnailUrl,
+    }));
   }
 
   /// ////////////////////////////////////////
@@ -94,7 +116,7 @@ export default class Database {
   /// ////////////////////////////////////////
 
   validatePlaylist(data: any): boolean {
-    return this.playlistSchemaValidator(data);
+    return this.playlistSchemaValidator(data) as boolean;
   }
 
   async createPlaylist(data: any): Promise<any> {
