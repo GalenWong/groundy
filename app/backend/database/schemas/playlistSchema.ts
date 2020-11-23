@@ -1,4 +1,4 @@
-import { Playlist, Song } from '../../types';
+import { Playlist, Song } from '../../../types';
 
 export interface DbPlaylist {
   name: string;

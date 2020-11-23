@@ -8,7 +8,7 @@ import playlistSchema, {
   DbPlaylist,
   DbResolvedPlaylist,
 } from './schemas/playlistSchema';
-import { Song, Token } from '../types/index';
+import { Song, Token } from '../../types/index';
 import tokenSchema from './schemas/tokenSchema';
 
 export default class Database {

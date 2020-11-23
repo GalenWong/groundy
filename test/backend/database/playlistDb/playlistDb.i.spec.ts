@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import * as os from 'os';
 import * as path from 'path';
-import Database from '../../app/backend/database';
-import { Song } from '../../app/types/index';
+import Database from '../../../../app/backend/database';
+import { Song } from '../../../../app/types/index';
 
 function getRand() {
   return Math.floor(Math.random() * 10000);
