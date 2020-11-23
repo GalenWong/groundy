@@ -4,7 +4,10 @@ import Datastore from 'nedb-promises';
 import Ajv from 'ajv';
 import * as path from 'path';
 import songSchema, { DbSong } from './schemas/songSchema';
-import playlistSchema from './schemas/playlistSchema';
+import playlistSchema, {
+  DbPlaylist,
+  DbResolvedPlaylist,
+} from './schemas/playlistSchema';
 import { Song, Playlist, Token } from '../types/index';
 
 export default class Database {
@@ -119,37 +122,63 @@ export default class Database {
     return this.playlistSchemaValidator(data) as boolean;
   }
 
-  async createPlaylist(data: any): Promise<any> {
-    const isValid = this.validatePlaylist(data);
-    if (isValid) {
-      // assume ytid for each song is valid
-      // call findOneSong() before adding to songs[]
+  async createPlaylist(name: string) {
+    const playlist = {
+      name,
+      songs: [],
+      key: 'playlist',
+    };
+    const isValid = this.validatePlaylist(playlist);
 
-      data.key = 'playlist';
-      let p = await this.db.insert(data);
-      await this.db.update({ _id: p._id }, { $set: { id: p._id } });
-      p = await this.db.findOne({ _id: p._id });
-      return p;
+    if (isValid) {
+      return this.db.insert(playlist);
     }
     return null;
   }
 
-  async getOnePlaylist(id: string): Promise<any> {
-    const p = await this.db.findOne({ key: 'playlist', id }).exec();
-    return p;
+  async getOnePlaylist(id: string): Promise<DbResolvedPlaylist | null> {
+    const entry = await this.db.findOne<DbPlaylist>({
+      key: 'playlist',
+      _id: id,
+    });
+    if (entry === null) return null;
+
+    const songPromises = entry.songs.map((ytid) => this.getOneSong(ytid));
+    const songs = await Promise.all(songPromises);
+    if (songs.some((song) => song === null)) {
+      throw new Error('playlist contains invalid songs');
+    }
+
+    return {
+      id: entry._id,
+      name: entry.name,
+      songs: songs as Song[],
+    };
   }
 
   async deletePlaylist(id: string): Promise<void> {
-    await this.db.remove({ key: 'playlist', id });
+    await this.db.remove({ key: 'playlist', _id: id }, { multi: true });
   }
 
-  async updatePlaylist(id: string, data: any): Promise<void> {
-    await this.db.update({ key: 'playlist', id }, { $set: data });
+  async updatePlaylist(id: string, data: Partial<DbPlaylist>): Promise<void> {
+    if (data.songs) {
+      const songs = await Promise.all(
+        data.songs.map((id) => this.getOneSong(id))
+      );
+      if (songs.some((v) => v === null)) {
+        throw new Error('inserting non existing songs');
+      }
+    }
+    await this.db.update({ key: 'playlist', _id: id }, { $set: data });
   }
 
-  async getAllPlaylists(): Promise<any> {
+  async getAllPlaylists(): Promise<DbResolvedPlaylist[]> {
     const playlists = await this.db.find({ key: 'playlist' });
-    return playlists;
+    return Promise.all(
+      playlists.map(
+        (pl) => this.getOnePlaylist(pl._id) as Promise<DbResolvedPlaylist>
+      )
+    );
   }
 
   /// ////////////////////////////////////////

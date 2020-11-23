@@ -2,7 +2,7 @@
 import * as os from 'os';
 import * as path from 'path';
 import Database from '../../app/backend/database';
-import { Playlist } from '../types/index.d';
+import { Song } from '../../app/types/index';
 
 function getRand() {
   return Math.floor(Math.random() * 10000);
@@ -13,42 +13,35 @@ describe('database', () => {
   it('createPlaylist', async () => {
     const database = Database.getInstance(tempDir);
 
-    const song = {
-      ytid: `my_ytid_${getRand()}`,
+    const song: Song = {
+      ytID: `my_ytid_${getRand()}`,
       title: 'my_title',
       channel: 'my_channel',
       fileName: 'my_filename',
       thumbnailUrl: 'my_thumbnailUrl',
-    } as Song;
+      downloaded: true,
+    };
 
     const s = await database.createSong(song);
+    const TEST_PLAYLIST_NAME = 'my_playlist';
 
-    const data = {
-      name: 'my_name',
-      songs: [{ ytid: s.ytid }],
-    } as Playlist;
-
-    const p = await database.createPlaylist(data);
+    const p = await database.createPlaylist(TEST_PLAYLIST_NAME);
     expect(p.key).toEqual('playlist');
-    expect(p.name).toEqual('my_name');
-    expect(p.songs).toContainEqual(expect.objectContaining({ ytid: s.ytid }));
+    expect(p.name).toEqual(TEST_PLAYLIST_NAME);
+    await database.updatePlaylist(p._id, { songs: [s.ytid] });
+    const udpatedP = await database.getOnePlaylist(p._id);
+    expect(udpatedP.songs).toContainEqual(expect.objectContaining(song));
   });
 
   it('getOnePlaylist', async () => {
     const database = Database.getInstance(tempDir);
 
-    const data = {
-      name: 'my_name',
-      songs: [],
-    };
-
-    const p = await database.createPlaylist(data);
-    let result = await database.getOnePlaylist(p.id);
+    const p = await database.createPlaylist('my_name');
+    let result = await database.getOnePlaylist(p._id);
     expect(p.key).toEqual('playlist');
-    expect(result.id).toEqual(p.id);
 
-    database.updatePlaylist(p.id, { name: 'hello world' });
-    result = await database.getOnePlaylist(p.id);
+    database.updatePlaylist(p._id, { name: 'hello world' });
+    result = await database.getOnePlaylist(p._id);
     expect(result.name).toEqual('hello world');
   });
 
@@ -60,11 +53,11 @@ describe('database', () => {
       songs: [],
     };
 
-    const p = await database.createPlaylist(data);
+    const p = await database.createPlaylist('my_name');
     let result = await database.getAllPlaylists();
-    expect(result).toContainEqual(expect.objectContaining(p));
+    expect(result).toContainEqual(expect.objectContaining(data));
 
-    database.deletePlaylist(p.id);
+    database.deletePlaylist(p._id);
     result = await database.getAllPlaylists();
     expect(result).not.toContainEqual(expect.objectContaining(p));
   });
