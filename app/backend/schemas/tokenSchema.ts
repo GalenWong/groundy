@@ -5,10 +5,9 @@ const tokenSchema = {
     expiry_date: { type: 'string' },
     access_token: { type: 'string' },
     token_type: { type: 'string' },
-    id_token: { type: 'string' },
     scope: { type: 'string' },
+    key: { value: 'token' },
   },
-  required: ['id_token'],
   additionalProperties: false,
 };
 

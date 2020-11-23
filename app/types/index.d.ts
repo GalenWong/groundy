@@ -50,6 +50,5 @@ export interface Token {
   expiry_date?: string;
   access_token?: string;
   token_type?: string;
-  id_token: string;
   scope?: string;
 }

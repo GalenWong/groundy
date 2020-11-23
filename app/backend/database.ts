@@ -8,7 +8,8 @@ import playlistSchema, {
   DbPlaylist,
   DbResolvedPlaylist,
 } from './schemas/playlistSchema';
-import { Song, Playlist, Token } from '../types/index';
+import { Song, Token } from '../types/index';
+import tokenSchema from './schemas/tokenSchema';
 
 export default class Database {
   private static instance: Database;
@@ -19,6 +20,8 @@ export default class Database {
 
   private playlistSchemaValidator: Ajv.ValidateFunction;
 
+  private tokenSchemaValidator: Ajv.ValidateFunction;
+
   private db: Datastore;
 
   private constructor(directory: string) {
@@ -26,6 +29,7 @@ export default class Database {
 
     this.songSchemaValidator = ajv.compile(songSchema);
     this.playlistSchemaValidator = ajv.compile(playlistSchema);
+    this.tokenSchemaValidator = ajv.compile(tokenSchema);
 
     const databasePath = path.join(directory, 'database.db');
     this.directory = databasePath;
@@ -163,7 +167,7 @@ export default class Database {
   async updatePlaylist(id: string, data: Partial<DbPlaylist>): Promise<void> {
     if (data.songs) {
       const songs = await Promise.all(
-        data.songs.map((id) => this.getOneSong(id))
+        data.songs.map((ytid) => this.getOneSong(ytid))
       );
       if (songs.some((v) => v === null)) {
         throw new Error('inserting non existing songs');
@@ -184,18 +188,30 @@ export default class Database {
   /// ////////////////////////////////////////
   // TOKEN DATABASE API
   /// ////////////////////////////////////////
-  async createToken(data: any): Promise<any> {
-    data.key = 'token';
-    const t = await this.db.insert(data);
+
+  validateToken(data: any): boolean {
+    return this.tokenSchemaValidator(data) as boolean;
+  }
+
+  async createToken(data: Token) {
+    const record = {
+      ...data,
+      key: 'token',
+    };
+    const isValid = this.tokenSchemaValidator(record);
+    if (!isValid) {
+      throw new Error('invalid token detected');
+    }
+    const t = await this.db.insert(record);
     return t;
   }
 
-  async getToken(id_token: string): Promise<any> {
-    const t = await this.db.findOne({ key: 'token', id_token }).exec();
+  async getToken(): Promise<Token | null> {
+    const t = await this.db.findOne<Token>({ key: 'token' });
     return t;
   }
 
-  async updateToken(id_token: string, data: any): Promise<void> {
-    await this.db.update({ key: 'token', id_token }, { $set: data });
+  async deleteToken(): Promise<void> {
+    await this.db.remove({ key: 'token' }, { multi: true });
   }
 }
