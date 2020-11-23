@@ -1,3 +1,4 @@
+// These two are dummy classes I made only for testing purposes
 class Song{
     constructor(title, channel, ytID, downloaded = false, fileName = null) {
         this.title = title
@@ -26,14 +27,8 @@ class PalylistService {
         this.expiry_date = null
         this.tokenExist = false
     }
-    setTokens(tokens) {
-        this.accessToken = tokens.access_token
-        this.refreshToken = tokens.refresh_token
-        this.scope = tokens.scope
-        this.tokenType = tokens.token_type
-        this.expiryDate = tokens.expiry_date
-        this.tokenExist = true
-    }
+    
+    // Private functions user should NOT call:
     async unwrapIntoPlaylist(respJSON, isRelated = false, relatedTo = '') {
         var item;
         var songs = []
@@ -61,7 +56,7 @@ class PalylistService {
                 songs
             )
         }
-        // get playlist name
+
         const url = new URL('https://www.googleapis.com/youtube/v3/playlists')
         url.searchParams.set('part', 'snippet')
         url.searchParams.set('id', item.snippet.playlistId)
@@ -83,6 +78,36 @@ class PalylistService {
             )
         }
         return list
+    }
+
+    search(query) {
+        const url = new URL('https://www.googleapis.com/youtube/v3/search');
+        url.searchParams.set('part', 'snippet');
+        url.searchParams.set('maxResults', '1');
+        url.searchParams.set('q', query);
+        if (this.tokenExist) {
+            return fetch(url.toString(), {
+                headers: {
+                    Authorization: `${this.tokenType} ${this.accessToken}`,
+                },
+            }).then(resp => resp.json())
+        }
+        else {
+            url.searchParams.set('key', this.apiKey)
+            return fetch(url.toString()).then(resp => resp.json())
+        }
+    }
+
+    // Public functions:
+
+    // This function should be called right away after logging in
+    setTokens(tokens) {
+        this.accessToken = tokens.access_token
+        this.refreshToken = tokens.refresh_token
+        this.scope = tokens.scope
+        this.tokenType = tokens.token_type
+        this.expiryDate = tokens.expiry_date
+        this.tokenExist = true
     }
 
     async getRecommend(maxResults = 10) {
@@ -143,24 +168,6 @@ class PalylistService {
         return this.unwrapIntoPlaylist(respJson, true, songId)
     }
 
-    search(query) {
-        const url = new URL('https://www.googleapis.com/youtube/v3/search');
-        url.searchParams.set('part', 'snippet');
-        url.searchParams.set('maxResults', '1');
-        url.searchParams.set('q', query);
-        if (this.tokenExist) {
-            return fetch(url.toString(), {
-                headers: {
-                    Authorization: `${this.tokenType} ${this.accessToken}`,
-                },
-            }).then(resp => resp.json())
-        }
-        else {
-            url.searchParams.set('key', this.apiKey)
-            return fetch(url.toString()).then(resp => resp.json())
-        }
-    }
-
     async getSongByName(songName) {
         const result = await this.search(songName)
         console.log(result)
@@ -179,7 +186,33 @@ class PalylistService {
     }
 
     async getSongById(songId) {
-        return null
+        const url = new URL('https://www.googleapis.com/youtube/v3/videos')
+        url.searchParams.set('part', 'snippet')
+        url.searchParams.set('id', songId)
+        if (this.tokenExist) {
+            var response = await fetch(url.toString(), {
+                headers: {
+                    Authorization: `${this.tokenType} ${this.accessToken}`,
+                },
+            }).then(resp => resp.json())
+        }
+        else {
+            url.searchParams.set('key', this.apiKey)
+            response = await fetch(url.toString()).then(resp => resp.json())
+        }
+        console.log(response)
+        try {
+            var item = response.items[0]
+            var song = new Song(
+                item.snippet.title,
+                item.snippet.channelId,
+                item.id,
+            )
+        }
+        catch (err) {
+            song = null
+        }
+        return song
     }
 }
 
