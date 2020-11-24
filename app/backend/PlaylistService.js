@@ -1,3 +1,4 @@
+/* eslint-disable */
 // These two are dummy classes I made only for testing purposes
 class Song{
     constructor(title, channel, ytID, downloaded = false, fileName = null) {
@@ -27,7 +28,7 @@ class PalylistService {
         this.expiry_date = null
         this.tokenExist = false
     }
-    
+
     // Private functions user should NOT call:
     async unwrapIntoPlaylist(respJSON, isRelated = false, relatedTo = '') {
         var item;
@@ -126,7 +127,7 @@ class PalylistService {
         }).then(resp => resp.json())
         return this.unwrapIntoPlaylist(response)
     }
-    
+
     async getPlaylist(playlistId, maxResults = 10) {
         const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
         url.searchParams.set('part', 'snippet')
