@@ -7,6 +7,7 @@ export interface Song {
   ytID: string;
   downloaded: boolean;
   fileName?: string;
+  thumbnailUrl?: string;
 }
 
 /**
@@ -44,8 +45,10 @@ export interface DownloadedSong extends Song {
   filePath: string;
 }
 
-// just to finish the doc
-// will clarify what Account is later
-export interface Account {
-  token: string;
+export interface Token {
+  refresh_token?: string;
+  expiry_date?: string;
+  access_token?: string;
+  token_type?: string;
+  scope?: string;
 }
