@@ -1,0 +1,7 @@
+:global(.react-jinke-music-player-main
+    .music-player-panel
+    .panel-content
+    > .img-content) {
+  background-position: center;
+  background-size: cover;
+}

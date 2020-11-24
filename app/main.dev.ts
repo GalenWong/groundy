@@ -15,6 +15,8 @@ import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+import registerEndpoints from './backend/ipc';
+import { setMainWindow } from './backend/ipc-renderer';
 
 export default class AppUpdater {
   constructor() {
@@ -75,9 +77,11 @@ const createWindow = async () => {
       process.env.ERB_SECURE !== 'true'
         ? {
             nodeIntegration: true,
+            webSecurity: false, // for accessing local music file
           }
         : {
             preload: path.join(__dirname, 'dist/renderer.prod.js'),
+            webSecurity: false, // for accessing local music file
           },
   });
 
@@ -100,6 +104,9 @@ const createWindow = async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  // load the store mainwindow to ipc-renderer
+  setMainWindow(mainWindow);
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
@@ -133,3 +140,5 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
 });
+
+registerEndpoints();
