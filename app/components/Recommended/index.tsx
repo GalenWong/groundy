@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import Playlist from '../Playlist';
 import { DownloadedSong, Song, Progress } from '../../types';
-import { getAllRecommendation } from '../../utils';
-import { playerQueueContext } from '../../containers/PlayerWrapper/index';
+import { getAllRecommendation, startDownload } from '../../utils';
+import { isDownloaded } from '../SongCard';
 
 const useStyles = makeStyles({
   topbar: {
@@ -26,7 +26,6 @@ interface State {
 const Recommended = () => {
   const [state, setState] = React.useState<State>({ songs: [], downloads: {} });
   const { songs, downloads } = state;
-  // const controls = React.useContext(playerQueueContext);
   React.useEffect(() => {
     const getData = async () => {
       getAllRecommendation()
@@ -39,6 +38,12 @@ const Recommended = () => {
   }, []);
   const classes = useStyles();
 
+  function downloadAll(sgs: (Song | DownloadedSong)[]): void {
+    sgs
+      .filter((s) => !isDownloaded(s))
+      .forEach((sng: Song | DownloadedSong) => startDownload(sng.ytID));
+  }
+
   return (
     <Paper className={classes.padded}>
       <Box className={classes.topbar}>
@@ -46,9 +51,9 @@ const Recommended = () => {
           Recommended
         </Typography>
         <Box>
-          <Button>
-            <Typography variant="caption">Action</Typography>
-            <PlayArrowIcon />
+          <Button onClick={() => downloadAll(songs)}>
+            <Typography variant="caption">Download All</Typography>
+            <GetAppIcon />
           </Button>
         </Box>
       </Box>
