@@ -15,7 +15,7 @@ import PlaylistComponent from '../Playlist';
 import { isDownloaded } from '../SongCard';
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     fillSpace: {
       flex: '1',
@@ -42,35 +42,32 @@ export default function ShowPlaylist() {
       setIsLoading(true);
       const data = await getPlaylistInfo(id);
       setPlaylist(data);
-      setDownloads(downloads);
+      setDownloads({});
       setIsLoading(false);
     }
     fetchData();
   }, [id]);
-  const playAll = controls.makePlaylistQueue(
-    playlist.songs.filter(isDownloaded)
-  );
+  const playAll = () =>
+    controls.makePlaylistQueue(playlist.songs.filter(isDownloaded));
   return isLoading ? (
     <CircularProgress color="secondary" />
   ) : (
-    <div>
-      <Paper className={classes.padded}>
-        <Grid container justify="space-between">
-          <Grid item>
-            <Typography className={classes.fillSpace} variant="h4" noWrap>
-              {playlist.name}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <IconButton onClick={() => playAll}>
-              <PlaylistPlayIcon />
-            </IconButton>
-          </Grid>
+    <Paper className={classes.padded}>
+      <Grid container justify="space-between">
+        <Grid item>
+          <Typography className={classes.fillSpace} variant="h4" noWrap>
+            {playlist.name}
+          </Typography>
         </Grid>
         <Grid item>
-          <PlaylistComponent songs={playlist.songs} downloads={downloads} />
+          <IconButton onClick={playAll}>
+            <PlaylistPlayIcon />
+          </IconButton>
         </Grid>
-      </Paper>
-    </div>
+      </Grid>
+      <Grid item>
+        <PlaylistComponent songs={playlist.songs} downloads={downloads} />
+      </Grid>
+    </Paper>
   );
 }

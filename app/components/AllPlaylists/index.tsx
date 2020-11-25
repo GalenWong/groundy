@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CircularProgress, Grid, Typography, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-// import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-// import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { getAllPlaylists } from '../../utils';
 import { Playlist } from '../../types';
 import PlaylistCard from './PlaylistCard';
