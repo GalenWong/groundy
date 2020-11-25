@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Typography, Grid, Paper, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Search from './search';
 
 const useStyles = makeStyles(() =>
@@ -16,12 +16,15 @@ const useStyles = makeStyles(() =>
 );
 
 export default function ShowPlaylist() {
-  const [query, setQuery] = useState('haha');
+  const [query, setQuery] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const classes = useStyles();
 
-  const handleTyping = async (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleTyping = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSubmitted(false);
     setQuery(e.target.value);
-
+  };
+  const handleSubmit = () => setIsSubmitted(true);
   return (
     <div>
       <Paper className={classes.padded}>
@@ -30,13 +33,13 @@ export default function ShowPlaylist() {
             <TextField autoFocus id="name" onChange={handleTyping} fullWidth />
           </Grid>
           <Grid item>
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" onClick={handleSubmit}>
               <Typography variant="caption">Submit</Typography>
             </Button>
           </Grid>
         </Grid>
       </Paper>
-      <Search query={query} />
+      {isSubmitted && query !== '' ? <Search query={query} /> : ''}
     </div>
   );
 }

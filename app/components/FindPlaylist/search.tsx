@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import {
-  CircularProgress,
-  Typography,
-  IconButton,
-  Grid,
-  Paper,
-} from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
-import { Playlist, Progress } from '../../types';
-import { getPlaylistInfo } from '../../utils';
+import { CircularProgress } from '@material-ui/core';
+import { Playlist } from '../../types';
 import PlaylistComponent from '../Playlist';
-import { isDownloaded } from '../SongCard';
-import { playerQueueContext } from '../../containers/PlayerWrapper/index';
+import { getYouTubePlaylist } from '../../utils';
 
 interface SearchProps {
   query: string;
@@ -21,16 +10,26 @@ interface SearchProps {
 
 export default function Search(props: SearchProps) {
   const { query } = props;
-  // const [playlist, setPlaylist] = useState<Playlist>({
-  //   id: 'loading',
-  //   name: 'loading',
-  //   songs: [],
-  // });
-  return (
-    <div>
-      Searching query
-      {query}
-      ...
-    </div>
+  const [playlist, setPlaylist] = useState<Playlist>({
+    id: 'loading',
+    name: 'loading',
+    songs: [],
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      const data = await getYouTubePlaylist(query);
+      setPlaylist(data);
+      setIsLoading(false);
+    }
+    fetchData();
+  }, [query]);
+
+  return isLoading ? (
+    <CircularProgress />
+  ) : (
+    <PlaylistComponent songs={playlist.songs} downloads={{}} />
   );
 }
