@@ -8,7 +8,7 @@ interface SearchProps {
   query: string;
 }
 
-export default function Search(props: SearchProps) {
+export default function SearchPlaylist(props: SearchProps) {
   const { query } = props;
   const [playlist, setPlaylist] = useState<Playlist>({
     id: 'loading',

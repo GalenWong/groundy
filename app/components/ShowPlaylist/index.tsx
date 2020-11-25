@@ -7,7 +7,7 @@ import {
   Grid,
   Paper,
 } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import { Playlist, Progress } from '../../types';
 import { getPlaylistInfo } from '../../utils';

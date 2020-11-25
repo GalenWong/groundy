@@ -93,7 +93,10 @@ const getRelated = async (url: string): Promise<(DownloadedSong | Song)[]> => {
       title: `Fkj & Masego - Tadow, related to ${url}`,
       channel: 'Fkj',
       ytID: 'hC8CH0Z3L54',
-      downloaded: false,
+      downloaded: true,
+      fileName: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
+      filePath:
+        'D:/Users/Tony/Downloads/サカナクション / 新宝島　-New Album「834.194」(6/19 release)-.mp3',
     },
     {
       title: `サカナクション / 新宝島 -New Album「834.194」(6/19 release)-, related to ${url}`,

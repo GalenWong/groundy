@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Grid, Paper, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import Search from './search';
+import SearchPlaylist from './searchplaylist';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function ShowPlaylist() {
+export default function FindPlaylist() {
   const [query, setQuery] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const classes = useStyles();
@@ -39,7 +39,7 @@ export default function ShowPlaylist() {
           </Grid>
         </Grid>
       </Paper>
-      {isSubmitted && query !== '' ? <Search query={query} /> : ''}
+      {isSubmitted && query !== '' ? <SearchPlaylist query={query} /> : ''}
     </div>
   );
 }
