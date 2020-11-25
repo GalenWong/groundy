@@ -6,9 +6,9 @@ import { Playlist, DownloadedSong, Song } from '../types';
  * @async
  * @returns {Promise<boolean>}
  */
-const isUserLoggedIn = async (): Promise<boolean> => {
-  return false;
-};
+// const isUserLoggedIn = async (): Promise<boolean> => {
+//   return false;
+// };
 
 /**
  * Get all downloaded songs in an array
@@ -328,7 +328,7 @@ const getSongPath = async (ytID: string): Promise<string> => {
 };
 
 export {
-  isUserLoggedIn,
+  // isUserLoggedIn,
   getAllDownloads,
   getAllRecommendation,
   getYouTubePlaylist,

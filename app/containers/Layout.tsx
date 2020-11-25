@@ -19,6 +19,7 @@ import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import routesJSON from '../constants/routes.json';
 import PlayerWrapper from './PlayerWrapper';
+import LoginButton from '../components/LoginButton';
 
 const drawerWidth = 240;
 
@@ -54,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
   },
+  grow: {
+    flexGrow: 1,
+  },
   drawerPaper: {
     width: drawerWidth,
     height: 'calc(100% - 80px)',
@@ -81,6 +85,8 @@ export default function Layout({ children }: LayoutProps) {
           <Typography variant="h6" noWrap>
             {currLocation.pathname}
           </Typography>
+          <div className={classes.grow} />
+          <LoginButton />
         </Toolbar>
       </AppBar>
       <Drawer
