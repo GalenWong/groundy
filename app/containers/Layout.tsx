@@ -112,7 +112,7 @@ export default function Layout({ children }: LayoutProps) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <PlayerWrapper>{children}</PlayerWrapper>
+        {children}
       </main>
     </div>
   );

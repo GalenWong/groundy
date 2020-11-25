@@ -23,11 +23,9 @@ const Root = ({ store, history }: Props) => (
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <ErrorSnackBarWrapper>
-          <Layout>
-            <PlayerWrapper>
-              <Routes />
-            </PlayerWrapper>
-          </Layout>
+          <PlayerWrapper>
+            <Routes />
+          </PlayerWrapper>
         </ErrorSnackBarWrapper>
       </SnackbarProvider>
     </ConnectedRouter>
