@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       color: theme.palette.text.secondary,
     },
-    topbar: {
-      display: 'flex',
-    },
     fillSpace: {
       flex: '1',
     },

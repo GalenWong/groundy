@@ -82,6 +82,29 @@ const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
 };
 
 /**
+ * Get an array of related songs based on a song url
+ *
+ * @async
+ * @returns {Promise<Song[]>}
+ */
+const getRelated = async (url: string): Promise<(DownloadedSong | Song)[]> => {
+  return [
+    {
+      title: `Fkj & Masego - Tadow, related to ${url}`,
+      channel: 'Fkj',
+      ytID: 'hC8CH0Z3L54',
+      downloaded: false,
+    },
+    {
+      title: `サカナクション / 新宝島 -New Album「834.194」(6/19 release)-, related to ${url}`,
+      channel: 'NFRecords sakanaction',
+      ytID: 'LIlZCmETvsY',
+      downloaded: false,
+    },
+  ];
+};
+
+/**
  * Get a public playlist with a url
  *
  * @async
@@ -221,12 +244,18 @@ const getPlaylistInfo = async (playlistID: string): Promise<Playlist> => {
         ytID: 'hC8CH0Z3L54',
         downloaded: true,
         fileName: 'Fkj & Masego - Tadow-hC8CH0Z3L54.mp3',
+        filePath:
+          'D:/Users/Tony/Downloads/Fkj & Masego - Tadow-hC8CH0Z3L54.mp3',
       },
       {
         title: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
         channel: 'NFRecords sakanaction',
         ytID: 'LIlZCmETvsY',
-        downloaded: false,
+        downloaded: true,
+        fileName:
+          'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
+        filePath:
+          'D:/Users/Tony/Downloads/サカナクション / 新宝島　-New Album「834.194」(6/19 release)-.mp3',
       },
       {
         title: 'Official髭男dism - Pretender［Official Video］',
@@ -235,6 +264,8 @@ const getPlaylistInfo = async (playlistID: string): Promise<Playlist> => {
         downloaded: true,
         fileName:
           'Official髭男dism - Pretender［Official Video］-TQ8WlA2GXbk.mp3',
+        filePath:
+          'D:/Users/Tony/Downloads/單曲推薦僕が死のうと思ったのは薇爾莉特.mp3',
       },
     ],
   };
@@ -331,6 +362,7 @@ export {
   isUserLoggedIn,
   getAllDownloads,
   getAllRecommendation,
+  getRelated,
   getYouTubePlaylist,
   getYouTubeSong,
   getAllPlaylists,
