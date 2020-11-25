@@ -7,7 +7,6 @@ import { SnackbarProvider } from 'notistack';
 import { Store } from '../store';
 import Routes from '../Routes';
 import PlayerWrapper from './PlayerWrapper';
-import Layout from './Layout';
 import ErrorSnackBarWrapper from './ErrorSnackbarWrapper';
 
 type Props = {

@@ -18,7 +18,6 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import routesJSON from '../constants/routes.json';
-import PlayerWrapper from './PlayerWrapper';
 
 const drawerWidth = 240;
 
