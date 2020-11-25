@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import PlayerWrapper from './PlayerWrapper';
 import NavMenu from './NavMenu';
 
 const drawerWidth = 220;
