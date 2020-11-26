@@ -82,7 +82,7 @@ const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
 };
 
 /**
- * Get an array of related songs based on a song url
+ * Get an array of related songs based on a song url or a ytid
  *
  * @async
  * @returns {Promise<Song[]>}
