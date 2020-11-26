@@ -1,44 +1,38 @@
-// //import Playlist from '../../components/Playlist';
-// import { Song, Playlist } from '../../types/index';
-// import Database from '../database/index';
-// import { DbResolvedPlaylist } from '../database/schemas/playlistSchema';
-// //import { DbPlaylist } from '../database/schemas/playlistSchema';
-// import playlistSchema, {
-//   DbPlaylist,
-//   DbResolvedPlaylist,
-// } from './schemas/playlistSchema';
-
 import Database from '../database/index';
 import { Song, Playlist } from '../../types/index';
 
 export default class PlaylistModule {
   private database: Database;
 
-  constructor(directory: string) {
-    this.database = Database.getInstance(directory);
+  constructor() {
+    this.database = Database.getExistingInstance();
   }
 
-  async addSong(song: Song, playlist: Playlist): Promise<void> {
-    const found = await this.database.getOneSong(song.ytID);
-    if (found) {
-      playlist.songs.push(song);
-      const songIdPromises = playlist.songs.map((s) => s.ytID);
-      const songIdArr = await Promise.all(songIdPromises);
-      await this.database.updatePlaylist(playlist.id, { songs: songIdArr });
-    }
+  async addSong(songId: string, playlistId: string): Promise<void> {
+    const song = await this.database.getOneSong(songId);
+    const playlist = await this.database.getOnePlaylist(playlistId);
+
+    if (!song) throw new Error(`song does not exist. songId = ${songId}`);
+    if (!playlist)
+      throw new Error(`playlist does not exist. playlistId = ${playlistId}`);
+
+    const songIdArr = playlist.songs.map((s) => s.ytID);
+    songIdArr.push(songId);
+    await this.database.updatePlaylist(playlistId, { songs: songIdArr });
   }
 
-  async removeSong(song: Song, playlist: Playlist): Promise<void> {
-    const found = await this.database.getOneSong(song.ytID);
-    if (found) {
-      const songPromises = playlist.songs.filter((s) => s.ytID !== song.ytID);
-      const songs = await Promise.all(songPromises);
-      playlist.songs = songs;
+  async removeSong(songId: string, playlistId: string): Promise<void> {
+    const song = await this.database.getOneSong(songId);
+    const playlist = await this.database.getOnePlaylist(playlistId);
 
-      const songIdPromises = songs.map((s) => s.ytID);
-      const songIdArr = await Promise.all(songIdPromises);
-      await this.database.updatePlaylist(playlist.id, { songs: songIdArr });
-    }
+    if (!song) throw new Error(`song does not exist. songId = ${songId}`);
+    if (!playlist)
+      throw new Error(`playlist does not exist. playlistId = ${playlistId}`);
+
+    const songIdArr = playlist.songs
+      .filter((s) => s.ytID !== songId)
+      .map((s) => s.ytID);
+    await this.database.updatePlaylist(playlistId, { songs: songIdArr });
   }
 
   async createPlaylist(name: string): Promise<Playlist> {
@@ -52,6 +46,7 @@ export default class PlaylistModule {
 
   async getPlaylist(id: string): Promise<Playlist> {
     const p = await this.database.getOnePlaylist(id);
+    if (!p) throw new Error(`playlist does not exist with id = ${id}`);
     return p as Playlist;
   }
 

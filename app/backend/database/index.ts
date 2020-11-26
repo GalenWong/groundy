@@ -53,6 +53,12 @@ export default class Database {
     return Database.instance;
   }
 
+  // Used for Playlist Module only
+  // Assume the instance already exist
+  static getExistingInstance(): Database {
+    return Database.instance;
+  }
+
   // For testing only
   getDirectory(): string {
     return this.directory;
