@@ -197,7 +197,11 @@ export default class Database {
 
   async createToken(data: Token) {
     const record = {
-      ...data,
+      refresh_token: data.refresh_token,
+      expiry_date: data.expiry_date,
+      token_type: data.token_type,
+      scope: data.scope,
+      access_token: data.access_token,
       key: 'token',
     };
     const isValid = this.tokenSchemaValidator(record);
