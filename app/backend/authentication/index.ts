@@ -1,5 +1,7 @@
 import { BrowserWindow } from 'electron';
 import { OAuth2Client } from 'google-auth-library';
+import { Token } from '../../types';
+import Database from '../database';
 /**
  * This file is a JSON containing two fields: 'client_id' and 'client_secret'.
  * The value of these can be found in the shared drive
@@ -52,18 +54,18 @@ const startAuth = async () => {
   const [client, authURL] = getOAuthClient();
   const code = await getOAuthCode(authURL);
   const tokens = await client.getToken(code);
-  // TODO: write to token to DB
-  console.log(tokens);
+  const db = Database.getInstance();
+  await db.createToken(tokens.tokens as Token);
 };
 
-// TODO: have to know the structure of database
 const deleteToken = async () => {
-  console.log('Token Deleted');
+  const db = Database.getInstance();
+  await db.deleteToken();
 };
 
-// TODO: get from DB
 const getToken = async () => {
-  console.log('get token');
+  const db = Database.getInstance();
+  return db.getToken();
 };
 
 export { startAuth, getToken, deleteToken, getOAuthClient, getOAuthCode };

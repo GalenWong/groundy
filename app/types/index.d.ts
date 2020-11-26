@@ -47,7 +47,7 @@ export interface DownloadedSong extends Song {
 
 export interface Token {
   refresh_token?: string;
-  expiry_date?: string;
+  expiry_date?: number;
   access_token?: string;
   token_type?: string;
   scope?: string;
