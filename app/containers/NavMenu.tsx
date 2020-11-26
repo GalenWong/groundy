@@ -10,7 +10,6 @@ import QueueMusicOutlinedIcon from '@material-ui/icons/QueueMusicOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-// import LocationSearchingSharpIcon from '@material-ui/icons/LocationSearchingSharp';
 import YoutubeSearchedForSharpIcon from '@material-ui/icons/YoutubeSearchedForSharp';
 import routesJSON from '../constants/routes.json';
 
@@ -23,7 +22,6 @@ const icons: JSX.Element[] = [
   <HomeIcon key="home" />,
   <QueueMusicOutlinedIcon key="all" />,
   <CloudDownloadOutlinedIcon key="downloaded" />,
-  // <LocationSearchingSharpIcon key="findrelated" />,
   <SearchOutlinedIcon key="findsong" />,
   <YoutubeSearchedForSharpIcon key="findplaylist" />,
   <WhatshotOutlinedIcon key="recommended" />,
