@@ -309,7 +309,7 @@
     "regenerator-runtime": "^0.13.5",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.19.2",
-    "ytdl-core": "^4.0.3"
+    "ytdl-core": "^4.1.0"
   },
   "devEngines": {
     "node": ">=7.x",
