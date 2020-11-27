@@ -1,3 +1,6 @@
+import { getToken } from '../authentication';
+
 export default async () => {
-  return false;
+  const token = await getToken();
+  return token !== null;
 };

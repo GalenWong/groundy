@@ -17,6 +17,8 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import registerEndpoints from './backend/ipc';
 import { setMainWindow } from './backend/ipc-renderer';
+import Database from './backend/database';
+import SongStore from './backend/SongStore';
 
 export default class AppUpdater {
   constructor() {
@@ -141,4 +143,11 @@ app.on('activate', () => {
   if (mainWindow === null) createWindow();
 });
 
+// register backend IPC endpoints
 registerEndpoints();
+// set DB directory
+Database.getInstance(path.join(app.getPath('userData'), 'db'));
+// set song directory
+SongStore.getInstance().setDirectory(
+  path.join(app.getPath('userData'), 'songs')
+);

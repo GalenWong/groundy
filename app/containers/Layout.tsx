@@ -8,6 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import NavMenu from './NavMenu';
+import LoginButton from '../components/LoginButton';
 
 const drawerWidth = 220;
 
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+  },
+  grow: {
+    flexGrow: 1,
   },
   drawerPaper: {
     width: drawerWidth,
@@ -55,6 +59,8 @@ export default function Layout({ children }: LayoutProps) {
           <Typography variant="h6" noWrap>
             {currLocation.pathname}
           </Typography>
+          <div className={classes.grow} />
+          <LoginButton />
         </Toolbar>
       </AppBar>
       <Drawer
