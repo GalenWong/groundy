@@ -12,6 +12,7 @@ function getRand() {
 describe('playlistModule', () => {
   const tempDir = path.join(os.tmpdir(), getRand().toString());
   it('playlistModuleIntegration', async () => {
+    
     // Create database
     const database = Database.getInstance(tempDir);
 
