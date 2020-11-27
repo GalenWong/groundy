@@ -6,7 +6,7 @@ import routesJSON from '../../constants/routes.json';
 import { Playlist } from '../../types';
 import Delete from './delete';
 
-interface ListItemProps {
+interface PlaylistCardProps {
   list: Playlist;
 }
 
@@ -17,7 +17,7 @@ const routes: RoutesObject = routesJSON;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    listItem: {
+    playlistCard: {
       padding: theme.spacing(0),
       margin: theme.spacing(1),
       color: theme.palette.text.secondary,
@@ -25,12 +25,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ListItem(props: ListItemProps) {
+export default function PlaylistCard(props: PlaylistCardProps) {
   const classes = useStyles();
   const { list } = props;
   return (
     <Grid item xs={12}>
-      <Card className={classes.listItem}>
+      <Card className={classes.playlistCard}>
         <CardContent>
           <Grid container justify="space-between" alignItems="center">
             <Grid item>

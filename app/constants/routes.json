@@ -2,7 +2,8 @@
   "Home": "/",
   "All Playlists": "/allplaylists",
   "Downloaded": "/downloaded",
-  "Find Related": "/findrelated",
+  "Find Song": "/findsong",
+  "Find Playlist": "/findplaylist",
   "Recommended": "/recommended",
   "Setting": "/setting",
   "Show Playlist": "/showplaylist"

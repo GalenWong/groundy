@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { CircularProgress, Grid } from '@material-ui/core';
+import { CircularProgress, Grid, Typography, Paper } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-// import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-// import TextFieldsIcon from '@material-ui/icons/TextFields';
 import { getAllPlaylists } from '../../utils';
 import { Playlist } from '../../types';
-import ListItem from './listItem';
+import PlaylistCard from './PlaylistCard';
 import Add from './add';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,8 +13,11 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       color: theme.palette.text.secondary,
     },
-    settingBar: {
-      justifyContent: 'flex-end',
+    fillSpace: {
+      flex: '1',
+    },
+    padded: {
+      padding: '10px',
     },
   })
 );
@@ -39,21 +40,24 @@ export default function AllPlaylists() {
   return isLoading ? (
     <CircularProgress color="secondary" />
   ) : (
-    <Grid container>
-      <Grid item xs={12}>
-        <Grid container className={classes.settingBar}>
-          <Grid item>
-            <Add />
+    <Paper className={classes.padded}>
+      <Grid container justify="space-between">
+        <Grid item>
+          <Typography className={classes.fillSpace} variant="h4" noWrap>
+            All Playlists
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Add />
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container>
+            {allLists.map((list: Playlist) => (
+              <PlaylistCard key={list.id} list={list} />
+            ))}
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Grid container>
-          {allLists.map((list: Playlist) => (
-            <ListItem key={list.id} list={list} />
-          ))}
-        </Grid>
-      </Grid>
-    </Grid>
+    </Paper>
   );
 }
