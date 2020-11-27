@@ -7,6 +7,7 @@ import { SnackbarProvider } from 'notistack';
 import { Store } from '../store';
 import Routes from '../Routes';
 import ErrorSnackBarWrapper from './ErrorSnackbarWrapper';
+import PlayerWrapper from './PlayerWrapper';
 
 type Props = {
   store: Store;
@@ -21,7 +22,9 @@ const Root = ({ store, history }: Props) => (
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <ErrorSnackBarWrapper>
-          <Routes />
+          <PlayerWrapper>
+            <Routes />
+          </PlayerWrapper>
         </ErrorSnackBarWrapper>
       </SnackbarProvider>
     </ConnectedRouter>
