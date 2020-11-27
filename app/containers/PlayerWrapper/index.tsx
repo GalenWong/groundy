@@ -27,6 +27,22 @@ export const playerQueueContext = React.createContext<PlayerQueueContextObj>({
   makePlaylistQueue: () => console.warn('no player context'),
 });
 
+export const duplicateCheck = (
+  song: DownloadedSong,
+  queue: DownloadedSong[]
+): boolean => {
+  const hasSameId = queue.findIndex((s) => song.ytID === s.ytID);
+  const hasSameSrc = queue.findIndex((s) => song.filePath === s.filePath);
+  if (hasSameSrc >= 0 && hasSameId !== hasSameSrc) {
+    console.warn(
+      'duplicate src detected with different ID',
+      queue[hasSameSrc],
+      song
+    );
+  }
+  return hasSameSrc >= 0 || hasSameId >= 0;
+};
+
 export default function PlayerWrapper({ children }: PlayerWrapperProps) {
   const playerInstanceRef = useRef<ReactJkMusicPlayerInstance>();
 
@@ -41,6 +57,14 @@ export default function PlayerWrapper({ children }: PlayerWrapperProps) {
 
   const playSong = useCallback(
     (song: DownloadedSong) => {
+      // duplicate check
+      if (duplicateCheck(song, playlist)) {
+        const index = playlist.findIndex(
+          (s) => song.ytID === s.ytID || song.filePath === s.filePath
+        );
+        setPlayIndex(index);
+        return;
+      }
       const newPlaylist = [
         ...playlist.slice(0, playIndex + 1),
         song,
@@ -54,6 +78,10 @@ export default function PlayerWrapper({ children }: PlayerWrapperProps) {
   );
 
   const addSongToQueue = (song: DownloadedSong) => {
+    // duplicate check
+    if (duplicateCheck(song, playlist)) {
+      return;
+    }
     setPlaylist([...playlist, song]);
   };
 

@@ -41,14 +41,16 @@ export default class Database {
     });
   }
 
-  static getInstance(directory: string): Database {
-    if (directory === '') {
+  static getInstance(directory?: string): Database {
+    if (Database.instance) {
+      return Database.instance;
+    }
+
+    if (!directory) {
       throw new Error('Directory cannot be empty.');
     }
 
-    if (!Database.instance) {
-      Database.instance = new Database(directory);
-    }
+    Database.instance = new Database(directory);
 
     return Database.instance;
   }
