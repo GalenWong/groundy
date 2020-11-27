@@ -2,7 +2,7 @@
 import * as os from 'os';
 import * as path from 'path';
 import Database from '../../../../app/backend/database';
-import { Song, Playlist } from '../../../../app/types/index';
+import { Song } from '../../../../app/types/index';
 import PlaylistModule from '../../../../app/backend/playlist/index';
 
 function getRand() {
@@ -12,7 +12,6 @@ function getRand() {
 describe('playlistModule', () => {
   const tempDir = path.join(os.tmpdir(), getRand().toString());
   it('playlistModuleIntegration', async () => {
-    
     // Create database
     const database = Database.getInstance(tempDir);
 
