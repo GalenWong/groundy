@@ -15,6 +15,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import QueueIcon from '@material-ui/icons/Queue';
 
+import SelectPlaylist from './SelectPlaylist';
 import { playerQueueContext } from '../containers/PlayerWrapper/index';
 import { DownloadedSong } from '../types';
 import { deleteSong } from '../utils/index';
@@ -24,17 +25,21 @@ interface PlaylistActionProps {
 }
 
 const PlaylistActions = (props: PlaylistActionProps) => {
-  const [state, setState] = React.useState({ open: false });
+  const [state, setState] = React.useState({ open: false, playlist: false });
   const { song } = props;
-  const { open } = state;
+  const { open, playlist } = state;
   const controls = React.useContext(playerQueueContext);
 
   const openDialog = () => {
-    setState({ open: true });
+    setState({ open: true, playlist: state.playlist });
+  };
+
+  const addToPlaylist = () => {
+    setState({ open: state.open, playlist: true });
   };
 
   const closeDialog = () => {
-    setState({ open: false });
+    setState({ open: false, playlist: false });
   };
 
   const handleDelete = () => {
@@ -50,7 +55,7 @@ const PlaylistActions = (props: PlaylistActionProps) => {
       <IconButton key={2} onClick={() => controls.addSongToQueue(song)}>
         <QueueIcon />
       </IconButton>
-      <IconButton key={3}>
+      <IconButton key={3} onClick={addToPlaylist}>
         <PlaylistAddIcon />
       </IconButton>
       <IconButton key={4} onClick={openDialog}>
@@ -69,6 +74,7 @@ const PlaylistActions = (props: PlaylistActionProps) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <SelectPlaylist songID={song.ytID} open={playlist} close={closeDialog} />
     </CardActions>
   );
 };
