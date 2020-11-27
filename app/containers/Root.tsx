@@ -6,8 +6,8 @@ import { History } from 'history';
 import { SnackbarProvider } from 'notistack';
 import { Store } from '../store';
 import Routes from '../Routes';
-import PlayerWrapper from './PlayerWrapper';
 import ErrorSnackBarWrapper from './ErrorSnackbarWrapper';
+import PlayerWrapper from './PlayerWrapper';
 
 type Props = {
   store: Store;
