@@ -126,6 +126,18 @@ export default class Database {
     }));
   }
 
+  async getAllDownloads(): Promise<Song[]> {
+    const songs = await this.db.find<DbSong>({ key: 'song', downloaded: true });
+    return songs.map((s) => ({
+      ytID: s.ytid,
+      title: s.title,
+      channel: s.channel,
+      downloaded: s.downloaded,
+      fileName: s.fileName,
+      thumbnailUrl: s.thumbnailUrl,
+    }));
+  }
+
   /// ////////////////////////////////////////
   // PLAYLIST DATABASE API
   /// ////////////////////////////////////////
