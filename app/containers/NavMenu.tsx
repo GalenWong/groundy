@@ -33,7 +33,9 @@ export default function NavMenu() {
   return (
     <List>
       {routesArray
-        .filter((name: string) => !['Show Playlist'].includes(name))
+        .filter(
+          (name: string) => !['Show Playlist', 'Find Related'].includes(name)
+        )
         .map((name: string, index: number) => (
           <ListItem key={name} button component={Link} to={`${routes[name]}`}>
             <ListItemIcon>{icons[index]}</ListItemIcon>

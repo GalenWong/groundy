@@ -87,10 +87,10 @@ const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
  * @async
  * @returns {Promise<Song[]>}
  */
-const getRelated = async (url: string): Promise<(DownloadedSong | Song)[]> => {
+const getRelated = async (ytid: string): Promise<(DownloadedSong | Song)[]> => {
   return [
     {
-      title: `Fkj & Masego - Tadow, related to ${url}`,
+      title: `Fkj & Masego - Tadow, related to ${ytid}`,
       channel: 'Fkj',
       ytID: 'hC8CH0Z3L54',
       downloaded: true,
@@ -99,7 +99,7 @@ const getRelated = async (url: string): Promise<(DownloadedSong | Song)[]> => {
         'D:/Users/Tony/Downloads/サカナクション / 新宝島　-New Album「834.194」(6/19 release)-.mp3',
     },
     {
-      title: `サカナクション / 新宝島 -New Album「834.194」(6/19 release)-, related to ${url}`,
+      title: `サカナクション / 新宝島 -New Album「834.194」(6/19 release)-, related to ${ytid}`,
       channel: 'NFRecords sakanaction',
       ytID: 'LIlZCmETvsY',
       downloaded: false,
