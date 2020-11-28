@@ -10,9 +10,8 @@ import {
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import { Playlist, Progress } from '../../types';
-import { getPlaylistInfo } from '../../utils';
+import { getPlaylistInfo, isDownloaded } from '../../utils';
 import PlaylistComponent from '../Playlist';
-import { isDownloaded } from '../SongCard';
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
 
 const useStyles = makeStyles(() =>

@@ -10,8 +10,7 @@ import {
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { Song, DownloadedSong, Progress } from '../../types';
-import { getRelated, startDownload } from '../../utils';
-import { isDownloaded } from '../SongCard';
+import { getRelated, startDownload, isDownloaded } from '../../utils';
 import Playlist from '../Playlist';
 
 const useStyles = makeStyles(() =>
