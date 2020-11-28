@@ -70,6 +70,13 @@ describe('playlistModule', () => {
     const p2 = await playlistModule.getPlaylist(myPlaylist2.id);
     expect(p2.songs).toContainEqual(expect.objectContaining(song2));
 
+    // expect to throw on duplicate add
+    await expect(async () => {
+      await playlistModule.addSong(song2.ytID, myPlaylist2.id);
+    }).rejects.toThrow();
+    const p2AfterAdd = await playlistModule.getPlaylist(myPlaylist2.id);
+    expect(p2.songs).toEqual(p2AfterAdd.songs);
+
     // Remove song from Playlist
     await playlistModule.removeSong(song2.ytID, myPlaylist1.id);
     p1 = await playlistModule.getPlaylist(myPlaylist1.id);

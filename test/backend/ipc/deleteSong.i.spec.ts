@@ -15,7 +15,7 @@ describe('deleteSong endpoint', () => {
       await deleteSong('this_id_does_not_exist');
     });
 
-    thunk.rejects.toThrow();
+    await thunk.rejects.toThrow();
   });
 
   it('remove song from playlist', async () => {

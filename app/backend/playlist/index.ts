@@ -17,6 +17,11 @@ export default class PlaylistModule {
       throw new Error(`playlist does not exist. playlistId = ${playlistId}`);
 
     const songIdArr = playlist.songs.map((s) => s.ytID);
+    if (songIdArr.includes(songId)) {
+      throw new Error(
+        `song ${songId} ${song.title} already exists in playlist ${playlist.id} ${playlist.name}`
+      );
+    }
     songIdArr.push(songId);
     await this.database.updatePlaylist(playlistId, { songs: songIdArr });
   }
