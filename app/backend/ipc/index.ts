@@ -6,6 +6,7 @@ import getAllDownloads from './getAllDownloads';
 import getAllPlaylists from './getAllPlaylists';
 import getPlaylistInfo from './getPlaylistInfo';
 import getRecommendation from './getRecommendation';
+import getRelated from './getRelated';
 import getSongPath from './getSongPath';
 import getYouTubePlaylist from './getYouTubePlaylist';
 import getYouTubeSong from './getYouTubeSong';
@@ -33,6 +34,7 @@ export enum BackendEndpoints {
   GET_SONG_PATH = 'get-song-path',
   START_AUTH = 'start-auth',
   LOG_OUT = 'log-out',
+  GET_RELATED = 'get-related',
 }
 
 const endPoints2Handler = {
@@ -52,6 +54,7 @@ const endPoints2Handler = {
   [BackendEndpoints.GET_SONG_PATH]: getSongPath,
   [BackendEndpoints.START_AUTH]: startAuth,
   [BackendEndpoints.LOG_OUT]: logout,
+  [BackendEndpoints.GET_RELATED]: getRelated,
 };
 
 const ipcEndpointWrapper = <T extends CallableFunction>(func: T) => (
