@@ -30,6 +30,6 @@ export default function SearchPlaylist(props: SearchProps) {
   return isLoading ? (
     <CircularProgress />
   ) : (
-    <PlaylistComponent songs={playlist.songs} downloads={{}} />
+    <PlaylistComponent songs={playlist.songs} />
   );
 }
