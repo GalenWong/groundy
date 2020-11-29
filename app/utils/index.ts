@@ -71,33 +71,33 @@ const getRelated = async (ytid: string): Promise<(DownloadedSong | Song)[]> => {
 };
 
 /**
- * Get a public playlist with a url
+ * Get a public playlist with an ID
  *
  * @async
- * @param {string} playlistURL - url of a public playlist
+ * @param {string} playlistID - a public playlist id
  * @returns {Promise<Playlist>} - Promise that resolves to a Playlist
  */
-const getYouTubePlaylist = async (playlistURL: string): Promise<Playlist> => {
+const getYouTubePlaylist = async (playlistID: string): Promise<Playlist> => {
   const publicPlaylist = await ipcRenderer.invoke(
     BackendEndpoints.GET_YOUTUBE_PLAYLIST,
-    playlistURL
+    playlistID
   );
   return publicPlaylist;
 };
 
 /**
- * Get a public song with a url
+ * Get a public song with an ID
  *
  * @async
- * @param {string} songURL - url of a public song
+ * @param {string} songID - ID of a public song
  * @returns {Promise<Song>} - Promise that resolves to a Song
  */
 const getYouTubeSong = async (
-  songURL: string
+  songID: string
 ): Promise<Song | DownloadedSong> => {
   const publicSong = await ipcRenderer.invoke(
     BackendEndpoints.GET_YOUTUBE_SONG,
-    songURL
+    songID
   );
   return publicSong;
 };
