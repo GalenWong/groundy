@@ -11,6 +11,7 @@ import FindPlaylistPage from './containers/FindPlaylistPage';
 import AllPlaylistsPage from './containers/AllPlaylistsPage';
 import SettingPage from './containers/SettingPage';
 import ShowPlaylistPage from './components/ShowPlaylist';
+import FindRelatedPage from './components/FindRelated';
 
 import Layout from './containers/Layout';
 
@@ -27,6 +28,10 @@ export default function Routes() {
           <Route
             path={`${routes['Show Playlist']}/:id`}
             component={ShowPlaylistPage}
+          />
+          <Route
+            path={`${routes['Find Related']}/:id`}
+            component={FindRelatedPage}
           />
           <Route path={routes['All Playlists']} component={AllPlaylistsPage} />
           <Route path={routes['Find Song']} component={FindSongPage} />

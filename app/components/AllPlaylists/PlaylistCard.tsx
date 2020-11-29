@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, Grid } from '@material-ui/core';
+import { Card, CardContent, Grid, IconButton } from '@material-ui/core';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import routesJSON from '../../constants/routes.json';
-import { Playlist } from '../../types';
+import { Playlist, Song, DownloadedSong } from '../../types';
+import { isDownloaded } from '../../utils';
 import Delete from './delete';
+import { playerQueueContext } from '../../containers/PlayerWrapper/index';
 
 interface PlaylistCardProps {
   list: Playlist;
@@ -27,7 +31,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function PlaylistCard(props: PlaylistCardProps) {
   const classes = useStyles();
+  const controls = React.useContext(playerQueueContext);
   const { list } = props;
+
+  function getDownloaded(sgs: (Song | DownloadedSong)[]): DownloadedSong[] {
+    return sgs.filter(isDownloaded);
+  }
+  const playPlaylist = () =>
+    controls.makePlaylistQueue(getDownloaded(list.songs));
+
   return (
     <Grid item xs={12}>
       <Card className={classes.playlistCard}>
@@ -39,13 +51,17 @@ export default function PlaylistCard(props: PlaylistCardProps) {
               </Link>
             </Grid>
             <Grid item>
-              {/* <IconButton aria-label="play">
-                <PlayArrowIcon />
-              </IconButton>
-              <IconButton aria-label="rename">
-                <TextFieldsIcon />
-              </IconButton> */}
               <Grid container>
+                <Grid item>
+                  <IconButton aria-label="playPlaylist" onClick={playPlaylist}>
+                    <PlaylistPlayIcon />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <IconButton aria-label="rename">
+                    <TextFieldsIcon />
+                  </IconButton>
+                </Grid>
                 <Grid item>
                   <Delete playlistID={list.id} />
                 </Grid>
