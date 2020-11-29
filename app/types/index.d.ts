@@ -15,6 +15,7 @@ export interface Song {
  *
  */
 export interface Playlist {
+  playlist: Promise<(DownloadedSong | Song)[]>;
   id: string;
   name: string;
   songs: (DownloadedSong | Song)[];
@@ -47,7 +48,7 @@ export interface DownloadedSong extends Song {
 
 export interface Token {
   refresh_token?: string;
-  expiry_date?: number;
+  expiry_date?: string;
   access_token?: string;
   token_type?: string;
   scope?: string;
