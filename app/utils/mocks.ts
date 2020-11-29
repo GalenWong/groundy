@@ -87,10 +87,10 @@ const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
  * @async
  * @returns {Promise<Song[]>}
  */
-const getRelated = async (url: string): Promise<(DownloadedSong | Song)[]> => {
+const getRelated = async (ytid: string): Promise<(DownloadedSong | Song)[]> => {
   return [
     {
-      title: `Fkj & Masego - Tadow, related to ${url}`,
+      title: `Fkj & Masego - Tadow, related to ${ytid}`,
       channel: 'Fkj',
       ytID: 'hC8CH0Z3L54',
       downloaded: true,
@@ -99,7 +99,7 @@ const getRelated = async (url: string): Promise<(DownloadedSong | Song)[]> => {
         'D:/Users/Tony/Downloads/サカナクション / 新宝島　-New Album「834.194」(6/19 release)-.mp3',
     },
     {
-      title: `サカナクション / 新宝島 -New Album「834.194」(6/19 release)-, related to ${url}`,
+      title: `サカナクション / 新宝島 -New Album「834.194」(6/19 release)-, related to ${ytid}`,
       channel: 'NFRecords sakanaction',
       ytID: 'LIlZCmETvsY',
       downloaded: false,
@@ -180,6 +180,8 @@ const getAllPlaylists = async (): Promise<Playlist[]> => {
           ytID: 'hC8CH0Z3L54',
           downloaded: true,
           fileName: 'Fkj & Masego - Tadow-hC8CH0Z3L54.mp3',
+          filePath:
+            'D:/Users/Tony/Downloads/Fkj & Masego - Tadow-hC8CH0Z3L54.mp3',
         },
         {
           title:
@@ -195,6 +197,8 @@ const getAllPlaylists = async (): Promise<Playlist[]> => {
           downloaded: true,
           fileName:
             'Official髭男dism - Pretender［Official Video］-TQ8WlA2GXbk.mp3',
+          filePath:
+            'D:/Users/Tony/Downloads/Fkj & Masego - Tadow-hC8CH0Z3L54.mp3',
         },
       ],
     },
@@ -320,12 +324,12 @@ const removeSongFromPlaylist = async (
  * Create a new local playlist
  *
  * @async
- * @param {string} name - id of a song
- * @returns {Promise<string>} - success/failure message
+ * @param {string} name - name of the new playlist
+ * @returns {Promise<string>} - local playlist id
  */
 const newPlaylist = async (name: string): Promise<string> => {
   console.log(`Playlist ${name} created`);
-  return `Playlist ${name} created`;
+  return `new-mock-playlist`;
 };
 
 /**
@@ -360,6 +364,18 @@ const deleteSong = async (ytID: string): Promise<string> => {
 const getSongPath = async (ytID: string): Promise<string> => {
   return `C:/Users/User/Music/example_${ytID}.mp3`;
 };
+
+/**
+ * See if a song is downloaded
+ *
+ * @param {Song | DownloadedSong} thing - a song
+ * @returns {Promise<boolean>}
+ */
+export function isDownloaded(
+  thing: Song | DownloadedSong
+): thing is DownloadedSong {
+  return thing.downloaded;
+}
 
 export {
   // isUserLoggedIn,

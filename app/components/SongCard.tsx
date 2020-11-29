@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
+import FindRelatedActions from './FindRelatedActions';
 import { Song, DownloadedSong, Progress } from '../types';
 
 const useStyles = makeStyles({
@@ -66,6 +67,7 @@ const SongCard = (props: SongCardProps) => {
           ytid={ytID}
         />
       )}
+      <FindRelatedActions song={song} />
     </Card>
   );
 };
