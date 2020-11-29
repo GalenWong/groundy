@@ -16,13 +16,13 @@ const useStyles = makeStyles(() =>
 );
 
 export default function FindSong() {
-  const [query, setQuery] = useState('');
+  const [url, seturl] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const classes = useStyles();
 
   const handleTyping = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsSubmitted(false);
-    setQuery(e.target.value);
+    seturl(e.target.value);
   };
   const handleSubmit = () => setIsSubmitted(true);
   return (
@@ -39,7 +39,7 @@ export default function FindSong() {
           </Grid>
         </Grid>
       </Paper>
-      {isSubmitted && query !== '' ? <SearchSong query={query} /> : ''}
+      {isSubmitted && url !== '' ? <SearchSong url={url} /> : ''}
     </div>
   );
 }
