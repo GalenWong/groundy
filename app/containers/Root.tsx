@@ -9,6 +9,7 @@ import Routes from '../Routes';
 import ErrorSnackBarWrapper from './ErrorSnackbarWrapper';
 import PlayerWrapper from './PlayerWrapper';
 import ProgressWrapper from './ProgressWrapper';
+import LoginStateWrapper from './LoginStateWrapper';
 
 type Props = {
   store: Store;
@@ -23,11 +24,13 @@ const Root = ({ store, history }: Props) => (
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <ErrorSnackBarWrapper>
-          <ProgressWrapper>
-            <PlayerWrapper>
-              <Routes />
-            </PlayerWrapper>
-          </ProgressWrapper>
+          <LoginStateWrapper>
+            <ProgressWrapper>
+              <PlayerWrapper>
+                <Routes />
+              </PlayerWrapper>
+            </ProgressWrapper>
+          </LoginStateWrapper>
         </ErrorSnackBarWrapper>
       </SnackbarProvider>
     </ConnectedRouter>
