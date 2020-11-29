@@ -1,1 +1,6 @@
-export default async (_ytid: string, _playlistId: string) => {};
+import PlaylistModule from '../playlist/index';
+
+export default async (ytid: string, playlistId: string): Promise<void> => {
+  const playlistModule = new PlaylistModule();
+  await playlistModule.addSong(ytid, playlistId);
+};
