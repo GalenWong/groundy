@@ -1,10 +1,11 @@
-import { Song } from '../../types';
+import { DownloadedSong, Song } from '../../types';
+import { getToken } from '../authentication';
+import * as yt from '../youtubeData';
+import { resolveSongFromDb } from './utils';
 
-export default async (_URLorID: string): Promise<Song> => {
-  return {
-    title: 'サカナクション / 新宝島　-New Album「834.194」(6/19 release)-',
-    channel: 'NFRecords sakanaction',
-    ytID: 'LIlZCmETvsY',
-    downloaded: false,
-  };
+export default async (ytid: string): Promise<Song | DownloadedSong> => {
+  const token = await getToken();
+  const ytSong = await yt.getSongById(ytid, token ?? undefined);
+
+  return resolveSongFromDb(ytSong);
 };
