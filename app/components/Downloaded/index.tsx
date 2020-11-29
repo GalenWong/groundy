@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Playlist from '../Playlist';
-import { DownloadedSong, Song, Progress } from '../../types';
+import { DownloadedSong, Song } from '../../types';
 import { getAllDownloads } from '../../utils';
 import { isDownloaded } from '../SongCard';
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
@@ -21,22 +21,19 @@ const useStyles = makeStyles({
 
 interface State {
   songs: (DownloadedSong | Song)[];
-  downloads: Record<string, Progress>;
 }
 
 // example download
 // {'hC8CH0Z3L54': {ytID: 'hC8CH0Z3L54', total: BigInt(20000), current: BigInt(11000)}}
 
 const Downloaded = () => {
-  const [state, setState] = React.useState<State>({ songs: [], downloads: {} });
-  const { songs, downloads } = state;
+  const [state, setState] = React.useState<State>({ songs: [] });
+  const { songs } = state;
   const controls = React.useContext(playerQueueContext);
   React.useEffect(() => {
     const getData = async () => {
       getAllDownloads()
-        .then((s: (DownloadedSong | Song)[]) =>
-          setState({ songs: s, downloads: state.downloads })
-        )
+        .then((s: (DownloadedSong | Song)[]) => setState({ songs: s }))
         .catch(() => {});
     };
     getData();
@@ -62,7 +59,7 @@ const Downloaded = () => {
           </Button>
         </Box>
       </Box>
-      <Playlist songs={songs} downloads={downloads} />
+      <Playlist songs={songs} />
     </Paper>
   );
 };

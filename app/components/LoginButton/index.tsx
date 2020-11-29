@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
-import useIsLoggedIn from '../../hooks/useIsLoggedIn';
 import * as endpoints from '../../utils';
+import { loginContext } from '../../containers/LoginStateWrapper';
 
 function LoginButton() {
-  const isLoggedIn = useIsLoggedIn();
+  const { isLoggedIn } = useContext(loginContext);
   const login = async () => {
     await endpoints.startAuth();
   };

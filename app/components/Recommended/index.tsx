@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Playlist from '../Playlist';
-import { DownloadedSong, Song, Progress } from '../../types';
+import { DownloadedSong, Song } from '../../types';
 import { getAllRecommendation, startDownload } from '../../utils';
 import { isDownloaded } from '../SongCard';
 
@@ -20,18 +20,15 @@ const useStyles = makeStyles({
 
 interface State {
   songs: (DownloadedSong | Song)[];
-  downloads: Record<string, Progress>;
 }
 
 const Recommended = () => {
-  const [state, setState] = React.useState<State>({ songs: [], downloads: {} });
-  const { songs, downloads } = state;
+  const [state, setState] = React.useState<State>({ songs: [] });
+  const { songs } = state;
   React.useEffect(() => {
     const getData = async () => {
       getAllRecommendation()
-        .then((s: (DownloadedSong | Song)[]) =>
-          setState({ songs: s, downloads: state.downloads })
-        )
+        .then((s: (DownloadedSong | Song)[]) => setState({ songs: s }))
         .catch(() => {});
     };
     getData();
@@ -57,7 +54,7 @@ const Recommended = () => {
           </Button>
         </Box>
       </Box>
-      <Playlist songs={songs} downloads={downloads} />
+      <Playlist songs={songs} />
     </Paper>
   );
 };

@@ -2,15 +2,16 @@ import * as React from 'react';
 import { List } from '@material-ui/core';
 import SongCard from './SongCard';
 
-import { DownloadedSong, Song, Progress } from '../types';
+import { DownloadedSong, Song } from '../types';
+import { progressesContext } from '../containers/ProgressWrapper';
 
 interface PlaylistProps {
   songs: (DownloadedSong | Song)[];
-  downloads: Record<string, Progress>;
 }
 
 const Playlist = (props: PlaylistProps) => {
-  const { songs, downloads } = props;
+  const { progresses } = React.useContext(progressesContext);
+  const { songs } = props;
 
   return (
     <List>
@@ -19,7 +20,7 @@ const Playlist = (props: PlaylistProps) => {
           <SongCard
             key={song.ytID}
             song={song}
-            progress={downloads[song.ytID]}
+            progress={progresses[song.ytID]}
           />
         );
       })}

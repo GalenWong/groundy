@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
-import { Playlist, Progress } from '../../types';
+import { Playlist } from '../../types';
 import { getPlaylistInfo, isDownloaded } from '../../utils';
 import PlaylistComponent from '../Playlist';
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
@@ -33,7 +33,6 @@ export default function ShowPlaylist() {
     name: 'loading',
     songs: [],
   });
-  const [downloads, setDownloads] = useState<Record<string, Progress>>({});
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
   useEffect(() => {
@@ -41,7 +40,6 @@ export default function ShowPlaylist() {
       setIsLoading(true);
       const data = await getPlaylistInfo(id);
       setPlaylist(data);
-      setDownloads({});
       setIsLoading(false);
     }
     fetchData();
@@ -65,7 +63,7 @@ export default function ShowPlaylist() {
         </Grid>
       </Grid>
       <Grid item>
-        <PlaylistComponent songs={playlist.songs} downloads={downloads} />
+        <PlaylistComponent songs={playlist.songs} />
       </Grid>
     </Paper>
   );
