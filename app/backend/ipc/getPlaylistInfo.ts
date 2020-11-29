@@ -1,4 +1,3 @@
-import { title } from 'process';
 import { Playlist } from '../../types/index';
 import PlaylistModule from '../playlist/index';
 import { resolveSongFromDb } from './utils';

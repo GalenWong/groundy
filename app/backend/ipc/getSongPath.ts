@@ -1,3 +1,4 @@
+import { DownloadedSong } from '../../types';
 import Database from '../database/index';
 import { resolveSongFromDb } from './utils';
 
@@ -10,5 +11,7 @@ export default async (ytid: string) => {
     title: s.title,
     channel: s.channel,
   });
-  return resolvedSong.filePath;
+  if (!resolvedSong.downloaded)
+    throw new Error(`song ${s.ytID} is not downloaded`);
+  return (resolvedSong as DownloadedSong).filePath;
 };
