@@ -21,6 +21,7 @@ export default class SongStore {
     if (storageDirectory === '') {
       throw new Error('storageDirectory cannot be empty.');
     }
+    fs.mkdirSync(storageDirectory, { recursive: true });
     this.storageDirectory = storageDirectory;
   }
 
