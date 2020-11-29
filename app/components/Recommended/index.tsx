@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Playlist from '../Playlist';
-import { DownloadedSong, Song, Progress } from '../../types';
+import { DownloadedSong, Song } from '../../types';
 import { getAllRecommendation, startDownload } from '../../utils';
 import { isDownloaded } from '../SongCard';
 

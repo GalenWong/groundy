@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { Song, DownloadedSong, Progress } from '../../types';
+import { Song, DownloadedSong } from '../../types';
 import { getRelated, startDownload, isDownloaded } from '../../utils';
 import Playlist from '../Playlist';
 
