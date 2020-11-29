@@ -28,21 +28,20 @@ const useStyles = makeStyles(() =>
 );
 interface State {
   songs: (DownloadedSong | Song)[];
-  downloads: Record<string, Progress>;
 }
 
 export default function FindRelated() {
   const { id }: { id: string } = useParams();
-  const [state, setState] = React.useState<State>({ songs: [], downloads: {} });
+  const [state, setState] = React.useState<State>({ songs: [] });
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
-  const { songs, downloads } = state;
+  const { songs } = state;
 
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
       const data = await getRelated(id);
-      setState({ songs: data, downloads: state.downloads });
+      setState({ songs: data });
       setIsLoading(false);
     }
     fetchData();
@@ -71,7 +70,7 @@ export default function FindRelated() {
             </Button>
           </Box>
         </Box>
-        <Playlist songs={songs} downloads={downloads} />
+        <Playlist songs={songs} />
       </Paper>
     </div>
   );
