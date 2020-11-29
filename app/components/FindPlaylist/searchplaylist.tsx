@@ -9,7 +9,7 @@ interface SearchProps {
 }
 
 function parsePlaylistID(url: string): string {
-  const m = url.match(/playlist?list=(.*)/);
+  const m = url.match(/playlist\?list=(.*)/);
   if (m) {
     return m[1];
   }
