@@ -5,11 +5,19 @@ import PlaylistComponent from '../Playlist';
 import { getYouTubePlaylist } from '../../utils';
 
 interface SearchProps {
-  query: string;
+  url: string;
+}
+
+function parsePlaylistID(url: string): string {
+  const m = url.match(/playlist\?list=(.*)/);
+  if (m) {
+    return m[1];
+  }
+  return '';
 }
 
 export default function SearchPlaylist(props: SearchProps) {
-  const { query } = props;
+  const { url } = props;
   const [playlist, setPlaylist] = useState<Playlist>({
     id: 'loading',
     name: 'loading',
@@ -20,12 +28,12 @@ export default function SearchPlaylist(props: SearchProps) {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      const data = await getYouTubePlaylist(query);
+      const data = await getYouTubePlaylist(parsePlaylistID(url));
       setPlaylist(data);
       setIsLoading(false);
     }
     fetchData();
-  }, [query]);
+  }, [url]);
 
   return isLoading ? (
     <CircularProgress />
