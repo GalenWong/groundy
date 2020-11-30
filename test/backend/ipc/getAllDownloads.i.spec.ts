@@ -1,5 +1,6 @@
 import os from 'os';
 import path from 'path';
+import { mkdirSync } from 'fs';
 import getAllDownloads from '../../../app/backend/ipc/getAllDownloads';
 import Database from '../../../app/backend/database';
 import SongStore from '../../../app/backend/SongStore';
@@ -7,7 +8,9 @@ import { DownloadedSong } from '../../../app/types';
 
 describe('getAllDownloads', () => {
   it('resolve file path', async () => {
-    const tempDir = os.tmpdir() + Math.random();
+    const randomStr = Math.random().toString();
+    const tempDir = path.join(os.tmpdir(), randomStr);
+    mkdirSync(tempDir, { recursive: true });
     const db = Database.getInstance(tempDir);
     SongStore.getInstance().setDirectory(tempDir);
     await db.createSong({
