@@ -1,3 +1,4 @@
+import { shell } from 'electron';
 import * as React from 'react';
 import {
   CardActions,
@@ -41,6 +42,8 @@ const ImportActions = (props: ImportActionsProps) => {
   const classes = useStyles();
   const { downloaded, progress, ytid } = props;
 
+  const youtubeUrl = `https://www.youtube.com/watch?v=${ytid}`;
+
   let component;
   if (progress === undefined) {
     component = (
@@ -72,7 +75,7 @@ const ImportActions = (props: ImportActionsProps) => {
 
   return (
     <CardActions className={classes.fixWidth}>
-      <Button key={1}>
+      <Button key={1} onClick={() => shell.openExternal(youtubeUrl)}>
         <Typography variant="caption">Preview</Typography>
       </Button>
       {component}
