@@ -1,8 +1,9 @@
 import Database from '../database/index';
-import { Song } from '../../types/index';
+import { resolveSongFromDb } from './utils';
 
-export default async (): Promise<Song[]> => {
+export default async () => {
   const db = Database.getExistingInstance();
   const downloads = await db.getAllSongs();
-  return downloads;
+  const songPromises = downloads.map((v) => resolveSongFromDb(v));
+  return Promise.all(songPromises);
 };
