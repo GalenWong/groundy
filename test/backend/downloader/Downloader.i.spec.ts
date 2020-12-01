@@ -17,7 +17,7 @@ describe('Downloader', () => {
     const name = 'test-file-downloader-i-spec';
 
     const filename = await downloader.startDownload(videoId, name);
-    expect(filename).toBe(`${name}.mp4`);
+    expect(filename).toBe(`${name}-${videoId}.mp4`);
 
     // cannot start download twice
     await expect(downloader.startDownload(videoId, name)).rejects.toThrow();
