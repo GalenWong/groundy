@@ -6,6 +6,7 @@ import {
   Typography,
   Box,
   makeStyles,
+  CircularProgress,
 } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -38,7 +39,13 @@ interface ImportActionsProps {
   ytid: string;
 }
 
+interface State {
+  downloading: boolean;
+}
+
 const ImportActions = (props: ImportActionsProps) => {
+  const [state, setState] = React.useState<State>({ downloading: false });
+  const { downloading } = state;
   const classes = useStyles();
   const { downloaded, progress, ytid } = props;
 
@@ -46,10 +53,24 @@ const ImportActions = (props: ImportActionsProps) => {
 
   let component;
   if (progress === undefined) {
-    component = (
-      <Button key={2} disabled={downloaded} onClick={() => startDownload(ytid)}>
+    const item = downloading ? (
+      <CircularProgress />
+    ) : (
+      <>
         <GetAppIcon />
         <Typography>Cache</Typography>
+      </>
+    );
+    component = (
+      <Button
+        key={2}
+        disabled={downloaded}
+        onClick={() => {
+          startDownload(ytid);
+          setState({ downloading: true });
+        }}
+      >
+        {item}
       </Button>
     );
   } else {
