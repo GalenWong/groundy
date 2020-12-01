@@ -307,6 +307,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
+    "sanitize-filename": "^1.6.3",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.19.2",
     "ytdl-core": "^4.1.0"

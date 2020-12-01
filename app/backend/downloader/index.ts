@@ -1,3 +1,4 @@
+import sanitize from 'sanitize-filename';
 import ytdl from 'ytdl-core';
 import DownloadManager from './DownloadManager';
 import { FinishCallback, ProgressCallback } from './types';
@@ -25,7 +26,7 @@ class Downloader {
       filter: 'audioonly',
     });
 
-    const filename = `${name}.${audioFormat.container}`;
+    const filename = sanitize(`${name}-${ytid}.${audioFormat.container}`);
 
     const manager = new DownloadManager(ytid, filename, {
       format: audioFormat,
