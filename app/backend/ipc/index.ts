@@ -17,6 +17,7 @@ import isLoggedIn from './isLoggedIn';
 import logout from './logout';
 import newPlaylist from './newPlaylist';
 import removeSongFromPlaylist from './removeSongFromPlaylist';
+import renamePlaylist from './renamePlaylist';
 import startAuth from './startAuth';
 import startDownload from './startDownload';
 
@@ -40,6 +41,7 @@ export enum BackendEndpoints {
   GET_RELATED = 'get-related',
   DOWNLOAD_PLAYLIST = 'download-playlist',
   GET_SONG_STATE = 'get-song-state',
+  RENAME_PLAYLIST = 'rename-playlist',
 }
 
 const endPoints2Handler = {
@@ -62,6 +64,7 @@ const endPoints2Handler = {
   [BackendEndpoints.GET_RELATED]: getRelated,
   [BackendEndpoints.DOWNLOAD_PLAYLIST]: downloadPlaylist,
   [BackendEndpoints.GET_SONG_STATE]: getSongState,
+  [BackendEndpoints.RENAME_PLAYLIST]: renamePlaylist,
 };
 
 type AsyncFunc = (...args: any[]) => Promise<unknown> | void;
