@@ -1,0 +1,27 @@
+import { Playlist } from '../../types';
+import Database from '../database';
+import { notifyError } from '../ipc-renderer';
+import PlaylistModule from '../playlist';
+import startDownload from './startDownload';
+
+/**
+ * id of input playlist can be anything
+ */
+export default async (playlistArg: Playlist) => {
+  const playlistUtil = new PlaylistModule();
+  const db = Database.getExistingInstance();
+  const playlist = await playlistUtil.createPlaylist(playlistArg.name);
+  const downloadAndAddPromises = playlistArg.songs.map(async (s) => {
+    const ytid = s.ytID;
+    const song = await db.getOneSong(ytid);
+    if (song === null || !song.downloaded) {
+      try {
+        await startDownload(ytid);
+      } catch (e) {
+        notifyError(e.message);
+      }
+    }
+    await playlistUtil.addSong(ytid, playlist.id);
+  });
+  await Promise.all(downloadAndAddPromises);
+};

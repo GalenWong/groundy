@@ -9,6 +9,8 @@ import { Playlist, Song, DownloadedSong } from '../../types';
 import { isDownloaded } from '../../utils';
 import Delete from './delete';
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
+import RenameDialog from '../RenameDialog';
+import useRouteRefresh from '../../hooks/useRouteRefresh';
 
 interface PlaylistCardProps {
   list: Playlist;
@@ -33,6 +35,18 @@ export default function PlaylistCard(props: PlaylistCardProps) {
   const classes = useStyles();
   const controls = React.useContext(playerQueueContext);
   const { list } = props;
+  const [renameOpen, setRenameOpen] = React.useState(false);
+
+  const refreshRoute = useRouteRefresh();
+
+  const openRenameDialog = () => {
+    setRenameOpen(true);
+  };
+
+  const closeRenameDialog = () => {
+    setRenameOpen(false);
+    refreshRoute();
+  };
 
   function getDownloaded(sgs: (Song | DownloadedSong)[]): DownloadedSong[] {
     return sgs.filter(isDownloaded);
@@ -58,7 +72,7 @@ export default function PlaylistCard(props: PlaylistCardProps) {
                   </IconButton>
                 </Grid>
                 <Grid item>
-                  <IconButton aria-label="rename">
+                  <IconButton aria-label="rename" onClick={openRenameDialog}>
                     <TextFieldsIcon />
                   </IconButton>
                 </Grid>
@@ -69,6 +83,12 @@ export default function PlaylistCard(props: PlaylistCardProps) {
             </Grid>
           </Grid>
         </CardContent>
+        <RenameDialog
+          open={renameOpen}
+          close={closeRenameDialog}
+          playlistId={list.id}
+          playlistName={list.name}
+        />
       </Card>
     </Grid>
   );

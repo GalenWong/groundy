@@ -52,8 +52,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "Groundy",
+    "appId": "edu.ucla.fall2020.cs130.Groundy",
     "files": [
       "dist/",
       "node_modules/",
@@ -307,9 +307,10 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
+    "sanitize-filename": "^1.6.3",
     "source-map-support": "^0.5.19",
     "typedoc": "^0.19.2",
-    "ytdl-core": "^4.1.0"
+    "ytdl-core": "^4.1.1"
   },
   "devEngines": {
     "node": ">=7.x",
