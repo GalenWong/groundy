@@ -10,7 +10,12 @@ import {
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { Song, DownloadedSong } from '../../types';
-import { getRelated, startDownload, isDownloaded } from '../../utils';
+import {
+  getRelated,
+  startDownload,
+  isDownloaded,
+  getYouTubeSong,
+} from '../../utils';
 import Playlist from '../Playlist';
 
 const useStyles = makeStyles(() =>
@@ -32,6 +37,9 @@ interface State {
 
 export default function FindRelated() {
   const { id }: { id: string } = useParams();
+  const [songDetail, setSongDetail] = useState<Song | DownloadedSong | null>(
+    null
+  );
   const [state, setState] = React.useState<State>({ songs: [] });
   const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
@@ -40,7 +48,9 @@ export default function FindRelated() {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
+      const song = await getYouTubeSong(id);
       const data = await getRelated(id);
+      setSongDetail(song);
       setState({ songs: data });
       setIsLoading(false);
     }
@@ -61,7 +71,8 @@ export default function FindRelated() {
         <Box className={classes.topbar}>
           <Typography className={classes.fillSpace} variant="h4" noWrap>
             Related to:
-            {id}
+            {` `}
+            {songDetail?.title}
           </Typography>
           <Box>
             <Button onClick={() => downloadAll(songs)}>
