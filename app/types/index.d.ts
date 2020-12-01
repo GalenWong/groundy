@@ -31,12 +31,6 @@ export interface Progress {
 }
 
 /**
- * @typeParam ActionVariant
- *
- */
-export type ActionVariant = 'import' | 'playlist';
-
-/**
  * @typeParam DownloadedSong - Used for downloaded songs
  *
  */

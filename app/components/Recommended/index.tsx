@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
+import {
+  Box,
+  Typography,
+  Paper,
+  makeStyles,
+  Button,
+  CircularProgress,
+} from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Playlist from '../Playlist';
 import { DownloadedSong, Song } from '../../types';
@@ -20,15 +27,18 @@ const useStyles = makeStyles({
 
 interface State {
   songs: (DownloadedSong | Song)[];
+  loaded: boolean;
 }
 
 const Recommended = () => {
-  const [state, setState] = React.useState<State>({ songs: [] });
-  const { songs } = state;
+  const [state, setState] = React.useState<State>({ songs: [], loaded: false });
+  const { songs, loaded } = state;
   React.useEffect(() => {
     const getData = async () => {
       getAllRecommendation()
-        .then((s: (DownloadedSong | Song)[]) => setState({ songs: s }))
+        .then((s: (DownloadedSong | Song)[]) =>
+          setState({ songs: s, loaded: true })
+        )
         .catch(() => {});
     };
     getData();
@@ -54,7 +64,8 @@ const Recommended = () => {
           </Button>
         </Box>
       </Box>
-      <Playlist songs={songs} />
+      {loaded && <Playlist songs={songs} />}
+      {!loaded && <CircularProgress />}
     </Paper>
   );
 };
