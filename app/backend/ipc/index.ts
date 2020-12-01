@@ -10,6 +10,7 @@ import getPlaylistInfo from './getPlaylistInfo';
 import getRecommendation from './getRecommendation';
 import getRelated from './getRelated';
 import getSongPath from './getSongPath';
+import getSongState from './getSongState';
 import getYouTubePlaylist from './getYouTubePlaylist';
 import getYouTubeSong from './getYouTubeSong';
 import isLoggedIn from './isLoggedIn';
@@ -38,6 +39,7 @@ export enum BackendEndpoints {
   LOG_OUT = 'log-out',
   GET_RELATED = 'get-related',
   DOWNLOAD_PLAYLIST = 'download-playlist',
+  GET_SONG_STATE = 'get-song-state',
 }
 
 const endPoints2Handler = {
@@ -59,6 +61,7 @@ const endPoints2Handler = {
   [BackendEndpoints.LOG_OUT]: logout,
   [BackendEndpoints.GET_RELATED]: getRelated,
   [BackendEndpoints.DOWNLOAD_PLAYLIST]: downloadPlaylist,
+  [BackendEndpoints.GET_SONG_STATE]: getSongState,
 };
 
 type AsyncFunc = (...args: any[]) => Promise<unknown> | void;

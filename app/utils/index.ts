@@ -276,6 +276,12 @@ const isDownloaded = (
   return false;
 };
 
+const getSongState = async (
+  ytid: string
+): Promise<Song | DownloadedSong | null> => {
+  return ipcRenderer.invoke(BackendEndpoints.GET_SONG_STATE, ytid);
+};
+
 export {
   isLoggedIn,
   startAuth,
@@ -295,4 +301,5 @@ export {
   deleteSong,
   getSongPath,
   isDownloaded,
+  getSongState,
 };
