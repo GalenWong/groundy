@@ -6,7 +6,6 @@ import {
   Typography,
   Box,
   makeStyles,
-  CircularProgress,
 } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -53,15 +52,20 @@ const ImportActions = (props: ImportActionsProps) => {
 
   let component;
   if (progress === undefined) {
-    const item = downloading ? (
-      <CircularProgress />
+    component = downloading ? (
+      <Box className={classes.fillWidth}>
+        <Box display="flex">
+          <Typography
+            className={`${classes.grow} ${classes.tinyFont}`}
+            variant="caption"
+          />
+          <Typography className={classes.tinyFont} variant="caption">
+            --%
+          </Typography>
+        </Box>
+        <LinearProgress variant="indeterminate" />
+      </Box>
     ) : (
-      <>
-        <GetAppIcon />
-        <Typography>Cache</Typography>
-      </>
-    );
-    component = (
       <Button
         key={2}
         disabled={downloaded}
@@ -70,7 +74,8 @@ const ImportActions = (props: ImportActionsProps) => {
           setState({ downloading: true });
         }}
       >
-        {item}
+        <GetAppIcon />
+        <Typography>Cache</Typography>
       </Button>
     );
   } else {
