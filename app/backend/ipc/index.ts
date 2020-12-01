@@ -1,7 +1,9 @@
 import { ipcMain } from 'electron';
+import { notifyError } from '../ipc-renderer';
 import addSongToPlaylist from './addSongToPlaylist';
 import deletePlaylist from './deletePlaylist';
 import deleteSong from './deleteSong';
+import downloadPlaylist from './downloadPlaylist';
 import getAllDownloads from './getAllDownloads';
 import getAllPlaylists from './getAllPlaylists';
 import getPlaylistInfo from './getPlaylistInfo';
@@ -35,6 +37,7 @@ export enum BackendEndpoints {
   START_AUTH = 'start-auth',
   LOG_OUT = 'log-out',
   GET_RELATED = 'get-related',
+  DOWNLOAD_PLAYLIST = 'download-playlist',
 }
 
 const endPoints2Handler = {
@@ -55,16 +58,29 @@ const endPoints2Handler = {
   [BackendEndpoints.START_AUTH]: startAuth,
   [BackendEndpoints.LOG_OUT]: logout,
   [BackendEndpoints.GET_RELATED]: getRelated,
+  [BackendEndpoints.DOWNLOAD_PLAYLIST]: downloadPlaylist,
 };
 
-const ipcEndpointWrapper = <T extends CallableFunction>(func: T) => (
+type AsyncFunc = (...args: any[]) => Promise<unknown> | void;
+
+const ipcEndpointWrapper = (func: AsyncFunc) => (
   _e: Event,
   ...args: unknown[]
 ) => func(...args);
 
+const ipcErrorHandler = (func: AsyncFunc) => async (...args: unknown[]) => {
+  try {
+    const result = await func(...args);
+    return result;
+  } catch (e) {
+    notifyError(e.message);
+    throw e;
+  }
+};
+
 const registerEndpoints = () => {
   Object.entries(endPoints2Handler).forEach(([endpoint, handler]) => {
-    ipcMain.handle(endpoint, ipcEndpointWrapper(handler));
+    ipcMain.handle(endpoint, ipcEndpointWrapper(ipcErrorHandler(handler)));
   });
 };
 

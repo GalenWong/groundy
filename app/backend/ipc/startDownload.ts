@@ -27,6 +27,12 @@ export default async (ytid: string) => {
     });
   }
 
+  frontend.notifyProgress({
+    ytID: song.ytID,
+    current: BigInt(0),
+    total: BigInt(1),
+  });
+
   downloader.addProgressListener(song.ytID, async (stats) => {
     frontend.notifyProgress({
       ytID: song.ytID,
