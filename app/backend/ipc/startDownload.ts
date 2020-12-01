@@ -43,5 +43,6 @@ export default async (ytid: string) => {
 
   downloader.addFinishDownloadListener(song.ytID, async () => {
     await db.updateSong(ytid, { downloaded: true, fileName: filename });
+    frontend.notifyComplete(ytid);
   });
 };

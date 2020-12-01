@@ -3,8 +3,8 @@ import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Playlist from '../Playlist';
 import { DownloadedSong, Song } from '../../types';
-import { getAllDownloads } from '../../utils';
-import { isDownloaded } from '../SongCard';
+import { getAllDownloads, isDownloaded } from '../../utils';
+
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
 
 const useStyles = makeStyles({
@@ -22,9 +22,6 @@ const useStyles = makeStyles({
 interface State {
   songs: (DownloadedSong | Song)[];
 }
-
-// example download
-// {'hC8CH0Z3L54': {ytID: 'hC8CH0Z3L54', total: BigInt(20000), current: BigInt(11000)}}
 
 const Downloaded = () => {
   const [state, setState] = React.useState<State>({ songs: [] });
