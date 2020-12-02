@@ -286,6 +286,10 @@ const renamePlaylist = async (playlistId: string, name: string) => {
   await ipcRenderer.invoke(BackendEndpoints.RENAME_PLAYLIST, playlistId, name);
 };
 
+const downloadPlaylist = async (playlist: Playlist) => {
+  await ipcRenderer.invoke(BackendEndpoints.DOWNLOAD_PLAYLIST, playlist);
+};
+
 export {
   isLoggedIn,
   startAuth,
@@ -307,4 +311,5 @@ export {
   isDownloaded,
   getSongState,
   renamePlaylist,
+  downloadPlaylist,
 };

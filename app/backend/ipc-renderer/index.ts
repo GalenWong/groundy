@@ -1,4 +1,5 @@
 import { BrowserWindow } from 'electron';
+import { throttle } from 'throttle-debounce';
 import { ERROR_RENDERER_EVENT } from '../../hooks/useIpcErrorNotify';
 import { PROGRESS_RENDERER_EVENT } from '../../hooks/useIpcProgresses';
 import { Progress } from '../../types';
@@ -15,8 +16,10 @@ export const notifyError = (error: string) => {
   }
 };
 
-export const notifyProgress = (progress: Progress) => {
+const notifyProgressFunc = (progress: Progress) => {
   if (mainWindow) {
     mainWindow.webContents.send(PROGRESS_RENDERER_EVENT, progress);
   }
 };
+
+export const notifyProgress = throttle(300, false, notifyProgressFunc);

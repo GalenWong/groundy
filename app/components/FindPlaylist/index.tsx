@@ -11,6 +11,7 @@ const useStyles = makeStyles(() =>
     },
     padded: {
       padding: '10px',
+      marginBottom: '10px',
     },
   })
 );

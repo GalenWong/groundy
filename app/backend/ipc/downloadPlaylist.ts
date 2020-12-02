@@ -21,7 +21,14 @@ export default async (playlistArg: Playlist) => {
         notifyError(e.message);
       }
     }
-    await playlistUtil.addSong(ytid, playlist.id);
+    // await playlistUtil.addSong(ytid, playlist.id);
   });
   await Promise.all(downloadAndAddPromises);
+
+  // add song one by one to prevent race
+  // eslint-disable-next-line no-restricted-syntax
+  for (const song of playlistArg.songs) {
+    // eslint-disable-next-line no-await-in-loop
+    await playlistUtil.addSong(song.ytID, playlist.id);
+  }
 };

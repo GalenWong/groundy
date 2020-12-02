@@ -8,6 +8,7 @@ import { resolveSongFromDb } from './utils';
 export default async (ytid: string) => {
   const db = Database.getExistingInstance();
   const song = await db.getOneSong(ytid);
+  console.log('get song state');
   if (song === null) return null;
   return resolveSongFromDb(song);
 };

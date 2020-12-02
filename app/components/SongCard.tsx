@@ -60,7 +60,9 @@ function useFreshSongState(
         setSong(newSongState);
       }
     };
-    refreshSong();
+    // check only when it is 100%
+    if (progress && progress.current === progress.total && !song.downloaded)
+      refreshSong();
   }, [progress, song]);
 
   return song;

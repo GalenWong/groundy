@@ -38,6 +38,7 @@ export default class DownloadManager {
 
     this.ytdlInst.on('end', () => {
       this.notifyFinish();
+      this.notifyProgress(100, 100);
     });
   }
 
