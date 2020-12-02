@@ -60,9 +60,13 @@ function useFreshSongState(
         setSong(newSongState);
       }
     };
-    // check only when it is 100%
-    if (progress && progress.current === progress.total && !song.downloaded)
-      refreshSong();
+    const timer = setInterval(() => {
+      if (progress && !song.downloaded) refreshSong();
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, [progress, song]);
 
   return song;
