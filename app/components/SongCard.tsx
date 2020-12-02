@@ -11,6 +11,7 @@ import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
 import FindRelatedActions from './FindRelatedActions';
 import { Song, DownloadedSong, Progress } from '../types';
+import { getSongState } from '../utils';
 
 const useStyles = makeStyles({
   card: {
@@ -41,10 +42,42 @@ export function isDownloaded(
   return false;
 }
 
+function useFreshSongState(
+  propSong: Song | DownloadedSong,
+  progress?: Progress
+) {
+  const [song, setSong] = React.useState<Song | DownloadedSong>(propSong);
+
+  React.useEffect(() => {
+    setSong(propSong);
+  }, [propSong]);
+
+  React.useEffect(() => {
+    const refreshSong = async () => {
+      const newSongState = await getSongState(song.ytID);
+      if (newSongState === null) return;
+      if (newSongState.downloaded !== song.downloaded) {
+        setSong(newSongState);
+      }
+    };
+    const timer = setInterval(() => {
+      if (progress && !song.downloaded) refreshSong();
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [progress, song]);
+
+  return song;
+}
+
 const SongCard = (props: SongCardProps) => {
   const classes = useStyles();
 
-  const { song, progress } = props;
+  const { song: propSong, progress } = props;
+
+  const song = useFreshSongState(propSong, progress);
   const { title, channel, downloaded, ytID } = song;
 
   return (

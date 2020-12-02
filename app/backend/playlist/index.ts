@@ -63,4 +63,11 @@ export default class PlaylistModule {
   async removePlaylist(id: string): Promise<void> {
     await this.database.deletePlaylist(id);
   }
+
+  async renamePlaylist(id: string, name: string) {
+    const playlist = await this.database.getOnePlaylist(id);
+    if (!playlist)
+      throw new Error(`playlist does not exist. playlistId = ${id}`);
+    await this.database.updatePlaylist(id, { name });
+  }
 }

@@ -19,6 +19,7 @@ import SelectPlaylist from './SelectPlaylist';
 import { playerQueueContext } from '../containers/PlayerWrapper/index';
 import { DownloadedSong } from '../types';
 import { deleteSong } from '../utils/index';
+import useRouteRefresh from '../hooks/useRouteRefresh';
 
 interface PlaylistActionProps {
   song: DownloadedSong;
@@ -29,6 +30,7 @@ const PlaylistActions = (props: PlaylistActionProps) => {
   const { song } = props;
   const { open, playlist } = state;
   const controls = React.useContext(playerQueueContext);
+  const refreshRoute = useRouteRefresh();
 
   const openDialog = () => {
     setState({ open: true, playlist: state.playlist });
@@ -42,9 +44,10 @@ const PlaylistActions = (props: PlaylistActionProps) => {
     setState({ open: false, playlist: false });
   };
 
-  const handleDelete = () => {
-    deleteSong(song.ytID);
+  const handleDelete = async () => {
+    await deleteSong(song.ytID);
     closeDialog();
+    refreshRoute();
   };
 
   return (

@@ -9,10 +9,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { newPlaylist } from '../../utils';
+import useRouteRefresh from '../../hooks/useRouteRefresh';
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
   const [newName, setNewName] = React.useState('New Playlist Name');
+
+  const refreshRoute = useRouteRefresh();
 
   const handleClickOpen = () => {
     setNewName('New Playlist Name');
@@ -26,6 +29,7 @@ export default function FormDialog() {
   const handleCreate = async () => {
     await newPlaylist(newName);
     setOpen(false);
+    refreshRoute();
   };
 
   const handleTyping = async (e: React.ChangeEvent<HTMLInputElement>) =>

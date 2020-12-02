@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { CircularProgress } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  makeStyles,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import { Playlist } from '../../types';
 import PlaylistComponent from '../Playlist';
-import { getYouTubePlaylist } from '../../utils';
+import { downloadPlaylist, getYouTubePlaylist } from '../../utils';
+
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    padding: theme.spacing(1.5),
+  },
+}));
 
 interface SearchProps {
   url: string;
@@ -24,6 +37,7 @@ export default function SearchPlaylist(props: SearchProps) {
     songs: [],
   });
   const [isLoading, setIsLoading] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     async function fetchData() {
@@ -35,9 +49,29 @@ export default function SearchPlaylist(props: SearchProps) {
     fetchData();
   }, [url]);
 
+  const download = async () => {
+    await downloadPlaylist(playlist);
+  };
+
   return isLoading ? (
     <CircularProgress />
   ) : (
-    <PlaylistComponent songs={playlist.songs} />
+    <Paper>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        className={classes.toolbar}
+      >
+        <Typography variant="h4" noWrap>
+          Showing Playlist:
+          {` `}
+          {playlist.name}
+        </Typography>
+        <Button variant="outlined" onClick={download}>
+          Download Playlist
+        </Button>
+      </Box>
+      <PlaylistComponent songs={playlist.songs} />
+    </Paper>
   );
 }
