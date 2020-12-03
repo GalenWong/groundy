@@ -11,7 +11,7 @@ import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
 import FindRelatedActions from './FindRelatedActions';
 import { Song, DownloadedSong, Progress } from '../types';
-import { getSongState, isDownloaded } from '../utils';
+import { getSongState } from '../utils';
 
 const useStyles = makeStyles({
   card: {
@@ -30,7 +30,16 @@ const useStyles = makeStyles({
 
 interface SongCardProps {
   song: Song | DownloadedSong;
-  progress: Progress;
+  progress?: Progress;
+}
+
+export function isDownloaded(
+  thing: Song | DownloadedSong
+): thing is DownloadedSong {
+  if ((thing as DownloadedSong).filePath) {
+    return true;
+  }
+  return false;
 }
 
 function useFreshSongState(
@@ -57,7 +66,7 @@ function useFreshSongState(
   return song;
 }
 
-const SongCard = React.memo((props: SongCardProps) => {
+const SongCard = (props: SongCardProps) => {
   const classes = useStyles();
 
   const { song: propSong, progress } = props;
@@ -88,7 +97,10 @@ const SongCard = React.memo((props: SongCardProps) => {
       <FindRelatedActions song={song} />
     </Card>
   );
-});
+};
 
-SongCard.displayName = 'SongCard';
 export default SongCard;
+
+SongCard.defaultProps = {
+  progress: undefined,
+};

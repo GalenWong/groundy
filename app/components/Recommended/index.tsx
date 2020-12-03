@@ -3,7 +3,8 @@ import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Playlist from '../Playlist';
 import { DownloadedSong, Song } from '../../types';
-import { getAllRecommendation, startDownload, isDownloaded } from '../../utils';
+import { getAllRecommendation, startDownload } from '../../utils';
+import { isDownloaded } from '../SongCard';
 
 const useStyles = makeStyles({
   topbar: {
