@@ -3,8 +3,7 @@ import { Box, Typography, Paper, makeStyles, Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Playlist from '../Playlist';
 import { DownloadedSong, Song } from '../../types';
-import { getAllDownloads } from '../../utils';
-import { isDownloaded } from '../SongCard';
+import { getAllDownloads, isDownloaded } from '../../utils';
 import { playerQueueContext } from '../../containers/PlayerWrapper/index';
 
 const useStyles = makeStyles({

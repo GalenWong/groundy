@@ -11,7 +11,7 @@ import PlaylistActions from './PlaylistActions';
 import ImportActions from './ImportActions';
 import FindRelatedActions from './FindRelatedActions';
 import { Song, DownloadedSong, Progress } from '../types';
-import { getSongState } from '../utils';
+import { getSongState, isDownloaded } from '../utils';
 
 const useStyles = makeStyles({
   card: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles({
     paddingBottom: '5px',
   },
   flexItem: {
+    flex: '1 1 auto',
     minWidth: '200px',
   },
 });
@@ -31,15 +32,6 @@ const useStyles = makeStyles({
 interface SongCardProps {
   song: Song | DownloadedSong;
   progress?: Progress;
-}
-
-export function isDownloaded(
-  thing: Song | DownloadedSong
-): thing is DownloadedSong {
-  if ((thing as DownloadedSong).filePath) {
-    return true;
-  }
-  return false;
 }
 
 function useFreshSongState(
