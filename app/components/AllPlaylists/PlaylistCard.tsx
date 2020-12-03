@@ -1,6 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, Grid, IconButton } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import {
+  Card,
+  CardContent,
+  IconButton,
+  CardActionArea,
+  CardActions,
+  Box,
+  Typography,
+} from '@material-ui/core';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -28,11 +36,25 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       color: theme.palette.text.secondary,
     },
+    card: {
+      display: 'flex',
+      height: '50px',
+    },
+    content: {
+      display: 'flex',
+      paddingTop: '5px',
+      paddingBottom: '5px',
+    },
+    flexItem: {
+      flex: '1 1 auto',
+      minWidth: '200px',
+    },
   })
 );
 
 export default function PlaylistCard(props: PlaylistCardProps) {
   const classes = useStyles();
+  const history = useHistory();
   const controls = React.useContext(playerQueueContext);
   const { list } = props;
   const [renameOpen, setRenameOpen] = React.useState(false);
@@ -55,41 +77,32 @@ export default function PlaylistCard(props: PlaylistCardProps) {
     controls.makePlaylistQueue(getDownloaded(list.songs));
 
   return (
-    <Grid item xs={12}>
-      <Card className={classes.playlistCard}>
-        <CardContent>
-          <Grid container justify="space-between" alignItems="center">
-            <Grid item>
-              <Link to={`${routes['Show Playlist']}/${list.id}`}>
-                {list.name}
-              </Link>
-            </Grid>
-            <Grid item>
-              <Grid container>
-                <Grid item>
-                  <IconButton aria-label="playPlaylist" onClick={playPlaylist}>
-                    <PlaylistPlayIcon />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <IconButton aria-label="rename" onClick={openRenameDialog}>
-                    <TextFieldsIcon />
-                  </IconButton>
-                </Grid>
-                <Grid item>
-                  <Delete playlistID={list.id} />
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+    <Card variant="outlined" className={classes.card}>
+      <CardActionArea
+        className={classes.flexItem}
+        onClick={() => history.push(`${routes['Show Playlist']}/${list.id}`)}
+      >
+        <CardContent className={classes.content}>
+          <Box maxWidth={1}>
+            <Typography noWrap>{list.name}</Typography>
+          </Box>
         </CardContent>
-        <RenameDialog
-          open={renameOpen}
-          close={closeRenameDialog}
-          playlistId={list.id}
-          playlistName={list.name}
-        />
-      </Card>
-    </Grid>
+      </CardActionArea>
+      <CardActions>
+        <IconButton aria-label="playPlaylist" onClick={playPlaylist}>
+          <PlaylistPlayIcon />
+        </IconButton>
+        <IconButton aria-label="rename" onClick={openRenameDialog}>
+          <TextFieldsIcon />
+        </IconButton>
+        <Delete playlistID={list.id} />
+      </CardActions>
+      <RenameDialog
+        open={renameOpen}
+        close={closeRenameDialog}
+        playlistId={list.id}
+        playlistName={list.name}
+      />
+    </Card>
   );
 }

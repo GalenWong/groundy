@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { CircularProgress, Grid, Typography, Paper } from '@material-ui/core';
+import {
+  CircularProgress,
+  Grid,
+  Typography,
+  Paper,
+  List,
+} from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { getAllPlaylists } from '../../utils';
 import { Playlist } from '../../types';
@@ -51,11 +57,11 @@ export default function AllPlaylists() {
           <Add />
         </Grid>
         <Grid item xs={12}>
-          <Grid container>
+          <List>
             {allLists.map((list: Playlist) => (
               <PlaylistCard key={list.id} list={list} />
             ))}
-          </Grid>
+          </List>
         </Grid>
       </Grid>
     </Paper>
