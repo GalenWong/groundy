@@ -100,9 +100,9 @@ Directory Structure of Groundy
 - database: contains database APIs for songs, playlists and tokens
 - downloader: to download songs & track progress
 - ipc & ipc-renderder: for backend-to-frontend and frontend-to-backend communication
-- youtubeData: to get recommendations from YouTube and
-- playlist: contain APIs for playlist module
-- SongStore: contains APIS for songs
+- youtubeData: to get recommendations from YouTube and fetch meta data for videos and playlists
+- playlist: contain APIs for playlist module to manage the local playlists
+- SongStore: contains APIs for interacting with the file system to store songs
 
 `/components` includes logical React components for the frontend
 
