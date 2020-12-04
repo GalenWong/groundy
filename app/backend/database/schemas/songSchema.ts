@@ -1,3 +1,6 @@
+/**
+ * what a song looks like for the backend
+ */
 export interface DbSong {
   ytid: string;
   title: string;
@@ -8,6 +11,9 @@ export interface DbSong {
   key: string;
 }
 
+/**
+ * DB schema for Song
+ */
 const songSchema = {
   type: 'object',
   properties: {

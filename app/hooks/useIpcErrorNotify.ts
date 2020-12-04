@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 
 export const ERROR_RENDERER_EVENT = 'error-renderer-event';
 
+/**
+ * A hook function that catches errors from the backend
+ * and handle them and show them on the frontend
+ *
+ */
 function useIpcErrorNotify() {
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {

@@ -20,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
 interface SearchProps {
   url: string;
 }
-
+/**
+ * Parse the id of a public playlist out of its url
+ *
+ * @param {string} url - the given url
+ * @returns {string} playlistID - id of the public playlist
+ */
 function parsePlaylistID(url: string): string {
   const m = url.match(/playlist\?list=(.*)/);
   if (m) {
@@ -29,6 +34,10 @@ function parsePlaylistID(url: string): string {
   return '';
 }
 
+/**
+ * Component that display a playlist's songs as search results.
+ * Take a yt url as input.
+ */
 export default function SearchPlaylist(props: SearchProps) {
   const { url } = props;
   const [playlist, setPlaylist] = useState<Playlist>({

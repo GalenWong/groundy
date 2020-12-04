@@ -1,3 +1,6 @@
+/**
+ * DB schema for token
+ */
 const tokenSchema = {
   type: 'object',
   properties: {

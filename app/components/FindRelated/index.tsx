@@ -35,6 +35,12 @@ interface State {
   songs: (DownloadedSong | Song)[];
 }
 
+/**
+ * Page component display related songs given a song.
+ * For all songs in the app, users can click the locator button
+ * and find songs that are related.
+ *
+ */
 export default function FindRelated() {
   const { id }: { id: string } = useParams();
   const [songDetail, setSongDetail] = useState<Song | DownloadedSong | null>(

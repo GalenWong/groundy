@@ -5,7 +5,10 @@ import PlaylistModule from '../playlist';
 import startDownload from './startDownload';
 
 /**
+ * Download a playlist
  * id of input playlist can be anything
+ * @async
+ * @param {Playlist} playlist - the playlist to be downloaded
  */
 export default async (playlistArg: Playlist) => {
   const playlistUtil = new PlaylistModule();

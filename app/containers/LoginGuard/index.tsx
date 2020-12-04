@@ -4,6 +4,10 @@ import { loginContext } from '../LoginStateWrapper';
 
 export type LoginGuardProps = React.ComponentProps<'div'>;
 
+/**
+ * Reminds users to login when they try actions that require logins
+ * wraps on components that require login
+ */
 export default function LoginGuard({ children }: LoginGuardProps) {
   const { isLoggedIn } = useContext(loginContext);
   if (!isLoggedIn) {

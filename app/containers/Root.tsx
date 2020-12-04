@@ -16,6 +16,12 @@ type Props = {
   history: History;
 };
 
+/**
+ * Wrapper component that handles many wrapping including:
+ * routing,
+ * error notifications,
+ * and music player
+ */
 const Root = ({ store, history }: Props) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>

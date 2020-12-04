@@ -6,6 +6,13 @@ import * as yt from '../youtubeData';
 import * as frontend from '../ipc-renderer';
 import { ProgressCallback } from '../downloader/types';
 
+/**
+ * Start downloading a song
+ *
+ * @async
+ * @param {string} ytID - id of a song
+ * @returns {Promise<void>} - a Promise that resolves to void
+ */
 export default async (ytid: string) => {
   const db = Database.getExistingInstance();
   const dbSong = await db.getOneSong(ytid);

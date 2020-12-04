@@ -2,6 +2,12 @@ import PlaylistModule from '../playlist/index';
 import { Playlist } from '../../types/index';
 import { resolveSongFromDb } from './utils';
 
+/**
+ * Get all local playlists
+ *
+ * @async
+ * @returns {Promise<Playlist[]>} - Promise that resolves to an array of local playlists
+ */
 export default async (): Promise<Playlist[]> => {
   const playlistModule = new PlaylistModule();
   const playlists = await playlistModule.getAllPlaylists();

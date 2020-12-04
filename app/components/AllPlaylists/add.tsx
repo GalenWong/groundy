@@ -11,7 +11,11 @@ import AddIcon from '@material-ui/icons/Add';
 import { newPlaylist } from '../../utils';
 import useRouteRefresh from '../../hooks/useRouteRefresh';
 
-export default function FormDialog() {
+/**
+ * Button component that once clicked, will prompt users
+ * type the name of the newly created playlsit.
+ */
+export default function Add() {
   const [open, setOpen] = React.useState(false);
   const [newName, setNewName] = React.useState('New Playlist Name');
 

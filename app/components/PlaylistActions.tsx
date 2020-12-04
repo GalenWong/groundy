@@ -25,6 +25,13 @@ interface PlaylistActionProps {
   song: DownloadedSong;
 }
 
+/**
+ * Action component for a downloaded Song.
+ * Supports adding to a playlist,
+ * delete, and add to the play queue.
+ * Take a song as an input.
+ *
+ */
 const PlaylistActions = (props: PlaylistActionProps) => {
   const [state, setState] = React.useState({ open: false, playlist: false });
   const { song } = props;

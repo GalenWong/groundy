@@ -8,7 +8,7 @@ import { Playlist, DownloadedSong, Song } from '../types';
  * Check Google Account Login Status
  *
  * @async
- * @returns {Promise<boolean>}
+ * @returns {Promise<boolean>} - Promise that resolves to a boolean
  */
 const isLoggedIn = async (): Promise<boolean> => {
   return ipcRenderer.invoke(BackendEndpoints.IS_LOGGED_IN);
@@ -36,7 +36,7 @@ const logout = async () => {
  * Get all downloaded songs in an array
  *
  * @async
- * @returns {Promise<Song[]>}
+ * @returns {Promise<(Song | DownloadedSong)[]>} - Promise that resolves to an array of songs downloaded
  */
 const getAllDownloads = async (): Promise<(Song | DownloadedSong)[]> => {
   const songList = await ipcRenderer.invoke(BackendEndpoints.GET_ALL_DOWNLOADS);
@@ -47,7 +47,7 @@ const getAllDownloads = async (): Promise<(Song | DownloadedSong)[]> => {
  * Get an array of songs based on user account
  *
  * @async
- * @returns {Promise<Song[]>}
+ * @returns {(Promise<Song | DownloadedSong)[]>} - Promise that resolves to an array of recommended songs
  */
 const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
   const recommendationList = await ipcRenderer.invoke(
@@ -60,7 +60,8 @@ const getAllRecommendation = async (): Promise<(DownloadedSong | Song)[]> => {
  * Get an array of related songs based on a ytid
  *
  * @async
- * @returns {Promise<Song[]>}
+ * @param {string} ytid - ytid of the song
+ * @returns {Promise<(Downloaded | Song)[]>} - Promise that resolves to an array of related songs
  */
 const getRelated = async (ytid: string): Promise<(DownloadedSong | Song)[]> => {
   const relatedList = await ipcRenderer.invoke(
@@ -75,7 +76,7 @@ const getRelated = async (ytid: string): Promise<(DownloadedSong | Song)[]> => {
  *
  * @async
  * @param {string} playlistID - a public playlist id
- * @returns {Promise<Playlist>} - Promise that resolves to a Playlist
+ * @returns {Promise<Playlist>} - Promise that resolves to a YT Playlist
  */
 const getYouTubePlaylist = async (playlistID: string): Promise<Playlist> => {
   const publicPlaylist = await ipcRenderer.invoke(
@@ -90,7 +91,7 @@ const getYouTubePlaylist = async (playlistID: string): Promise<Playlist> => {
  *
  * @async
  * @param {string} songID - ID of a public song
- * @returns {Promise<Song>} - Promise that resolves to a Song
+ * @returns {Promise<Song | Downloaded>} - Promise that resolves to a Song or DownloadedSong
  */
 const getYouTubeSong = async (
   songID: string
@@ -106,7 +107,7 @@ const getYouTubeSong = async (
  * Get all local playlists
  *
  * @async
- * @returns {Promise<Playlist[]>}
+ * @returns {Promise<Playlist[]>} - Promise that resolves to an array of local playlists
  */
 const getAllPlaylists = async (): Promise<Playlist[]> => {
   const allPlaylists = await ipcRenderer.invoke(
@@ -276,16 +277,34 @@ const isDownloaded = (
   return false;
 };
 
+/**
+ * See if a song is downloaded
+ *
+ * @async
+ * @param {string} ytid - ytid of a song
+ * @returns {Promise<Song | DownloadedSong | null>} - a song object or nonexistence
+ */
 const getSongState = async (
   ytid: string
 ): Promise<Song | DownloadedSong | null> => {
   return ipcRenderer.invoke(BackendEndpoints.GET_SONG_STATE, ytid);
 };
 
+/**
+ * Rename a playlist
+ * @async
+ * @param {string} playlistId - id of the renaming list
+ * @param {string} name - new name
+ */
 const renamePlaylist = async (playlistId: string, name: string) => {
   await ipcRenderer.invoke(BackendEndpoints.RENAME_PLAYLIST, playlistId, name);
 };
 
+/**
+ * Download a playlist
+ * @async
+ * @param {Playlist} playlist - the playlist to be downloaded
+ */
 const downloadPlaylist = async (playlist: Playlist) => {
   await ipcRenderer.invoke(BackendEndpoints.DOWNLOAD_PLAYLIST, playlist);
 };

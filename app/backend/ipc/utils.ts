@@ -3,6 +3,14 @@ import { DownloadedSong, Song } from '../../types';
 import Database from '../database';
 import SongStore from '../SongStore';
 
+/**
+ * Util function that resolves a backend song-like object
+ * to Song/DownloadedSong type
+ *
+ * @async
+ * @param - a song-like object usually returned from backend functions
+ * @returns {Promise<(Song | DownloadedSong)>} - Promise that resolves to a Song or DownloadedSong
+ */
 const resolveSongFromDb = async (song: {
   ytID: string;
   title: string;

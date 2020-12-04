@@ -4,6 +4,11 @@ import { Progress } from '../types';
 
 export const PROGRESS_RENDERER_EVENT = 'progress-renderer-event';
 
+/**
+ * A hook function to get progresses of downloading songs
+ *
+ * @returns {Record<string, Progress>} - downloading progresses for songs
+ */
 function useIpcProgresses() {
   const [progresses, setProgresses] = useState<Record<string, Progress>>({});
   useEffect(() => {

@@ -21,6 +21,9 @@ import renamePlaylist from './renamePlaylist';
 import startAuth from './startAuth';
 import startDownload from './startDownload';
 
+/**
+ * All the endpoint functions
+ */
 export enum BackendEndpoints {
   IS_LOGGED_IN = 'is-user-logged-in',
   GET_ALL_DOWNLOADS = 'get-all-downloads',
@@ -69,11 +72,23 @@ const endPoints2Handler = {
 
 type AsyncFunc = (...args: any[]) => Promise<unknown> | void;
 
+/**
+ * Wrapper for an ipc endpoint
+ *
+ * @param {AsyncFunc} func - IPC endpoint to be wrapped
+ * @returns {func} - a wrapped endpoint
+ */
 const ipcEndpointWrapper = (func: AsyncFunc) => (
   _e: Event,
   ...args: unknown[]
 ) => func(...args);
 
+/**
+ * Wrapper that provides error handling for an ipc function
+ *
+ * @param {AsyncFunc} func - IPC function to be wrapped
+ * @returns {func} - a wrapped function
+ */
 const ipcErrorHandler = (func: AsyncFunc) => async (...args: unknown[]) => {
   try {
     const result = await func(...args);
@@ -84,6 +99,11 @@ const ipcErrorHandler = (func: AsyncFunc) => async (...args: unknown[]) => {
   }
 };
 
+/**
+ * A function that register all endpoints for the ipcMain process
+ *
+ * @returns {void} - void
+ */
 const registerEndpoints = () => {
   Object.entries(endPoints2Handler).forEach(([endpoint, handler]) => {
     ipcMain.handle(endpoint, ipcEndpointWrapper(ipcErrorHandler(handler)));

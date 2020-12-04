@@ -42,6 +42,11 @@ interface State {
   downloading: boolean;
 }
 
+/**
+ * Action component for an uncached Song.
+ * Supports Preview, Download, and see download progress.
+ * Takes downloaded, progress states, and a ytid as inputs.
+ */
 const ImportActions = (props: ImportActionsProps) => {
   const [state, setState] = React.useState<State>({ downloading: false });
   const { downloading } = state;

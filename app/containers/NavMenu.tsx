@@ -18,6 +18,10 @@ interface RoutesObject {
 }
 const routes: RoutesObject = routesJSON;
 
+/**
+ * All the icons for all pages
+ * to be shown on the navigation menu bar
+ */
 const icons: JSX.Element[] = [
   <HomeIcon key="home" />,
   <QueueMusicOutlinedIcon key="all" />,
@@ -28,6 +32,11 @@ const icons: JSX.Element[] = [
   <SettingsOutlinedIcon key="setting" />,
 ];
 
+/**
+ * Returns the NavMenu component
+ * that's on the left of the screen
+ * providing navigations to all pages
+ */
 export default function NavMenu() {
   const routesArray = Object.keys(routes);
   return (

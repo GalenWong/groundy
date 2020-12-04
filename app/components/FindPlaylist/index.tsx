@@ -16,6 +16,10 @@ const useStyles = makeStyles(() =>
   })
 );
 
+/**
+ * The Find Playlist page.
+ * Allows user to paste a playlist url and see its songs in the app.
+ */
 export default function FindPlaylist() {
   const [url, setUrl] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);

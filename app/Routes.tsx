@@ -20,6 +20,10 @@ interface RoutesObject {
 }
 const routes: RoutesObject = routesJSON;
 
+/**
+ * Wrapper that handles routing for the app
+ * @returns - wrapped pages based on routes
+ */
 export default function Routes() {
   return (
     <App>

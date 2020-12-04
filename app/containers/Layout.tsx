@@ -12,6 +12,9 @@ import { IconButton } from '@material-ui/core';
 import NavMenu from './NavMenu';
 import LoginButton from '../components/LoginButton';
 
+/**
+ * Width of the left menu bar
+ */
 const drawerWidth = 220;
 
 interface Location {
@@ -20,6 +23,9 @@ interface Location {
 
 export type LayoutProps = React.ComponentProps<'div'>;
 
+/**
+ * Generates styles for components
+ */
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -52,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * A wrapper component that organizes the navigation and content of the app
+ */
 export default function Layout({ children }: LayoutProps) {
   const classes = useStyles();
   const history = useHistory();

@@ -14,6 +14,10 @@ interface FindRelatedActionProps {
   song: Song | DownloadedSong;
 }
 
+/**
+ * Button that provides the FindRelated feature.
+ * Take a song as an input.
+ */
 const FindRelatedActions = (props: FindRelatedActionProps) => {
   const { song } = props;
   return (

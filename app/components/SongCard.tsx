@@ -64,6 +64,11 @@ function useFreshSongState(
   return song;
 }
 
+/**
+ * A Song card that shows Song info and comes with different actions dependeing on
+ * if it's downloaded.
+ * Takes a Song object as input.
+ */
 const SongCard = (props: SongCardProps) => {
   const classes = useStyles();
 

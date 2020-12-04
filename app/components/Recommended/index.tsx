@@ -29,6 +29,11 @@ interface State {
   loaded: boolean;
 }
 
+/**
+ * Page component that fetches recommended songs and display them.
+ * Display recommended songs based on the login user's preference.
+ *
+ */
 const Recommended = () => {
   const [state, setState] = React.useState<State>({ songs: [], loaded: false });
   const { songs, loaded } = state;

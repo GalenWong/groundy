@@ -2,6 +2,13 @@ import Database from '../database';
 import PlaylistModule from '../playlist';
 import SongStore from '../SongStore';
 
+/**
+ * Delete a local song
+ *
+ * @async
+ * @param {string} ytID - id of a song
+ * @returns {Promise<void>} - Promise that resolves to void
+ */
 export default async (ytid: string) => {
   const db = Database.getExistingInstance();
   const song = await db.getOneSong(ytid);

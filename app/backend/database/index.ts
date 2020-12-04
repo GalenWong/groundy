@@ -11,15 +11,30 @@ import playlistSchema, {
 import { Song, Token } from '../../types/index';
 import tokenSchema from './schemas/tokenSchema';
 
+/**
+ * A singleton class handling all communications to the database
+ */
 export default class Database {
+  /**
+   * The instance of the class
+   */
   private static instance: Database;
 
   private directory: string;
 
+  /**
+   * Validate song schema
+   */
   private songSchemaValidator: Ajv.ValidateFunction;
 
+  /**
+   * Validate playlist schema
+   */
   private playlistSchemaValidator: Ajv.ValidateFunction;
 
+  /**
+   * Validate token schema
+   */
   private tokenSchemaValidator: Ajv.ValidateFunction;
 
   private db: Datastore;
@@ -41,6 +56,9 @@ export default class Database {
     });
   }
 
+  /**
+   * TO get the instance
+   */
   static getInstance(directory?: string): Database {
     if (Database.instance) {
       return Database.instance;
@@ -55,13 +73,17 @@ export default class Database {
     return Database.instance;
   }
 
-  // Used for Playlist Module only
-  // Assume the instance already exist
+  /**
+   * Used for Playlist Module only
+   * Assume the instance already exist
+   */
   static getExistingInstance(): Database {
     return Database.instance;
   }
 
-  // For testing only
+  /**
+   * For testing only
+   */
   getDirectory(): string {
     return this.directory;
   }
@@ -69,10 +91,24 @@ export default class Database {
   /// ////////////////////////////////////////
   // SONG DATABASE API
   /// ////////////////////////////////////////
+
+  /**
+   * Validate the schema of a song
+   *
+   * @param {any} data - the song
+   * @returns {Promise<boolean>} - valid or not
+   */
   validateSong(data: any): boolean {
     return this.songSchemaValidator(data) as boolean;
   }
 
+  /**
+   * Create a song in the db
+   *
+   * @async
+   * @param {Song} data - the to be createdSong
+   * @returns {Promise<DbSong>} - the created song
+   */
   async createSong(data: Song): Promise<DbSong> {
     const dbSong: DbSong = {
       ytid: data.ytID,
@@ -94,6 +130,13 @@ export default class Database {
     throw new Error('invalid song');
   }
 
+  /**
+   * Get a song from the db
+   *
+   * @async
+   * @param {string} ytid - the ytid of the song
+   * @returns {Promise<Song | null>} - the required song or null if couldn't find one
+   */
   async getOneSong(ytid: string): Promise<Song | null> {
     const s = await this.db.findOne<DbSong>({ key: 'song', ytid });
     if (s !== null)
@@ -104,16 +147,37 @@ export default class Database {
     return null;
   }
 
+  /**
+   * Delete a song from the db
+   *
+   * @async
+   * @param {string} ytid - the ytid of the song
+   * @returns {Promise<void>} - void
+   */
   async deleteSong(ytid: string): Promise<void> {
     await this.db.remove({ ytid }, { multi: true });
   }
 
+  /**
+   * Update a song in the db
+   *
+   * @async
+   * @param {string} ytid - the ytid of the song
+   * @param {Partial<Song>} data - updatedsong
+   * @returns {Promise<void>} - void
+   */
   async updateSong(ytid: string, data: Partial<Song>): Promise<void> {
     const found = this.db.findOne({ key: 'song', ytid });
     if (found === null) return;
     await this.db.update({ ytid }, { $set: data });
   }
 
+  /**
+   * Get all songs in the db
+   *
+   * @async
+   * @returns {Promise<Song[]>} - An array containing all songs in the db
+   */
   async getAllSongs(): Promise<Song[]> {
     const songs = await this.db.find<DbSong>({ key: 'song' });
     return songs.map((s) => ({
@@ -130,10 +194,23 @@ export default class Database {
   // PLAYLIST DATABASE API
   /// ////////////////////////////////////////
 
+  /**
+   * Validate the schema of a playlist
+   *
+   * @param {any} data - the playlist
+   * @returns {Promise<boolean>} - valid or not
+   */
   validatePlaylist(data: any): boolean {
     return this.playlistSchemaValidator(data) as boolean;
   }
 
+  /**
+   * Create a playlist in the db
+   *
+   * @async
+   * @param {string} name - name of the playlist
+   * @returns - the created playlist
+   */
   async createPlaylist(name: string) {
     const playlist = {
       name,
@@ -148,6 +225,13 @@ export default class Database {
     return null;
   }
 
+  /**
+   * Get a playlist from the db
+   *
+   * @async
+   * @param {string} id - the ytid of the playlist
+   * @returns {Promise<DbResolvedPlaylist | null>} - the required playlist or null if couldn't find one
+   */
   async getOnePlaylist(id: string): Promise<DbResolvedPlaylist | null> {
     const entry = await this.db.findOne<DbPlaylist>({
       key: 'playlist',
@@ -168,10 +252,25 @@ export default class Database {
     };
   }
 
+  /**
+   * Get a playlist from the db
+   *
+   * @async
+   * @param {string} id - the ytid of the playlist
+   * @returns {Promise<void>} - void
+   */
   async deletePlaylist(id: string): Promise<void> {
     await this.db.remove({ key: 'playlist', _id: id }, { multi: true });
   }
 
+  /**
+   * Get a playlist from the db
+   *
+   * @async
+   * @param {string} id - the ytid of the playlist
+   * @param {Partial<DbPlaylist>} data - the updated playlist
+   * @returns {Promise<void>} - void
+   */
   async updatePlaylist(id: string, data: Partial<DbPlaylist>): Promise<void> {
     if (data.songs) {
       const songs = await Promise.all(
@@ -184,6 +283,12 @@ export default class Database {
     await this.db.update({ key: 'playlist', _id: id }, { $set: data });
   }
 
+  /**
+   * Get all playlists in the db
+   *
+   * @async
+   * @returns {Promise<DbResolvedPlaylist[]>} - An array of all playlists in the db
+   */
   async getAllPlaylists(): Promise<DbResolvedPlaylist[]> {
     const playlists = await this.db.find({ key: 'playlist' });
     return Promise.all(
@@ -197,10 +302,23 @@ export default class Database {
   // TOKEN DATABASE API
   /// ////////////////////////////////////////
 
+  /**
+   * Validate the schema of a token
+   *
+   * @param {any} data - the token
+   * @returns {Promise<boolean>} - valid or not
+   */
   validateToken(data: any): boolean {
     return this.tokenSchemaValidator(data) as boolean;
   }
 
+  /**
+   * Create a token
+   *
+   * @async
+   * @param {Token} data - the created token
+   * @returns - the created playlist
+   */
   async createToken(data: Token) {
     const record = {
       refresh_token: data.refresh_token,
@@ -218,11 +336,23 @@ export default class Database {
     return t;
   }
 
+  /**
+   * Get current user's token
+   *
+   * @async
+   * @returns {Promise<Token | null>} - the token or null if couldn't find one
+   */
   async getToken(): Promise<Token | null> {
     const t = await this.db.findOne<Token>({ key: 'token' });
     return t;
   }
 
+  /**
+   * Delete current user's token
+   *
+   * @async
+   * @returns {Promise<void>} - void
+   */
   async deleteToken(): Promise<void> {
     await this.db.remove({ key: 'token' }, { multi: true });
   }

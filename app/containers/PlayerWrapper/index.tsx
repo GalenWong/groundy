@@ -43,6 +43,9 @@ export const duplicateCheck = (
   return hasSameSrc >= 0 || hasSameId >= 0;
 };
 
+/**
+ * Creates a sticky music player bar at the bottom of the app
+ */
 export default function PlayerWrapper({ children }: PlayerWrapperProps) {
   const playerInstanceRef = useRef<ReactJkMusicPlayerInstance>();
 

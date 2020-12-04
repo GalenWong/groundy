@@ -40,11 +40,7 @@
     "excludeExternals": true,
     "name": "Groundy",
     "exclude": [
-      "**/components/**",
-      "**/containers/**",
-      "**/Routes.tsx",
       "**/dist/**",
-      "**/global.d.ts",
       "./app/index.tsx",
       "./app/main.**",
       "./app/menu.ts",

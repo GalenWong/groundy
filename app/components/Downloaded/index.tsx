@@ -25,6 +25,10 @@ interface State {
 // example download
 // {'hC8CH0Z3L54': {ytID: 'hC8CH0Z3L54', total: BigInt(20000), current: BigInt(11000)}}
 
+/**
+ * Page Component that displays all downloaded songs.
+ * Users can find all songs that are ever downloaded and not deleted in this page.
+ */
 const Downloaded = () => {
   const [state, setState] = React.useState<State>({ songs: [] });
   const { songs } = state;

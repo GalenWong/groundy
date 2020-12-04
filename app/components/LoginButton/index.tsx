@@ -3,6 +3,10 @@ import { Button } from '@material-ui/core';
 import * as endpoints from '../../utils';
 import { loginContext } from '../../containers/LoginStateWrapper';
 
+/**
+ * A button that once clicked, will prompt the user to login.
+ *
+ */
 function LoginButton() {
   const { isLoggedIn } = useContext(loginContext);
   const login = async () => {

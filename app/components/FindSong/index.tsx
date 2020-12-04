@@ -15,6 +15,11 @@ const useStyles = makeStyles(() =>
   })
 );
 
+/**
+ * The Find Song page.
+ * Allows user to paste a song url and see it in the app.
+ *
+ */
 export default function FindSong() {
   const [url, seturl] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);

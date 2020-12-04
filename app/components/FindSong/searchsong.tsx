@@ -9,6 +9,10 @@ interface SearchProps {
   url: string;
 }
 
+/**
+ * Component that display a song as search result.
+ * Take a yt url as input.
+ */
 export default function SearchSong(props: SearchProps) {
   const { url } = props;
   const [song, setSong] = useState<Song | DownloadedSong>({

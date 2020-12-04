@@ -26,6 +26,10 @@ interface State {
   checked: boolean[];
 }
 
+/**
+ * A Form component that allows users to pick one out of all local playlists.
+ * Takes a Song id as input.
+ */
 const SelectPlaylist = (props: SelectPlaylistProps) => {
   const [state, setState] = React.useState<State>({
     playlists: [],

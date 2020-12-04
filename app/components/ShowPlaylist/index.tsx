@@ -25,6 +25,10 @@ const useStyles = makeStyles(() =>
   })
 );
 
+/**
+ * Page component for showing all songs in a playlist based on its routing url.
+ *
+ */
 export default function ShowPlaylist() {
   const { id }: { id: string } = useParams();
   const controls = React.useContext(playerQueueContext);

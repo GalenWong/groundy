@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+/**
+ * Page component that displays all downloaded playlists.
+ * Users can see all created playlists in this page.
+ */
 export default function AllPlaylists() {
   const [allLists, setAllLists] = useState<Playlist[]>([]);
   const [isLoading, setIsLoading] = useState(false);

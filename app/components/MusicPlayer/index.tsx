@@ -22,6 +22,10 @@ const transformSongToPlayerSrc = (
   }));
 };
 
+/**
+ * The Music Player that will be shown at the bottom of the app.
+ * Supports queue management like play/pause/next/prev
+ */
 export default function MusicPlayer({ songQueue, ...props }: MusicPlayerProps) {
   const audioLists = transformSongToPlayerSrc(songQueue);
   return (

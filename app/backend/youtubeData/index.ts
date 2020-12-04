@@ -3,6 +3,11 @@ import { Token } from '../../types';
 import { getOAuthClient } from '../authentication';
 import secrets from './apikey.json';
 
+/**
+ * Get a Youtube client (in the googleapis) without a token
+ *
+ * @returns - a youtube client
+ */
 const getClientNoLogin = () => {
   return google.youtube({
     version: 'v3',
@@ -10,6 +15,12 @@ const getClientNoLogin = () => {
   });
 };
 
+/**
+ * Get a Youtube client (in the googleapis) with token
+ *
+ * @param {Token?} token - user token
+ * @returns - a youtube client
+ */
 const getClientWithToken = (token: Token) => {
   const oauth = getOAuthClient()[0];
   oauth.setCredentials(token);
@@ -20,6 +31,14 @@ const getClientWithToken = (token: Token) => {
   });
 };
 
+/**
+ * Get a song
+ *
+ * @async
+ * @param {string} songId - ytid of the song
+ * @param {Token?} token - user token
+ * @returns - a Song-like object
+ */
 const getSongById = async (songId: string, token?: Token) => {
   const client = token ? getClientWithToken(token) : getClientNoLogin();
   const result = await client.videos.list({
@@ -37,6 +56,14 @@ const getSongById = async (songId: string, token?: Token) => {
   };
 };
 
+/**
+ * Get related songs of a song
+ *
+ * @async
+ * @param {number = 25} maxResults - max number of returned recommended songs
+ * @param {Token?} token - user token
+ * @returns - an array of Song-like objects
+ */
 const getRecommendations = async (token: Token, maxResults = 25) => {
   const client = getClientWithToken(token);
   const results = await client.playlistItems.list({
@@ -51,6 +78,14 @@ const getRecommendations = async (token: Token, maxResults = 25) => {
   throw new Error('cannot fetch recommendation');
 };
 
+/**
+ * Get a local playlist
+ *
+ * @async
+ * @param {string} playlistId - id of the playlist
+ * @param {Token?} token - user token
+ * @returns - a Playlist-like object
+ */
 const getPlaylist = async (playlistId: string, token?: Token) => {
   const client = token ? getClientWithToken(token) : getClientNoLogin();
   const playlistResp = await client.playlists.list({
@@ -77,6 +112,14 @@ const getPlaylist = async (playlistId: string, token?: Token) => {
   throw new Error(`cannot get playlist ${playlistId}`);
 };
 
+/**
+ * Get related songs of a song
+ *
+ * @async
+ * @param {string} songId - id of the song
+ * @param {Token?} token - user token
+ * @returns - an array of Song-like objects
+ */
 const getRelated = async (songId: string, token?: Token) => {
   const client = token ? getClientWithToken(token) : getClientNoLogin();
   const results = await client.search.list({

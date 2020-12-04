@@ -39,6 +39,10 @@ export interface DownloadedSong extends Song {
   filePath: string;
 }
 
+/**
+ * @typeParam Token - Used for Google account tokens
+ *
+ */
 export interface Token {
   refresh_token?: string;
   expiry_date?: number;

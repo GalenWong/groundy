@@ -12,6 +12,10 @@ interface DeleteProps {
   playlistID: string;
 }
 
+/**
+ * Button component that once clicked, will prompt users
+ * to double check their delete intentions on a playlist.
+ */
 export default function Delete(props: DeleteProps) {
   const [open, setOpen] = React.useState(false);
   const { playlistID } = props;

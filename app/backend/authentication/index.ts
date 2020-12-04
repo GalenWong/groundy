@@ -8,6 +8,11 @@ import Database from '../database';
  */
 import OAUTH_CLIENT from './secrets.json';
 
+/**
+ * Create a token and start Google's auth process
+ *
+ * @returns {[OAuth2Client, string]} - the client and authURL to be used to start auth
+ */
 const getOAuthClient = (): [OAuth2Client, string] => {
   const client = new OAuth2Client({
     clientId: OAUTH_CLIENT.client_id,
@@ -24,6 +29,13 @@ const getOAuthClient = (): [OAuth2Client, string] => {
   return [client, AuthURL];
 };
 
+/**
+ * Get an Auth code for user's google account
+ *
+ * @async
+ * @param {string} AuthURL: the auth url to be loaded up for auth
+ * @returns - the Auth code
+ */
 const getOAuthCode = async (AuthURL: string): Promise<string> => {
   const authWin = new BrowserWindow({ x: 60, y: 60, useContentSize: true });
   authWin.loadURL(AuthURL, { userAgent: 'Chrome' });
@@ -50,6 +62,12 @@ const getOAuthCode = async (AuthURL: string): Promise<string> => {
   });
 };
 
+/**
+ * Create a token and start Google's auth process
+ *
+ * @async
+ * @returns - void
+ */
 const startAuth = async () => {
   const [client, authURL] = getOAuthClient();
   const code = await getOAuthCode(authURL);
@@ -58,11 +76,23 @@ const startAuth = async () => {
   await db.createToken(tokens.tokens as Token);
 };
 
+/**
+ * Delete current user's token
+ *
+ * @async
+ * @returns {Promise<void>} - void
+ */
 const deleteToken = async () => {
   const db = Database.getInstance();
   await db.deleteToken();
 };
 
+/**
+ * Get current user's token
+ *
+ * @async
+ * @returns {Promise<Token | null>} - the token or null if couldn't find one
+ */
 const getToken = async () => {
   const db = Database.getInstance();
   return db.getToken();

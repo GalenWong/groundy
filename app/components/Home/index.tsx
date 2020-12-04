@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from './Groundy.css';
 
+/**
+ * svg animation for homepage
+ *
+ */
 export default function Groundy() {
   return (
     <svg
