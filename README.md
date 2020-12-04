@@ -9,7 +9,6 @@
 <br>
 
 Directory Structure of Groundy 
-
 ```
 /app
     /backend
