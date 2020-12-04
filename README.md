@@ -1,12 +1,13 @@
-<img src="internals/img/erb-banner.png" width="100%" />
+<div align=center>
 
-<br>
+# Groundy: CS 130 Fall 2020 Project
 
-<p>
-  Groundy
-</p>
+_Make YouTube music offline, for free._
 
-<br>
+</div>
+
+## Directory Structure of Groundy
+
 
 <div align="center">
   <a href="https://facebook.github.io/react/"><img src="./internals/img/react-padded-90.png" /></a>
@@ -18,33 +19,71 @@
   <a href="https://yarnpkg.com/"><img src="./internals/img/yarn-padded-90.png" /></a>
 </div>
 
-<hr />
-<br />
-
-<div align="center">
+<br>
 
 [![Build Status][github-actions-status]][github-actions-url]
-[![Dependency Status][david-image]][david-url]
-[![DevDependency Status][david-dev-image]][david-dev-url]
-[![Github Tag][github-tag-image]][github-tag-url]
 
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/electron-react-blpt)
-[![OpenCollective](https://opencollective.com/electron-react-boilerplate/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/electron-react-boilerplate/sponsors/badge.svg)](#sponsors)
-[![Good first issues open][good-first-issue-image]][good-first-issue-url]
-[![StackOverflow][stackoverflow-img]][stackoverflow-url]
+<br>
 
-</div>
+Directory Structure of Groundy 
+
+```
+/app
+    /backend
+        /authentication
+        /dataAPI
+        /database
+        /downloader
+        /ipc
+        /ipc-renderder
+        /playlist
+        /youtubeData
+        /SongStore
+	/components
+	/constants
+	/containers
+	/hooks
+	/types
+	/utils
+/test
+    /backend
+    /hooks
+    /mocks
+```
+
+`/backend`
+
+- authentication: a module that handles authentication procedures and storing tokens
+- database: contains database APIs for songs, playlists and tokens
+- downloader: to download songs & track progress
+- ipc & ipc-renderder: for backend-to-frontend and frontend-to-backend communication
+- youtubeData: to get recommendations from YouTube and
+- playlist: contain APIs for playlist module
+- SongStore: contains APIS for songs
+
+`/components` includes logical React components for the frontend
+
+`/containers` style wrapper React components for the frontend
+
+`/hooks` frontend to backend communication logic in forms of React hooks & reusable frontend logic written in hooks
+
+`/types` includes all application-wide types, which defines the contract between frontend & backend communication
+
+`/test`:
+
+- backend: Unit tests & integration tests for database APIs, downloader, IPC and songStore
+- hooks: unit tests for frontend & backend communication: receiving single update & using duplicate updates to override previous entry
+- mocks: using jest to mock ipcRenderer
 
 ## Install
 
-- **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
+- **If you have installation or compilation issues with this project, please see [electron's debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
 
 First, clone the repo via git and install dependencies:
 
 ```bash
-git clone --depth 1 --single-branch https://github.com/electron-react-boilerplate/electron-react-boilerplate.git your-project-name
-cd your-project-name
+git clone https://github.com/GalenWong/groundy
+cd groundy
 yarn
 ```
 
@@ -56,6 +95,14 @@ Start the app in the `dev` environment. This starts the renderer process in [**h
 yarn dev
 ```
 
+## Testing
+
+```bash
+yarn jest test
+```
+
+To run specific tests, replace `test` with the path to the specific test file(s).
+
 ## Packaging for Production
 
 To package apps for the local platform:
@@ -64,15 +111,19 @@ To package apps for the local platform:
 yarn package
 ```
 
-## Docs
+To package only for one platform:
 
-See our [docs and guides here](https://electron-react-boilerplate.js.org/docs/installation)
+```bash
+yarn package-linux
+yarn package-mac
+yarn package-win
+```
 
-## License
+## Github Actions
 
-MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
+Everytime a pull request is made, Github will run it through a series of CI/CD tests so that once the code goes through any building and testing processes, it's in a deployable state. We merge only when code is reviewed and all tests passes.
 
-[github-actions-status]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/workflows/Test/badge.svg
+[github-actions-status]: https://github.com/GalenWong/groundy/workflows/Test/badge.svg
 [github-actions-url]: https://github.com/GalenWong/groundy/actions
 [github-tag-image]: https://img.shields.io/github/tag/electron-react-boilerplate/electron-react-boilerplate.svg?label=version
 [github-tag-url]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/releases/latest
