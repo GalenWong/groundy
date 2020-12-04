@@ -16,7 +16,9 @@ _Make YouTube music offline, for free._
   <a href="https://yarnpkg.com/"><img src="./internals/img/yarn-padded-90.png" /></a>
 </div>
 
-## Features
+[![Build Status][github-actions-status]][github-actions-url]
+
+## Motivation
 
 <br>
 
@@ -30,37 +32,39 @@ Groundy can fill in this gap for offline desktop music experience. Groundy is a 
 <br>
 This page allows users to input a url to a YouTube video and will display the corresponding information. Users can then choose to preview the video, download the video, or find related songs.
 <br>
+<br >
 
 ![Can find and download playlists](./internals/img/groundy-findplaylist.png)
 <br>
 This page is similar to the Find Song page, but it handles urls to YouTube playlists rather than songs. It provides the same actions as the Find Song page for each song, but additionally allows users to download the entire playlist at once.
 <br>
+<br >
 
 ![Can find and download playlists](./internals/img/groundy-findplaylist.png)
 <br>
 This page is similar to the Find Song page, but it handles urls to YouTube playlists rather than songs. It provides the same actions as the Find Song page for each song, but additionally allows users to download the entire playlist at once.
 <br>
+<br >
 
 ![Can see recommended songs](./internals/img/groundy-recommended.png)
 <br>
 This page requires the user to be logged in and displays all the songs recommended for the user by YouTube. The user can download songs individually or download all songs at once.
 <br>
+<br >
 
 ![Can see all created playlists](./internals/img/groundy-playlists.png)
 <br>
 This page allows users to create, rename, play, and delete playlists. Clicking on the playlist leads to another page that displays all songs in the playlist.
 <br>
+<br >
 
 ![Can see all downloaded songs](./internals/img/groundy-downloaded.png)
 <br>
 The Downloaded page displays all the songs downloaded or downloading. The actions available to each song are as follows: Play song, Add to queue, Add to playlist, Delete song, and Find Related.
 <br>
-
-## Directory Structure of Groundy
-
 <br>
 
-[![Build Status][github-actions-status]][github-actions-url]
+## Directory Structure of Groundy
 
 <br>
 
