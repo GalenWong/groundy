@@ -166,6 +166,12 @@ yarn package-win
 
 Everytime a pull request is made, Github will run it through a series of CI/CD tests so that once the code goes through any building and testing processes, it's in a deployable state. We merge only when code is reviewed and all tests passes.
 
+## API Documentations Generation
+We are using typedoc and you can configure it in tsconfig.json.
+```bash
+yarn typedoc
+```
+
 [github-actions-status]: https://github.com/GalenWong/groundy/workflows/Test/badge.svg
 [github-actions-url]: https://github.com/GalenWong/groundy/actions
 [github-tag-image]: https://img.shields.io/github/tag/electron-react-boilerplate/electron-react-boilerplate.svg?label=version
