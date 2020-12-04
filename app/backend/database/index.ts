@@ -317,7 +317,7 @@ export default class Database {
    *
    * @async
    * @param {Token} data - the created token
-   * @returns - the created playlist
+   * @returns - the created token
    */
   async createToken(data: Token) {
     const record = {

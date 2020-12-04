@@ -12,7 +12,7 @@ export const loginContext = React.createContext<LoginStateContextObj>({
 });
 
 /**
- * Wrapper component that's used to lift states
+ * Wrapper component that's used to share the login state through context
  * so that components can share login states
  */
 export default function LoginStateWrapper({

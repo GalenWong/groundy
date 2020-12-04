@@ -13,7 +13,7 @@ export const progressesContext = React.createContext<ProgressContextObj>({
 });
 
 /**
- * A wrapper component that is used to lift states to higher level
+ * A wrapper component that is used to share states using context
  * so that components can share progress states
  */
 export default function ProgressWrapper({ children }: ProgressWrapperProps) {

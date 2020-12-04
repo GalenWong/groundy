@@ -17,7 +17,7 @@ class Downloader {
   /**
    * Try to get a song's DownloadManager
    *
-   * @param {string} ytid - ytid of asong
+   * @param {string} ytid - ytid of a song that is currently in download
    * @returns {DownloadManager} - DownloadManager for the required song id
    */
   private getOrThrow(ytid: string): DownloadManager {
@@ -34,7 +34,7 @@ class Downloader {
    * @async
    * @param {string} ytid - ytid of a song
    * @param {string} name - filename
-   * @returns {Promise<String>} - the downloaded filename
+   * @returns {Promise<String>} - the downloaded filename with extension type
    */
   public async startDownload(ytid: string, name: string): Promise<string> {
     if (this.managers.has(ytid)) {

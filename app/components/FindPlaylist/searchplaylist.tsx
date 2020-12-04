@@ -36,7 +36,7 @@ function parsePlaylistID(url: string): string {
 
 /**
  * Component that display a playlist's songs as search results.
- * Take a yt url as input.
+ * Take a YouTube playlist URL url as input.
  */
 export default function SearchPlaylist(props: SearchProps) {
   const { url } = props;

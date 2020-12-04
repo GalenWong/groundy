@@ -17,8 +17,8 @@ export interface RenameDialogProps extends DialogProps {
 }
 
 /**
- * Dialog that takes user input for playlist renaming
- *
+ * Dialog that takes user input for playlist renaming.
+ * Takes playlist id and name as input.
  */
 export default function RenameDialog(props: RenameDialogProps) {
   const [name, setName] = useState('');

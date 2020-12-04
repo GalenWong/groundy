@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 /**
  * Card component that display a playlist as a card.
- * Provides actiosn like renaming and adding all to queue
+ * Provides actions like renaming and adding all to queue
  */
 export default function PlaylistCard(props: PlaylistCardProps) {
   const classes = useStyles();

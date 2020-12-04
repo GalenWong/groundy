@@ -11,7 +11,7 @@ interface SearchProps {
 
 /**
  * Component that display a song as search result.
- * Take a yt url as input.
+ * Take a YouTube video url as input.
  */
 export default function SearchSong(props: SearchProps) {
   const { url } = props;

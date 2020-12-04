@@ -10,7 +10,7 @@ interface PlaylistProps {
 }
 
 /**
- * A Song card that shows Song info and comes with different actions dependeing on
+ * A Song card that shows Song info and comes with different actions depending on
  * if it's downloaded.
  * Take an array of songs as input.
  */

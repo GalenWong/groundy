@@ -9,7 +9,7 @@ import Database from '../database';
 import OAUTH_CLIENT from './secrets.json';
 
 /**
- * Create a token and start Google's auth process
+ * Method to create a google OAuth client, and an authentication URL
  *
  * @returns {[OAuth2Client, string]} - the client and authURL to be used to start auth
  */
@@ -30,7 +30,8 @@ const getOAuthClient = (): [OAuth2Client, string] => {
 };
 
 /**
- * Get an Auth code for user's google account
+ * Get an Auth code for user's google account by creating a browser window for
+ * user to log in to.
  *
  * @async
  * @param {string} AuthURL: the auth url to be loaded up for auth
