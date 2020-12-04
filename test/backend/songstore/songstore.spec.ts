@@ -12,8 +12,17 @@ describe('songstore', () => {
   it('getStorageDirectory', () => {
     const tempDir = os.tmpdir();
     const s = SongStore.getInstance();
+
+    expect(() => {
+      s.getStorageDirectory();
+    }).toThrow();
+
     s.setDirectory(tempDir);
     expect(s.getStorageDirectory()).toEqual(tempDir);
+
+    expect(() => {
+      s.setDirectory('');
+    }).toThrow();
   });
 
   it('getWriteStream', () => {
