@@ -17,7 +17,7 @@ export default function SearchSong(props: SearchProps) {
     ytID: 'loading',
     downloaded: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {

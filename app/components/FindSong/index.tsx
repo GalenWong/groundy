@@ -30,7 +30,14 @@ export default function FindSong() {
       <Paper className={classes.padded}>
         <Grid container justify="space-between" alignItems="center">
           <Grid item xs={10}>
-            <TextField autoFocus id="name" onChange={handleTyping} fullWidth />
+            <TextField
+              autoFocus
+              id="name"
+              onChange={handleTyping}
+              label="Video URL"
+              helperText="Copy video link from browser"
+              fullWidth
+            />
           </Grid>
           <Grid item>
             <Button variant="outlined" size="small" onClick={handleSubmit}>

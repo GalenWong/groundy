@@ -10,8 +10,7 @@ import {
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Playlist from '../Playlist';
 import { DownloadedSong, Song } from '../../types';
-import { getAllRecommendation, startDownload } from '../../utils';
-import { isDownloaded } from '../SongCard';
+import { getAllRecommendation, startDownload, isDownloaded } from '../../utils';
 
 const useStyles = makeStyles({
   topbar: {
