@@ -31,4 +31,10 @@ describe('database', () => {
     expect(database.validatePlaylist({ id: 1 })).toEqual(false);
     expect(database.validatePlaylist({ id: 'my_ytid' })).toEqual(false);
   });
+
+  it('getExistingInstance', () => {
+    const tempDir = os.tmpdir();
+    const inst = Database.getInstance(tempDir);
+    expect(Database.getExistingInstance()).toBe(inst);
+  });
 });

@@ -94,5 +94,40 @@ describe('playlistModule', () => {
     expect(playlists).toHaveLength(1);
     expect(playlists).not.toContainEqual(expect.objectContaining(p1));
     expect(playlists).toContainEqual(expect.objectContaining(p2));
+
+    // renames playlist
+    const playlist = await playlistModule.createPlaylist('playlist3');
+    const NEW_NAME = 'new_name';
+    await playlistModule.renamePlaylist(playlist.id, NEW_NAME);
+    const updatePlaylist = await playlistModule.getPlaylist(playlist.id);
+    expect(updatePlaylist.name).toBe(NEW_NAME);
+    await expect(async () => {
+      await playlistModule.renamePlaylist('this-playlist-id-not-exist', 'name');
+    }).rejects.toThrow();
+
+    // add song to non existing playlist
+    await expect(async () => {
+      await playlistModule.addSong(song1.ytID, 'this-playlist-id-not-exist');
+    }).rejects.toThrow();
+
+    // add non existing song
+    await expect(async () => {
+      await playlistModule.addSong('this-song-id-not-exist', playlist.id);
+    }).rejects.toThrow();
+
+    // remove non existing song
+    await expect(async () => {
+      await playlistModule.removeSong('this-song-id-not-exist', playlist.id);
+    }).rejects.toThrow();
+
+    // remove song from non existing playlist
+    await expect(async () => {
+      await playlistModule.removeSong(song1.ytID, 'this-playlist-id-not-exist');
+    }).rejects.toThrow();
+
+    // get non-existing playlist
+    await expect(async () => {
+      await playlistModule.getPlaylist('this-playlist-id-not-exist');
+    }).rejects.toThrow();
   });
 });
