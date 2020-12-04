@@ -1,69 +1,69 @@
-<img src="internals/img/erb-banner.png" width="100%" />
+<div align=center>
 
-<br>
+# Groundy: CS 130 Fall 2020 Project
 
-<p>
-  Groundy
-</p>
+_Make YouTube music offline, for free._
 
-<br>
+</div>
 
-Directory Structure of Groundy 
+## Directory Structure of Groundy
+
 ```
 /app
     /backend
-        /authentication 
-        /dataAPI 
-        /database 
+        /authentication
+        /dataAPI
+        /database
         /downloader
-        /ipc 
-        /ipc-renderder 
-        /playlist 
-        /youtubeData 
+        /ipc
+        /ipc-renderder
+        /playlist
+        /youtubeData
         /SongStore
 	/components
-	/constants 
+	/constants
 	/containers
 	/hooks
-	/types 
-	/utils 
+	/types
+	/utils
 /test
-    /backend 
-    /hooks 
-    /mocks 
+    /backend
+    /hooks
+    /mocks
 ```
 
 `/backend`
-- authentication: to hook up with database
-- dataAPI: contains sample playlist, related songs, recommendated songs 
-- database: contains database APIs for songs, playlists and tokens 
-- downloader: to download songs & track progress 
-- ipc & ipc-renderder: for backend to frontend communication 
-- youtubeData: to get recommendations from YouTube and 
-- playlist: contain APIs for playlist module 
-- SongStore: contains APIS for songs 
 
-`/components` includes React components for the frontend
+- authentication: a module that handles authentication procedures and storing tokens
+- database: contains database APIs for songs, playlists and tokens
+- downloader: to download songs & track progress
+- ipc & ipc-renderder: for backend-to-frontend and frontend-to-backend communication
+- youtubeData: to get recommendations from YouTube and
+- playlist: contain APIs for playlist module
+- SongStore: contains APIS for songs
 
-`/containers` frontend to backend communication logic in forms of React hooks & reusable frontend logic written in hooks
+`/components` includes logical React components for the frontend
 
-`/hooks` defines the contract between frontend & backend communication 
+`/containers` style wrapper React components for the frontend
 
-`/types` includes all user-defined types 
+`/hooks` frontend to backend communication logic in forms of React hooks & reusable frontend logic written in hooks
+
+`/types` includes all application-wide types, which defines the contract between frontend & backend communication
 
 `/test`:
-- backend: Unit tests & integration tests for database APIs, downloader, IPC and songStore 
+
+- backend: Unit tests & integration tests for database APIs, downloader, IPC and songStore
 - hooks: unit tests for frontend & backend communication: receiving single update & using duplicate updates to override previous entry
 - mocks: using jest to mock ipcRenderer
 
 ## Install
 
-- **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
+- **If you have installation or compilation issues with this project, please see [electron's debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
 
 First, clone the repo via git and install dependencies:
 
 ```bash
-git clone --depth 1 --single-branch https://github.com/GalenWong/groundy
+git clone https://github.com/GalenWong/groundy
 cd groundy
 yarn
 ```
@@ -76,11 +76,13 @@ Start the app in the `dev` environment. This starts the renderer process in [**h
 yarn dev
 ```
 
-## Testing 
+## Testing
 
-```bash 
+```bash
 yarn jest test
 ```
+
+To run specific tests, replace `test` with the path to the specific test file(s).
 
 ## Packaging for Production
 
@@ -90,17 +92,17 @@ To package apps for the local platform:
 yarn package
 ```
 
-## Github Actions 
+To package only for one platform:
 
-Everytime a pull request is made, Github will run it through a series of CI/CD tests so that once the code goes through any building and testing processes, it's in a deployable state. 
+```bash
+yarn package-linux
+yarn package-mac
+yarn package-win
+```
 
-## Docs
+## Github Actions
 
-See our [docs and guides here](https://electron-react-boilerplate.js.org/docs/installation)
-
-## License
-
-MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
+Everytime a pull request is made, Github will run it through a series of CI/CD tests so that once the code goes through any building and testing processes, it's in a deployable state. We merge only when code is reviewed and all tests passes.
 
 [github-actions-status]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/workflows/Test/badge.svg
 [github-actions-url]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/actions
