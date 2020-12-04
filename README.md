@@ -8,6 +8,22 @@
 
 <br>
 
+<div align="center">
+  <a href="https://facebook.github.io/react/"><img src="./internals/img/react-padded-90.png" /></a>
+  <a href="https://webpack.github.io/"><img src="./internals/img/webpack-padded-90.png" /></a>
+  <a href="https://redux.js.org/"><img src="./internals/img/redux-padded-90.png" /></a>
+  <a href="https://github.com/ReactTraining/react-router"><img src="./internals/img/react-router-padded-90.png" /></a>
+  <a href="https://eslint.org/"><img src="./internals/img/eslint-padded-90.png" /></a>
+  <a href="https://facebook.github.io/jest/"><img src="./internals/img/jest-padded-90.png" /></a>
+  <a href="https://yarnpkg.com/"><img src="./internals/img/yarn-padded-90.png" /></a>
+</div>
+
+<br>
+
+[![Build Status][github-actions-status]][github-actions-url]
+
+<br>
+
 Directory Structure of Groundy 
 ```
 /app
@@ -102,8 +118,8 @@ See our [docs and guides here](https://electron-react-boilerplate.js.org/docs/in
 
 MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 
-[github-actions-status]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/workflows/Test/badge.svg
-[github-actions-url]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/actions
+[github-actions-status]: https://github.com/GalenWong/groundy/workflows/Test/badge.svg
+[github-actions-url]: https://github.com/GalenWong/groundy/actions
 [github-tag-image]: https://img.shields.io/github/tag/electron-react-boilerplate/electron-react-boilerplate.svg?label=version
 [github-tag-url]: https://github.com/electron-react-boilerplate/electron-react-boilerplate/releases/latest
 [stackoverflow-img]: https://img.shields.io/badge/stackoverflow-electron_react_boilerplate-blue.svg
