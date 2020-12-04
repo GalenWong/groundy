@@ -55,4 +55,9 @@ describe('database', () => {
     result = await database.getToken();
     expect(result).toEqual(null);
   });
+
+  it('invalid token', async () => {
+    const database = Database.getInstance(tempDir);
+    expect(database.validateToken('abd')).toBe(false);
+  });
 });

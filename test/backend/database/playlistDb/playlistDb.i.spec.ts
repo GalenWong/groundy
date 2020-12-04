@@ -61,4 +61,12 @@ describe('database', () => {
     result = await database.getAllPlaylists();
     expect(result).not.toContainEqual(expect.objectContaining(p));
   });
+
+  it('fail on insert non existing songs', async () => {
+    const database = Database.getInstance(tempDir);
+    const p = await database.createPlaylist('playlist1');
+    await expect(async () => {
+      await database.updatePlaylist(p._id, { songs: ['non_existing_song_id'] });
+    }).rejects.toThrow();
+  });
 });
