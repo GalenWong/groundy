@@ -8,33 +8,36 @@
 
 <br>
 
-<div align="center">
-  <a href="https://facebook.github.io/react/"><img src="./internals/img/react-padded-90.png" /></a>
-  <a href="https://webpack.github.io/"><img src="./internals/img/webpack-padded-90.png" /></a>
-  <a href="https://redux.js.org/"><img src="./internals/img/redux-padded-90.png" /></a>
-  <a href="https://github.com/ReactTraining/react-router"><img src="./internals/img/react-router-padded-90.png" /></a>
-  <a href="https://eslint.org/"><img src="./internals/img/eslint-padded-90.png" /></a>
-  <a href="https://facebook.github.io/jest/"><img src="./internals/img/jest-padded-90.png" /></a>
-  <a href="https://yarnpkg.com/"><img src="./internals/img/yarn-padded-90.png" /></a>
-</div>
+Directory Structure of Groundy 
 
-<hr />
-<br />
+```
+/app
+    /backend
+	  /components
+	  /constants 
+	  /containers
+	  /hooks
+	  /types 
+	  /utils 
+/test
+    /backend 
+    /hooks 
+    /mocks 
+    /reducers 
+```
 
-<div align="center">
+```/backend```: includes authentication to hook up with database, dataAPI, database, downloader to download songs, ipc & ipc-renderder for frontend communication, youtubeData to get recommendations from YouTube and playlist. 
 
-[![Build Status][github-actions-status]][github-actions-url]
-[![Dependency Status][david-image]][david-url]
-[![DevDependency Status][david-dev-image]][david-dev-url]
-[![Github Tag][github-tag-image]][github-tag-url]
+```/components```: includes the following frontend components: AllPlaylists, Downloaded, FindPlaylist, FindRelated, FindSong, Home, LoginButton, MusicPlayer, Recommended, RenameDialog, Setting, ShowPlaylist 
 
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/electron-react-blpt)
-[![OpenCollective](https://opencollective.com/electron-react-boilerplate/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/electron-react-boilerplate/sponsors/badge.svg)](#sponsors)
-[![Good first issues open][good-first-issue-image]][good-first-issue-url]
-[![StackOverflow][stackoverflow-img]][stackoverflow-url]
+```/containers```: includes ErrorSnackbarWrapper, LoginGuard, LoginStateWrapper, PlayerWrapper, ProgressWrapper 
 
-</div>
+```/hooks```: backend to frontend communication 
+
+```/types```: includes all user-defined types 
+
+```/test```: includes unit tests & integration tests for backend-to-frontend communication, database, ipc, downloader, and songstore. 
+
 
 ## Install
 
@@ -43,8 +46,8 @@
 First, clone the repo via git and install dependencies:
 
 ```bash
-git clone --depth 1 --single-branch https://github.com/electron-react-boilerplate/electron-react-boilerplate.git your-project-name
-cd your-project-name
+git clone --depth 1 --single-branch https://github.com/GalenWong/groundy
+cd groundy
 yarn
 ```
 
@@ -54,6 +57,12 @@ Start the app in the `dev` environment. This starts the renderer process in [**h
 
 ```bash
 yarn dev
+```
+
+## Testing 
+
+```bash 
+yarn run test
 ```
 
 ## Packaging for Production
