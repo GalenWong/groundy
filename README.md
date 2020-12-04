@@ -13,31 +13,49 @@ Directory Structure of Groundy
 ```
 /app
     /backend
-	  /components
-	  /constants 
-	  /containers
-	  /hooks
-	  /types 
-	  /utils 
+        /authentication 
+        /dataAPI 
+        /database 
+        /downloader
+        /ipc 
+        /ipc-renderder 
+        /playlist 
+        /youtubeData 
+        /SongStore
+	/components
+	/constants 
+	/containers
+	/hooks
+	/types 
+	/utils 
 /test
     /backend 
     /hooks 
     /mocks 
-    /reducers 
 ```
 
-```/backend```: includes authentication to hook up with database, dataAPI, database, downloader to download songs, ipc & ipc-renderder for frontend communication, youtubeData to get recommendations from YouTube and playlist. 
+`/backend`
+- authentication: to hook up with database
+- dataAPI: contains sample playlist, related songs, recommendated songs 
+- database: contains database APIs for songs, playlists and tokens 
+- downloader: to download songs & track progress 
+- ipc & ipc-renderder: for backend to frontend communication 
+- youtubeData: to get recommendations from YouTube and 
+- playlist: contain APIs for playlist module 
+- SongStore: contains APIS for songs 
 
-```/components```: includes the following frontend components: AllPlaylists, Downloaded, FindPlaylist, FindRelated, FindSong, Home, LoginButton, MusicPlayer, Recommended, RenameDialog, Setting, ShowPlaylist 
+`/components` includes React components for the frontend
 
-```/containers```: includes ErrorSnackbarWrapper, LoginGuard, LoginStateWrapper, PlayerWrapper, ProgressWrapper 
+`/containers` frontend to backend communication logic in forms of React hooks & reusable frontend logic written in hooks
 
-```/hooks```: backend to frontend communication 
+`/hooks` defines the contract between frontend & backend communication 
 
-```/types```: includes all user-defined types 
+`/types` includes all user-defined types 
 
-```/test```: includes unit tests & integration tests for backend-to-frontend communication, database, ipc, downloader, and songstore. 
-
+`/test`:
+- backend: Unit tests & integration tests for database APIs, downloader, IPC and songStore 
+- hooks: unit tests for frontend & backend communication: receiving single update & using duplicate updates to override previous entry
+- mocks: using jest to mock ipcRenderer
 
 ## Install
 
@@ -62,7 +80,7 @@ yarn dev
 ## Testing 
 
 ```bash 
-yarn run test
+yarn jest test
 ```
 
 ## Packaging for Production
@@ -72,6 +90,10 @@ To package apps for the local platform:
 ```bash
 yarn package
 ```
+
+## Github Actions 
+
+Everytime a pull request is made, Github will run it through a series of CI/CD tests so that once the code goes through any building and testing processes, it's in a deployable state. 
 
 ## Docs
 
