@@ -38,7 +38,13 @@ interface ImportActionsProps {
   ytid: string;
 }
 
+interface State {
+  downloading: boolean;
+}
+
 const ImportActions = (props: ImportActionsProps) => {
+  const [state, setState] = React.useState<State>({ downloading: false });
+  const { downloading } = state;
   const classes = useStyles();
   const { downloaded, progress, ytid } = props;
 
@@ -46,8 +52,28 @@ const ImportActions = (props: ImportActionsProps) => {
 
   let component;
   if (progress === undefined) {
-    component = (
-      <Button key={2} disabled={downloaded} onClick={() => startDownload(ytid)}>
+    component = downloading ? (
+      <Box className={classes.fillWidth}>
+        <Box display="flex">
+          <Typography
+            className={`${classes.grow} ${classes.tinyFont}`}
+            variant="caption"
+          />
+          <Typography className={classes.tinyFont} variant="caption">
+            --%
+          </Typography>
+        </Box>
+        <LinearProgress variant="indeterminate" />
+      </Box>
+    ) : (
+      <Button
+        key={2}
+        disabled={downloaded}
+        onClick={() => {
+          startDownload(ytid);
+          setState({ downloading: true });
+        }}
+      >
         <GetAppIcon />
         <Typography>Cache</Typography>
       </Button>
